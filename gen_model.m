@@ -1,12 +1,5 @@
 function gen_model(Omega,omegaratio,Lambda,BathL,z)
 
-if isdeployed           % take care of command line arguments
-    if ischar(z), z = str2num(z); end
-    if ischar(Omega), Omega = str2num(Omega); end
-    if ischar(omegaratio), omegaratio = str2num(omegaratio); end
-    if ischar(BathL), BathL = str2num(BathL); end
-    if ischar(Lambda), Lambda = str2num(Lambda); end
-end
 
 %%%%%%%%%%%%%%%%%%---------MODEL INFO-------%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -32,7 +25,6 @@ para.L=BathL+2
 folder=sprintf('ratio%gLambda%gBathL%gz%g',omegaratio,Lambda,BathL,z);
 mkdir(folder);
 system(['cp ./cppsrc/snake ' folder]);
-system(['cp sgecpp ' folder]);
 para.folder=[folder,'/model'];
 mkdir(para.folder);
 
