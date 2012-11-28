@@ -1,6 +1,6 @@
 CC =	g++      	
 
-MYUSR=
+MYUSR= $(HOME)/usr
 LAPACKPP=$(MYUSR)/include/lapackpp
 MYLIB=$(MYUSR)/lib
 CFLAGS = -I$(LAPACKPP) -O3 -mtune=core2  
