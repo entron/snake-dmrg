@@ -7,7 +7,6 @@ Hamiltonian of a block. Sometimes the class can be used as other block operators
 @author Cheng Guo
 */
 
-using namespace std;
 
 #include "gqnbase.h"
 #include "gqnmat.h"
@@ -43,7 +42,7 @@ public:
   BlocHam(Site &first,double OnSiteE);
 
   ///Construct BlocHam from file "fin"
-  BlocHam(ifstream &fin);
+  BlocHam(std::ifstream &fin);
 
 
   ///Evaluate new BlocHam
@@ -56,8 +55,8 @@ public:
   ///Truncate the Block hamiltonian with truncation matrix.
   void renorm(DTMat &mat);
 
-   void write(ofstream &fout);
-   void read(ifstream &fin);
+   void write(std::ofstream &fout);
+   void read(std::ifstream &fin);
 
 ///Convert the data to complex type
   void toComplex();

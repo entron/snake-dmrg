@@ -29,7 +29,7 @@ bool GQN::operator==(const GQN& Gvar)const
     }
     return true;
 }
-bool GQN::operator==(const vector<GQN>& Gvecvar)const
+bool GQN::operator==(const std::vector<GQN>& Gvecvar)const
 {
 	int vlen=Gvecvar.size();
 	for(int n=0;n<vlen;n++)
@@ -99,20 +99,20 @@ GQN  GQN::operator- (const GQN& Gvar)const
   return Gminus;
 }
 
-ostream& operator<<(ostream& output,const GQN& GQvar)
+std::ostream& operator<<(std::ostream& output,const GQN& GQvar)
 {
     output<<"(";
     if(NUMBER_OF_GOOD_QUANTUM_NUMBER==1)
     {
-       output<<setw(3)<<GQvar.gqn[NUMBER_OF_GOOD_QUANTUM_NUMBER-1]<<")   ";
+       output<<std::setw(3)<<GQvar.gqn[NUMBER_OF_GOOD_QUANTUM_NUMBER-1]<<")   ";
     }
     else
     {
        for(int i=0;i<NUMBER_OF_GOOD_QUANTUM_NUMBER-1;i++)
        {
-          output<<setw(3)<<GQvar.gqn[i]<<",";
+          output<<std::setw(3)<<GQvar.gqn[i]<<",";
        }
-       output<<setw(3)<<GQvar.gqn[NUMBER_OF_GOOD_QUANTUM_NUMBER-1]<<"  )";
+       output<<std::setw(3)<<GQvar.gqn[NUMBER_OF_GOOD_QUANTUM_NUMBER-1]<<"  )";
     }
     return output;
 }
@@ -128,9 +128,9 @@ void GQN::none()
 
 
 /*!
-    \fn GQN::write(ofstream &fout)
+    \fn GQN::write(std::ofstream &fout)
  */
-void GQN::write(ofstream &fout)
+void GQN::write(std::ofstream &fout)
 {
   fout.write((char*)&num,sizeof num);
   for(int i=0;i<num;i++)
@@ -139,9 +139,9 @@ void GQN::write(ofstream &fout)
 
 
 /*!
-    \fn GQN::read(ifstream &fin)
+    \fn GQN::read(std::ifstream &fin)
  */
-void GQN::read(ifstream &fin)
+void GQN::read(std::ifstream &fin)
 {
   fin.read((char*)&num,sizeof num);
   for(int i=0;i<num;i++)
@@ -158,5 +158,5 @@ GQN& GQN::operator=(int n)
   if(num==1)
     gqn[0]=n;
   else
-    cout<<"There are more than one good quantum number!"<<endl;
+    std::cout<<"There are more than one good quantum number!"<<std::endl;
 }

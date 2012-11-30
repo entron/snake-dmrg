@@ -17,7 +17,6 @@ Density and truncation matrix class.The main purpose is to evaluate density matr
 
 #include<vector>
 #include<fstream>
-using namespace std;
 
 
 extern double totaltrunerror;
@@ -42,7 +41,7 @@ public:
 	DTMat();
 	~DTMat();
 	DTMat(char vtype,char hand);
-	DTMat(ifstream &fin);
+    DTMat(std::ifstream &fin);
 	DTMat(const DTMat &mat);
 
 	void gendenmat(Rmatrix &wfmat,GQNBase &l,GQNBase &r);
@@ -50,8 +49,8 @@ public:
 
 	void findtmat(int tn);
 
-	void write(ofstream &fout);
-	void read(ifstream &fin);
+    void write(std::ofstream &fout);
+    void read(std::ifstream &fin);
 
 	void renorm();
 
@@ -108,8 +107,8 @@ void DTMat::caltruncatemat(MType &evc, LaVectorDouble &evl, TMType &trumat)
 {
 	int Dim=denmatbase.Dim;
 
-  //cout<<evl<<endl;
-	vector<double> temp(Dim);
+  //std::cout<<evl<<std::endl;
+    std::vector<double> temp(Dim);
 	for(int i=0;i<Dim;i++)
 		temp[i]=evl(i);
 	sort(temp.begin(),temp.end());
@@ -136,8 +135,8 @@ void DTMat::caltruncatemat(MType &evc, LaVectorDouble &evl, TMType &trumat)
 	mark=new int [denmatbase.Dim];
 	for(int i=0;i<denmatbase.Dim;i++) mark[i]=0;
 	truncate(denmatbase,tmatbase,evl,cutedge,mark);
-	//for(int i=0;i<denmatbase.Dim;i++) cout<<mark[i]<<" ";
-	//cout<<endl
+    //for(int i=0;i<denmatbase.Dim;i++) std::cout<<mark[i]<<" ";
+    //std::cout<<std::endl
 
 	MType trunmatfull(denmatbase.Dim,tmatbase.Dim);
 	int q=0;
@@ -149,9 +148,9 @@ void DTMat::caltruncatemat(MType &evc, LaVectorDouble &evl, TMType &trumat)
 		}
 	delete [] mark;
 
-	//cout<<trunmatfull<<endl;
-	//cout<<denmatbase<<endl;
-	//cout<<tmatbase<<endl;
+    //std::cout<<trunmatfull<<std::endl;
+    //std::cout<<denmatbase<<std::endl;
+    //std::cout<<tmatbase<<std::endl;
 	trumat=TMType(trunmatfull,denmatbase,tmatbase,1);
 
 };

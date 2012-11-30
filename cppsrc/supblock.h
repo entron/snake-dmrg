@@ -15,7 +15,6 @@
 #define LA_COMPLEX_SUPPORT
 #include<lavc.h>
 
-using namespace std;
 
 #include "gqnbase.h"
 #include "setting.h"
@@ -30,14 +29,14 @@ extern double totaltrunerror;
 extern long int multnum;
 //extern Site freesite;
 
-extern  vector<Site> allfreesites;
+extern  std::vector<Site> allfreesites;
 
 class SupBlock {
 public:
     char value_type;
     int KeptStatesNum;
-    vector<GQN> TargetGQN;
-    vector<GQN> TargetGQN2;
+    std::vector<GQN> TargetGQN;
+    std::vector<GQN> TargetGQN2;
     int sitenum;
 
     ///Left and right block.
@@ -49,7 +48,7 @@ public:
     LaVectorComplex wfC2;
     //GQN tnum2;
     ///Left and right blocks' dtmats,useful when time evolve
-    vector<DTMat> leftdtmat,rightdtmat;
+    std::vector<DTMat> leftdtmat,rightdtmat;
 
     ///Matrix Form of wavefunction
     Rmatrix wfmat;
@@ -69,7 +68,7 @@ private:
 
     int mtimes;
     LaGenMatDouble Hlr;
-    ofstream fout_1stsite_n_t, fout_entropy_t, fout_steperror_t;
+    std::ofstream fout_1stsite_n_t, fout_entropy_t, fout_steperror_t;
 public:
     SupBlock();
     ~SupBlock();
@@ -97,9 +96,9 @@ public:
     void moveright(DTMat &leftdtmat,DTMat &rightdtmat);
 
     ///Time (real or imaginary) evolve
-    void evolve(vector<LaGenMatDouble> &UT,int timesteps);
-    void evolve(vector<LaGenMatComplex> &Ut, int timesteps);
-    void evolve(vector<LaGenMatComplex> &ut,vector<LaGenMatComplex> &Ut, int timesteps);
+    void evolve(std::vector<LaGenMatDouble> &UT,int timesteps);
+    void evolve(std::vector<LaGenMatComplex> &Ut, int timesteps);
+    void evolve(std::vector<LaGenMatComplex> &ut, std::vector<LaGenMatComplex> &Ut, int timesteps);
     /**Read data from files wrote by FINITE DMRG etc. so that supblock
      *can time evolve. n is the number of site which are exact.*/
     void prepare();
@@ -120,7 +119,7 @@ public:
     template<class MATType, class Type>
     void middlemult(MATType &TO,Type *in,Type *out)
     {
-        //cout<<TO<<endl;
+        //std::cout<<TO<<std::endl;
         for (int i=0;i<H2Dim;i++)
             for (int k=0;k<H2Dim;k++)
                 if (TO(i,k)!=0)
@@ -146,7 +145,7 @@ public:
     void read(char *filename);
 
     ///Generate mapdim and map
-    void genmiddlemap(vector<GQN> &tgqn);
+    void genmiddlemap(std::vector<GQN> &tgqn);
 
     ///Generate two freesite index.
     void genindex();
@@ -159,15 +158,15 @@ public:
      \fn SupBlock::evalwavefuncmat()
      */
     template<class WFType,class WFMATType>
-    void evalwfmat(WFType &f,WFMATType &mat, vector<GQN> TGQN)
+    void evalwfmat(WFType &f,WFMATType &mat, std::vector<GQN> TGQN)
     {
         int vstart=0;
-        //cout<<f.size()<<endl;
+        //std::cout<<f.size()<<std::endl;
         //if(mat.rowbase!=rightbase || mat.colbase!=leftbase)
         mat.resize(rightbase,leftbase);
-        //cout<<rightbase<<endl;
-        //cout<<leftbase<<endl;
-        //cout<<f<<endl;
+        //std::cout<<rightbase<<std::endl;
+        //std::cout<<leftbase<<std::endl;
+        //std::cout<<f<<std::endl;
         WFType tempv;
         typename WFMATType::value_type tempmat;
         for (int i=0;i<leftbase.subnum;i++)
@@ -180,7 +179,7 @@ public:
                     vstart+=leftbase.dim[i]*rightbase.dim[j];
                     tempmat.resize(rightbase.dim[j],leftbase.dim[i]);
                     vecCmat(tempv,tempmat);
-                    //cout<<tempmat<<endl;
+                    //std::cout<<tempmat<<std::endl;
                     mat.subnum++;
                     mat.submat.resize(mat.subnum);
                     mat.pmat(j,i)=mat.subnum-1;
@@ -195,12 +194,12 @@ public:
      \fn SupBlock::extractwf(int TargetGQN)
      */
     template<class WFType,class WFMATType>
-    void extractwf(WFMATType &mat,WFType &f, vector<GQN> TGQN)
+    void extractwf(WFMATType &mat,WFType &f, std::vector<GQN> TGQN)
     {
         WFType tempv;
         typename WFMATType::value_type tempmat;
         f.resize(0,1);
-        //printvector(TargetGQN);cout<<endl;
+        //printvector(TargetGQN);std::cout<<std::endl;
         for (int i=0;i<leftbase.subnum;i++)
         {
             for (int j=0;j<rightbase.subnum;j++)
@@ -218,7 +217,7 @@ public:
                 }
             }
         }
-        //cout<<"Wave func is "<<endl<<wf<<endl;
+        //std::cout<<"Wave func is "<<std::endl<<wf<<std::endl;
     }
 
 private:
@@ -226,7 +225,7 @@ private:
     template<class Type>
     void reshapewfmat(Type &wfmatfull,char hand)
     {
-        //cout<<wfmat<<endl;
+        //std::cout<<wfmat<<std::endl;
         int matrow=wfmatfull.size(0);
         int matcol=wfmatfull.size(1);
         int sitedim=freesite.base.Dim;
@@ -242,7 +241,7 @@ private:
                 for (int j=0;j<sitedim;j++)
                 {
                     tempsub=wfmatfull(LaIndex(j*newrow,j*newrow+newrow-1),LaIndex(i));
-                    //cout<<tempsub<<endl;
+                    //std::cout<<tempsub<<std::endl;
                     temp(LaIndex(),LaIndex(col)).inject(tempsub);
                     col++;
                 }
@@ -262,7 +261,7 @@ private:
                 }
         }
         wfmatfull=temp;
-        // cout<<wfmat<<endl;
+        // std::cout<<wfmat<<std::endl;
     }
 
 
@@ -277,7 +276,7 @@ private:
      *initial conditions*/
     void geninitialwf();
     void geninitialbases();
-    void geninitialdtmats(vector<DTMat> &left,vector<DTMat> &right);
+    void geninitialdtmats(std::vector<DTMat> &left, std::vector<DTMat> &right);
 
     ///Correlation function.<f|m1 m0|f>. hand tells which side m belongs.
     double corrfunc(Rmatrix &m1,char hand1,Rmatrix &m0,char hand0);
@@ -294,7 +293,7 @@ private:
     void leftmult(double *in ,double *out);
     void rightmult(double *in,double *out);
     void deletemiddlemap();
-    void onetimestep(LaGenMatComplex& impurity_OP_t, vector<LaGenMatComplex>& rt_OP);
+    void onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatComplex>& rt_OP);
 };
 
 extern "C" void dsaupd_(int *ido, char *bmat, int *n, char *which,
@@ -318,7 +317,7 @@ extern "C"
 }
 
 
-//extern ofstream foccnum,fentropy;
+//extern std::ofstream foccnum,fentropy;
 
 
 #endif

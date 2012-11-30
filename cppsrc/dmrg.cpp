@@ -8,9 +8,9 @@ DMRG::DMRG()
 	fDMRGSweepTimes=1;
 	TargetGQN.resize(1);
 	DTMat::MaxTruncateError=1e-12;
-	cout<<"==========Parameters:"<<endl;
-	cout<<"KeptStatesNum="<<KeptStatesNum<<endl;
-	cout<<"fDMRGSweepTimes="<<fDMRGSweepTimes<<endl;
+    std::cout<<"==========Parameters:"<<std::endl;
+    std::cout<<"KeptStatesNum="<<KeptStatesNum<<std::endl;
+    std::cout<<"fDMRGSweepTimes="<<fDMRGSweepTimes<<std::endl;
 }
 
 
@@ -25,9 +25,9 @@ DMRG::~DMRG()
 void DMRG::iDMRG()
 {
 	iDMRG_ReadParameters();
-	cout<<"==========Reading free site information from matlab generated files."<<endl;
+    std::cout<<"==========Reading free site information from matlab generated files."<<std::endl;
 	iDMRG_ReadFreesites();	
-	cout<<"==========Start Infinite DMRG."<<endl;
+    std::cout<<"==========Start Infinite DMRG."<<std::endl;
 	
 	///The initial left and right block each with one site.
 	left=new Block(allfreesites[0],OnSitePotentials[0]);
@@ -48,12 +48,12 @@ void DMRG::iDMRG()
 	IniRightL=right->sitenum;
 	
 	///Determin the occupation number for the iDMRG
-	vector<GQN> tempTargetGQN;
+    std::vector<GQN> tempTargetGQN;
 	int tempTargetGQNNum=1;
 	tempTargetGQN.resize(tempTargetGQNNum);
 	double occnum;
 	occnum=TargetGQN[0].gqn[0]/double(ChainLength);
-	cout<<"The average occuptation number is "<<occnum<<endl;
+    std::cout<<"The average occuptation number is "<<occnum<<std::endl;
 	
 	///Increase both sides
 	for(int i=1;i<=ChainLength/2-1;i++)
@@ -61,7 +61,7 @@ void DMRG::iDMRG()
 		NewLeftL=IniLeftL+i;
 		NewRightL=IniRightL+i;
         	tempTargetGQN[0].gqn[0]=round((NewLeftL+NewRightL)*occnum);
-  	        //cout<<tempTargetGQN[0].gqn[0]<<endl;
+            //std::cout<<tempTargetGQN[0].gqn[0]<<std::endl;
 		if(i>1) delete supblock;
 		AddTwoSites(NewLeftL-1,NewRightL-1);
 		supblock=new SupBlock(newleft,newright,left,right,H[NewLeftL-1]);
@@ -77,13 +77,13 @@ void DMRG::iDMRG()
 		delete right;
 		left=newleft;
 		right=newright;
-		cout<<endl;
+        std::cout<<std::endl;
 	}
 	delete newleft;
 	delete newright;
 	delete supblock;
-	//cout<<endl<<"The maximium exact block size is "<<n<<endl<<endl;
-	cout<<"==========Infinite DMRG complete."<<endl<<endl;
+    //std::cout<<std::endl<<"The maximium exact block size is "<<n<<std::endl<<std::endl;
+    std::cout<<"==========Infinite DMRG complete."<<std::endl<<std::endl;
 }
 
 
@@ -92,17 +92,17 @@ void DMRG::iDMRG()
  */
 void DMRG::fDMRG()
 {
-	cout<<"==========Start Finite DMRG."<<endl;
+    std::cout<<"==========Start Finite DMRG."<<std::endl;
 	fDMRG_finalNewLeftL=NewLeftL;
 	for(int num=0;num<fDMRGSweepTimes;num++)
 	{
 		//left increase at the cost of right
-		cout<<"*****No."<<num<<" sweep"<<endl;
+        std::cout<<"*****No."<<num<<" sweep"<<std::endl;
 		fDMRG_Sweep2Left(NewLeftL-1,1);
 		fDMRG_Sweep2Right(1,ChainLength-3);
 		fDMRG_Sweep2Left(ChainLength-3,fDMRG_finalNewLeftL-1);
 	}
-	cout<<"==========Finite DMRG complete."<<endl<<endl;
+    std::cout<<"==========Finite DMRG complete."<<std::endl<<std::endl;
 }
 
 
@@ -122,22 +122,22 @@ void DMRG::tDMRG()
 {
 	
 	tDMRG_ReadParameters();
-	cout<<"==========Start t-DMRG."<<endl;
+    std::cout<<"==========Start t-DMRG."<<std::endl;
 	supblock->creatoutputfiles();
 	supblock->evolve(rt_td_impurity_OP,rt_OP,tDMRGStepNum);
 	supblock->closeoutputfiles();
 	delete supblock;
-	cout<<"==========t-DMRG complete."<<endl<<endl;
+    std::cout<<"==========t-DMRG complete."<<std::endl<<std::endl;
 }
 
 
 
 void DMRG::iDMRG_ReadFreesites()
 {
-	string fname="./model/site_operators.dat";
-	ifstream opfin(fname.c_str(),ios_base::in|ios_base::binary);
-	string fname2="./model/site_base.dat";
-	ifstream basefin(fname2.c_str(),ios_base::in|ios_base::binary);
+	std::string fname="./model/site_operators.dat";
+    std::ifstream opfin(fname.c_str(),std::ios_base::in|std::ios_base::binary);
+	std::string fname2="./model/site_base.dat";
+    std::ifstream basefin(fname2.c_str(),std::ios_base::in|std::ios_base::binary);
 
 	allfreesites.resize(ChainLength);	
 	for(int i=0;i<ChainLength;i++)
@@ -151,9 +151,9 @@ void DMRG::iDMRG_ReadFreesites()
  */
 void DMRG::iDMRG_ReadParameters()
 {
-	cout<<"==========Reading model parameters from Matlab generated file."<<endl;
-	string fname="./model/problemparmeters.dat";
-	ifstream fin(fname.c_str(),ios_base::in|ios_base::binary);
+    std::cout<<"==========Reading model parameters from Matlab generated file."<<std::endl;
+	std::string fname="./model/problemparmeters.dat";
+    std::ifstream fin(fname.c_str(),std::ios_base::in|std::ios_base::binary);
 	fin.read((char*)&ChainLength,sizeof(int));
 	int TGQN;
 	fin.read((char*)&TGQN,sizeof(int));
@@ -165,7 +165,7 @@ void DMRG::iDMRG_ReadParameters()
 	//TargetGQN[2]=TargetGQN[0].gqn[0]-1;
 	
 	fname="./model/Hfac.dat";
-	fin.open(fname.c_str(),ios_base::in|ios_base::binary);
+    fin.open(fname.c_str(),std::ios_base::in|std::ios_base::binary);
 	HoppingIntegrals.resize(ChainLength-1);
 	OnSitePotentials.resize(ChainLength);
 	TwoSitesInteraction.resize(ChainLength-1);
@@ -175,20 +175,20 @@ void DMRG::iDMRG_ReadParameters()
 	fin.close();
 	
 	fname="./model/HC.dat";
-	fin.open(fname.c_str(),ios_base::in|ios_base::binary);
+    fin.open(fname.c_str(),std::ios_base::in|std::ios_base::binary);
 	ReadOperators(fin,H,ChainLength-1);
 	fin.close();
 
-	cout<<"ChainLength="<<ChainLength<<endl;
-	cout<<"TargetGQN="<<endl;
-	printvector(TargetGQN); cout<<endl;
-	cout<<"tDMRGStepNum="<<tDMRGStepNum<<endl;
-	cout<<"Hopping Integrals are:"<<endl;
-	printvector(HoppingIntegrals);cout<<endl;
-	cout<<"On site potentials are:"<<endl;
-	printvector(OnSitePotentials);cout<<endl;
-	cout<<"Two sites nearest neighbor interaction are:"<<endl;
-	printvector(TwoSitesInteraction);cout<<endl;
+    std::cout<<"ChainLength="<<ChainLength<<std::endl;
+    std::cout<<"TargetGQN="<<std::endl;
+    printvector(TargetGQN); std::cout<<std::endl;
+    std::cout<<"tDMRGStepNum="<<tDMRGStepNum<<std::endl;
+    std::cout<<"Hopping Integrals are:"<<std::endl;
+    printvector(HoppingIntegrals);std::cout<<std::endl;
+    std::cout<<"On site potentials are:"<<std::endl;
+    printvector(OnSitePotentials);std::cout<<std::endl;
+    std::cout<<"Two sites nearest neighbor interaction are:"<<std::endl;
+    printvector(TwoSitesInteraction);std::cout<<std::endl;
 }
 
 
@@ -209,7 +209,7 @@ void DMRG::mkdir()
  */
 void DMRG::iDMRG2tDMRG()
 {
-	cout<<"==========Passing fDMRG supblock to the t-DMRG."<<endl;
+    std::cout<<"==========Passing fDMRG supblock to the t-DMRG."<<std::endl;
 	///Pass the DMRG supblock to the tDMRG
 	ReadSavedLRBlocks(fDMRG_finalNewLeftL-1);
 	AddTwoSites(fDMRG_finalNewLeftL-1,fDMRG_finalNewLeftL-2);
@@ -220,7 +220,7 @@ void DMRG::iDMRG2tDMRG()
 	if(newleft->base.Dim>KeptStatesNum)
 		supblock->renorm(KeptStatesNum);
 	supblock->KeptStatesNum=KeptStatesNum;
-    //cout<<freesite<<endl;
+    //std::cout<<freesite<<std::endl;
 	supblock->loaddtmats();
 	supblock->sweep2left(fDMRG_finalNewLeftL);
 	//////////////////////////////
@@ -241,7 +241,7 @@ void DMRG::iDMRG2tDMRG()
     supblock->extractwf(supblock->wfmat,supblock->wf,supblock->TargetGQN);
 	supblock->toComplex();
 	R2C(wfmat2,supblock->wfmatC2);  supblock->extractwf(supblock->wfmatC2,supblock->wfC2,supblock->TargetGQN2);
-	//cout<<wfmat1<<endl;cout<<wfmat2<<endl;
+    //std::cout<<wfmat1<<std::endl;std::cout<<wfmat2<<std::endl;
 	for(int i=0;i<ChainLength;i++)
 	{
 		allfreesites[i].toComplex();
@@ -251,9 +251,9 @@ void DMRG::iDMRG2tDMRG()
 	delete right;
 	delete newleft;
 	delete newright;	
-	cout<<endl;
+    std::cout<<std::endl;
 system("rm -rf data");
-	cout<<"==========Passing fDMRG supblock to the t-DMRG complete."<<endl<<endl;
+    std::cout<<"==========Passing fDMRG supblock to the t-DMRG complete."<<std::endl<<std::endl;
 }
 
 
@@ -264,7 +264,7 @@ system("rm -rf data");
  */
 void DMRG::fDMRG_Sweep2Right(int StartLeftChainLength, int EndLeftChainLength)
 {
-	cout<<"-----Start sweeping to right."<<endl;
+    std::cout<<"-----Start sweeping to right."<<std::endl;
 	for(int i=StartLeftChainLength;i<=EndLeftChainLength;i++)
 	{
 		ReadSavedLRBlocks(i);
@@ -280,7 +280,7 @@ void DMRG::fDMRG_Sweep2Right(int StartLeftChainLength, int EndLeftChainLength)
 		delete newleft;
 		delete newright;
 		delete supblock;
-		cout<<endl;
+        std::cout<<std::endl;
 	}
 }
 
@@ -290,7 +290,7 @@ void DMRG::fDMRG_Sweep2Right(int StartLeftChainLength, int EndLeftChainLength)
  */
 void DMRG::fDMRG_Sweep2Left(int StartLeftChainLength, int EndLeftChainLength)
 {
-	cout<<"-----Start sweeping to left."<<endl;
+    std::cout<<"-----Start sweeping to left."<<std::endl;
 	for(int i=StartLeftChainLength;i>=EndLeftChainLength;i--)
 	{
 		ReadSavedLRBlocks(i);
@@ -298,7 +298,7 @@ void DMRG::fDMRG_Sweep2Left(int StartLeftChainLength, int EndLeftChainLength)
 		supblock=new SupBlock(newleft,newright,left,right,H[i]);
 		supblock->TargetGQN=TargetGQN;
 		supblock->CalGroundState();
-		//cout<<supblock->wf<<endl;break;
+        //std::cout<<supblock->wf<<std::endl;break;
 		//	if(newright->base.Dim>KeptStatesNum)
 		supblock->renormright(KeptStatesNum);
 		
@@ -308,7 +308,7 @@ void DMRG::fDMRG_Sweep2Left(int StartLeftChainLength, int EndLeftChainLength)
 		delete newright;
 		delete newleft;
 		delete supblock;
-		cout<<endl;
+        std::cout<<std::endl;
 	}
 }
 
@@ -318,17 +318,17 @@ void DMRG::fDMRG_Sweep2Left(int StartLeftChainLength, int EndLeftChainLength)
  */
 void DMRG::ReadSavedLRBlocks(int LeftChainLength)
 {
-	string fname;
-	stringstream stl,str;
+	std::string fname;
+    std::stringstream stl,str;
 	fname="./data/L";
 	stl<<LeftChainLength;
 	fname=fname+stl.str();
-  // cout<<fname<<endl;
+  // std::cout<<fname<<std::endl;
 	left=new Block(fname);
 	fname="./data/R";
 	str<<(ChainLength-LeftChainLength-2);
 	fname=fname+str.str();
-	//cout<<fname<<endl;
+    //std::cout<<fname<<std::endl;
 	right=new Block(fname);
 }
 
@@ -338,7 +338,7 @@ void DMRG::ReadSavedLRBlocks(int LeftChainLength)
  */
 void DMRG::CalN()
 {
-	cout<<"Calculate N of Everysites when Chain sweeped to the middle."<<endl;
+    std::cout<<"Calculate N of Everysites when Chain sweeped to the middle."<<std::endl;
 	ReadSavedLRBlocks(fDMRG_finalNewLeftL-1);
 	AddTwoSites(fDMRG_finalNewLeftL-1,fDMRG_finalNewLeftL-2);
 	supblock=new SupBlock(newleft,newright,left,right,H[fDMRG_finalNewLeftL-1]);
@@ -348,7 +348,7 @@ void DMRG::CalN()
 		supblock->renorm(KeptStatesNum);
 	
 	//supblock->calN("./data/n.dat");
-	ofstream fout("./data/n.dat");
+    std::ofstream fout("./data/n.dat");
 	newleft->calN(fout,'l');
 	newright->calN(fout,'r');
 	fout.close();
@@ -368,9 +368,9 @@ void DMRG::CalN()
 void DMRG::AddTwoSites(int LeftChainLength, int RightChainLength)
 {
 	newleft=new Block(*left,allfreesites[LeftChainLength],HoppingIntegrals[LeftChainLength-1], OnSitePotentials[LeftChainLength], TwoSitesInteraction[LeftChainLength-1]);
-	cout<<"NewLeftL="<<newleft->sitenum<<"\t";
+    std::cout<<"NewLeftL="<<newleft->sitenum<<"\t";
 	newright=new Block(allfreesites[ChainLength-RightChainLength-1],*right,HoppingIntegrals[ChainLength-RightChainLength-1], OnSitePotentials[ChainLength-RightChainLength-1], TwoSitesInteraction[ChainLength-RightChainLength-1]);
-    cout<<"NewRightL="<<newright->sitenum<<"\t";
+    std::cout<<"NewRightL="<<newright->sitenum<<"\t";
 }
 
 
@@ -379,14 +379,14 @@ void DMRG::AddTwoSites(int LeftChainLength, int RightChainLength)
  */
 void DMRG::tDMRG_ReadParameters()
 {
-	cout<<"==========Reading model parameters for t-DMRG from Matlab generated files."<<endl;
-	string fname;
+    std::cout<<"==========Reading model parameters for t-DMRG from Matlab generated files."<<std::endl;
+	std::string fname;
 	fname="./model/rt_T0.dat";
-	ifstream fin(fname.c_str(),ios_base::in|ios_base::binary);
+    std::ifstream fin(fname.c_str(),std::ios_base::in|std::ios_base::binary);
 	ReadOperators(fin,rt_OP,ChainLength-1);
 	fin.close();
 	fname="./model/rt_H1_T0.dat";
-	fin.open(fname.c_str(),ios_base::in|ios_base::binary);
+    fin.open(fname.c_str(),std::ios_base::in|std::ios_base::binary);
 	ReadOperators(fin,rt_td_impurity_OP,tDMRGStepNum);
 	fin.close();
 }

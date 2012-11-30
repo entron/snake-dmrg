@@ -27,10 +27,10 @@ BlocHam::BlocHam(Site &first,double OnSiteE)
 	base=first.base;
 	if(OnSiteE!=0)
 	{
-		cout<<"!!!!!!!!!!!!!!!!!!!!!Speical Case: H=OnSiteE*sigma_x!!!!!!!!!!!!!!!!!!!!!!"<<endl;
+		std::cout<<"!!!!!!!!!!!!!!!!!!!!!Speical Case: H=OnSiteE*sigma_x!!!!!!!!!!!!!!!!!!!!!!"<<std::endl;
 		H=first.n[0];
 		H.scale(OnSiteE);
-  	//cout<<H<<endl;
+  	//std::cout<<H<<std::endl;
 	}
 	else{
 		if(value_type=='r')
@@ -47,9 +47,9 @@ BlocHam::BlocHam(Site &first,double OnSiteE)
 }
 
 /*!
-\fn BlocHam::BlocHam(ifstream &fin)
+\fn BlocHam::BlocHam(std::ifstream &fin)
  */
-BlocHam::BlocHam(ifstream &fin)
+BlocHam::BlocHam(std::ifstream &fin)
 {
   read(fin);
 }
@@ -73,10 +73,10 @@ BlocHam::BlocHam(BlocHam *oldham,Site &add,Rmatrix &Hinter,char hand)
     kron(oldham->H,identity,H);
     H+=Hinter;
     base=kron(oldham->base,add.base);
-    //cout<<oldham->base<<endl;
-    //cout<<add.base<<endl;
-    //cout<<base<<endl;
-    // cout<<H<<endl;
+    //std::cout<<oldham->base<<std::endl;
+    //std::cout<<add.base<<std::endl;
+    //std::cout<<base<<std::endl;
+    // std::cout<<H<<std::endl;
   }
   else
   {
@@ -158,20 +158,20 @@ void BlocHam::renorm(DTMat &mat)
   if(value_type=='r')
   {
     Rmatrix temp(mat.tmatbase,base);
-  //cout<<"TranMat"<<endl<<mat.trunmattrans<<endl;
+  //std::cout<<"TranMat"<<std::endl<<mat.trunmattrans<<std::endl;
     Mat_Trans_Mat_Mult(mat.trunmat,H,temp);
     H.resize(mat.tmatbase,mat.tmatbase);
     Mat_Mat_Mult(temp,mat.trunmat,H);
-  //cout<<"H after renorm is"<<endl<<H<<endl;
+  //std::cout<<"H after renorm is"<<std::endl<<H<<std::endl;
   }
   else
   {
     Cmatrix temp(mat.tmatbase,base);
-  //cout<<"TranMat"<<endl<<mat.trunmattrans<<endl;
+  //std::cout<<"TranMat"<<std::endl<<mat.trunmattrans<<std::endl;
     Mat_Trans_Mat_Mult(mat.trunmatC,HC,temp);
     HC.resize(mat.tmatbase,mat.tmatbase);
     Mat_Mat_Mult(temp,mat.trunmatC,HC);
-  //cout<<"H after renorm is"<<endl<<H<<endl;
+  //std::cout<<"H after renorm is"<<std::endl<<H<<std::endl;
   }
   base=mat.tmatbase;
 }
@@ -179,9 +179,9 @@ void BlocHam::renorm(DTMat &mat)
 
 
 /*!
-    \fn BlocHam::write(ofstream &fout)
+    \fn BlocHam::write(std::ofstream &fout)
  */
-void BlocHam::write(ofstream &fout)
+void BlocHam::write(std::ofstream &fout)
 {
   fout.write(&value_type,sizeof value_type);
   base.write(fout);
@@ -199,14 +199,14 @@ void BlocHam::write(ofstream &fout)
 
 
 /*!
-    \fn BlocHam::read(ifstream &fin)
+    \fn BlocHam::read(std::ifstream &fin)
  */
-void BlocHam::read(ifstream &fin)
+void BlocHam::read(std::ifstream &fin)
 {
   fin.read(&value_type,sizeof value_type);
   base.read(fin);
   //for(int i=0;i<base.subnum;i++) readmat(fin,h[i]);
-  //cout<<dim[1]<<endl;
+  //std::cout<<dim[1]<<std::endl;
   if(value_type=='r')
   {
     H.read(fin);

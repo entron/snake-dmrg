@@ -26,7 +26,7 @@ long int multnum=0; //Using for debug
 //Site freesite;
 double totaltrunerror=0;
 vector<Site> allfreesites;
-//ofstream foccnum,;
+//std::ofstream foccnum,;
 
 int main()
 {
@@ -41,8 +41,8 @@ int main()
   chain1.iDMRG2tDMRG();
   chain1.tDMRG();
 
-  cout<<endl<<"The multipling times is "<<endl<<multnum<<endl;
-  cout << endl << "Total CPU time = " << (time(0) - time_start )  << " seconds" << endl ;
+  std::cout<<std::endl<<"The multipling times is "<<std::endl<<multnum<<std::endl;
+  std::cout << std::endl << "Total CPU time = " << (time(0) - time_start )  << " seconds" << std::endl ;
   return EXIT_SUCCESS;
 }
 

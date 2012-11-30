@@ -7,8 +7,6 @@ This class contains the information of the operators of a site.
 @author Cheng Guo
 */
 
-using namespace std;
-
 #include "gqnmat.h"
 #include "setting.h"
 #include "gqnbase.h"
@@ -29,8 +27,8 @@ public:
   GQNBase base;
   
   ///annilation,creation and number operator.
-  vector<Rmatrix> a,c,n; 
-  vector<Cmatrix> aC,cC,nC; 
+  std::vector<Rmatrix> a,c,n;
+  std::vector<Cmatrix> aC,cC,nC;
   
   ///'r' means real;'c' means complex
   char value_type;
@@ -41,7 +39,7 @@ public:
   Site();
   ~Site();
   ///Read site information from fin
-  Site(ifstream &fin);
+  Site(std::ifstream &fin);
   Site(const Site &s);
   
   ///Evaluate c from a.
@@ -61,10 +59,10 @@ public:
  // void genfreesite();
   
   ///Write the site infomation to file  
-  void write(ofstream &fout);
-  void read(ifstream &fin);
+  void write(std::ofstream &fout);
+  void read(std::ifstream &fin);
   //Read site operators from matlab generated files
-	void readsite(ifstream &basefin, ifstream &siteopfin);
+    void readsite(std::ifstream &basefin, std::ifstream &siteopfin);
 	
   Site& operator=(const Site& s);
   
@@ -72,7 +70,7 @@ public:
     void genfermion();
     void multsignmat();
     void genspin();
-  friend ostream & operator<<(ostream& os, const Site& site);
+  friend std::ostream & operator<<(std::ostream& os, const Site& site);
     void genspinlessfermion();
     void genspinFTDMRG();
 };

@@ -53,9 +53,9 @@ void SupBlock::geninitialbases()
 
 
 /*!
- \fn SupBlock::geninitialdtmats(vector<DTMat> &left,vector<DTMat> &right)
+ \fn SupBlock::geninitialdtmats(std::vector<DTMat> &left, std::vector<DTMat> &right)
 */
-void SupBlock::geninitialdtmats(vector<DTMat> &leftdt,vector<DTMat> &rightdt)
+void SupBlock::geninitialdtmats(std::vector<DTMat> &leftdt, std::vector<DTMat> &rightdt)
 {
 	LaGenMatDouble trunmat,trunmattrans;
 	leftdt.resize(sitenum);
@@ -79,9 +79,9 @@ void SupBlock::geninitialdtmats(vector<DTMat> &leftdt,vector<DTMat> &rightdt)
 		trunmat(1,0)=1;
 		trunmattrans(0,1)=1;
 		rightdt[i].trunmat=Rmatrix(trunmat,freesite.base,rightdt[i].tmatbase,1);
-		//cout<<rightdt[i].trunmat;
+		//std::cout<<rightdt[i].trunmat;
 		//rightdt[i].trunmattrans=Rmatrix(trunmattrans,rightdt[i].tmatbase,freesite.base,1);
-		// cout<<rightdt[i].trunmattrans;
+		// std::cout<<rightdt[i].trunmattrans;
 	}
 	leftdt[0].tmatbase=rightdt[0].tmatbase;
 
@@ -90,7 +90,7 @@ void SupBlock::geninitialdtmats(vector<DTMat> &leftdt,vector<DTMat> &rightdt)
 /*!
  \fn SupBlock::evolve(LaGenMatDouble &T,int timesteps)
  */
-void SupBlock::evolve(vector<LaGenMatDouble> &gs_proj,int timesteps)
+void SupBlock::evolve(std::vector<LaGenMatDouble> &gs_proj,int timesteps)
 {
 	///Initialize
 	geninitialdtmats(leftdtmat,rightdtmat);
@@ -109,12 +109,12 @@ void SupBlock::evolve(vector<LaGenMatDouble> &gs_proj,int timesteps)
 	extractwf(wfmat,wf, TargetGQN);
 	for(int n=0;n<timesteps;n++)
 	{
-		cout<<endl<<"********************Temperature step "<<n<<"********************"<<endl;
+		std::cout<<std::endl<<"********************Temperature step "<<n<<"********************"<<std::endl;
 
 		///Move right
 		for(int i=1;i<sitenum-1;i++)
 		{
-			//cout<<"Left site is "<<i<<endl;
+			//std::cout<<"Left site is "<<i<<std::endl;
 
 			genmiddlemap(TargetGQN);
 			middlemult(gs_proj[i-1],wf);
@@ -126,20 +126,20 @@ void SupBlock::evolve(vector<LaGenMatDouble> &gs_proj,int timesteps)
 		middlemult(gs_proj[sitenum-2],wf);
 		deletemiddlemap();
 		//wf.scale(1/sqrt(Blas_Dot_Prod(wf,wf)));
-		//chop(wf,1e-15);cout<<wf<<endl;
+		//chop(wf,1e-15);std::cout<<wf<<std::endl;
 
 		///Move left
 		for(int i=sitenum-1;i>1;i--)
 		{
-			//cout<<"Left site is "<<i<<endl;
+			//std::cout<<"Left site is "<<i<<std::endl;
 			genmiddlemap(TargetGQN);
 			middlemult(gs_proj[i-1],wf);
 			deletemiddlemap();
 			moveleft(leftdtmat[i-1],rightdtmat[sitenum-i]);
 			if(i==10)
 			{
-				//fentropy<<rightdtmat[sitenum-i].entropy<<endl;
-				cout<<"The von Neumann entropy of this step is "<<rightdtmat[sitenum-i].entropy<<endl;
+				//fentropy<<rightdtmat[sitenum-i].entropy<<std::endl;
+				std::cout<<"The von Neumann entropy of this step is "<<rightdtmat[sitenum-i].entropy<<std::endl;
 			}
 			oldleftbase=leftdtmat[i-2].tmatbase;
 		}
@@ -147,7 +147,7 @@ void SupBlock::evolve(vector<LaGenMatDouble> &gs_proj,int timesteps)
 		middlemult(gs_proj[0],wf);
 		deletemiddlemap();
 		double mod=sqrt(Blas_Dot_Prod(wf,wf));
-		cout<<"The mod of wf is "<<mod<<endl;
+		std::cout<<"The mod of wf is "<<mod<<std::endl;
 		wf.scale(1/sqrt(Blas_Dot_Prod(wf,wf)));
 
 
@@ -158,14 +158,14 @@ void SupBlock::evolve(vector<LaGenMatDouble> &gs_proj,int timesteps)
 		double occnum;
 		Rmatrix tempmat(leftbase,leftbase);
 		Mat_Mat_Mult(leftdm,freesite.n[0],tempmat);
-		//cout<<leftdm<<endl;
-		//cout<<freesite.n[0]<<endl;
+		//std::cout<<leftdm<<std::endl;
+		//std::cout<<freesite.n[0]<<std::endl;
 		occnum=tempmat.trace();
-		//    foccnum<<occnum<<endl;
-		cout<<"The acumulated truncation error is "<<totaltrunerror<<endl;
+		//    foccnum<<occnum<<std::endl;
+		std::cout<<"The acumulated truncation error is "<<totaltrunerror<<std::endl;
 	}
-	//foccnum<<endl;
-	//fentropy<<endl;
+	//foccnum<<std::endl;
+	//fentropy<<std::endl;
 	delindex();
 	//system("xmgrace ./data/entropy_temperature_evolve &");
 }

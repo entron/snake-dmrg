@@ -2,8 +2,6 @@
 #define GQN_H
 
 
-using namespace std;
-
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -14,7 +12,7 @@ class GQN
     GQN();
   ~GQN();
 
-          vector<int> gqn;
+          std::vector<int> gqn;
 
 
           GQN& operator= (const GQN&)     ;
@@ -23,15 +21,15 @@ class GQN
           GQN  operator+ (const GQN&)const;
           GQN  operator- (const GQN&)const;
           bool operator==(const GQN&)const;
-          bool operator==(const vector<GQN>&)const; //Return true if gqn = any gqn in gqnvector. Used for targetting multi gqn number.
+          bool operator==(const std::vector<GQN>&)const; //Return true if gqn = any gqn in gqnvector. Used for targetting multi gqn number.
           bool operator!=(const GQN&)const;
           bool operator> (const GQN&)const;
           bool operator< (const GQN&)const;
 
-          friend ostream& operator<<(ostream&, const GQN&);
+          friend std::ostream& operator<<(std::ostream&, const GQN&);
     void none();
-    void write(ofstream &fout);
-    void read(ifstream &fin);
+    void write(std::ofstream &fout);
+    void read(std::ifstream &fin);
     GQN& operator=(int n);
     int num;
 };

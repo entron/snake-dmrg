@@ -44,16 +44,16 @@ private:
 	int fDMRG_finalNewLeftL;
   ///The number of site which are exact.
   //int n;
-  vector<GQN> TargetGQN;
-  vector<LaGenMatDouble> H;
-  vector<LaGenMatComplex> Ut;
-  vector<double> HoppingIntegrals;
-	vector<double> OnSitePotentials;
-	vector<double> TwoSitesInteraction;
+  std::vector<GQN> TargetGQN;
+  std::vector<LaGenMatDouble> H;
+  std::vector<LaGenMatComplex> Ut;
+  std::vector<double> HoppingIntegrals;
+    std::vector<double> OnSitePotentials;
+    std::vector<double> TwoSitesInteraction;
     //Trotter terms of the real-time evolution operator
-  vector<LaGenMatComplex> rt_OP;
+  std::vector<LaGenMatComplex> rt_OP;
   //The time-dependent Trotter term of the impurity and the first site of the real-time evolution operator
-  vector<LaGenMatComplex> rt_td_impurity_OP;
+  std::vector<LaGenMatComplex> rt_td_impurity_OP;
 
 private:
   void fDMRG_Sweep2Right(int StartChainLength, int EndChainLength);

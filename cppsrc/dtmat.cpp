@@ -111,7 +111,7 @@ void DTMat::findtmat(int tn)
 		KeptStatesNum=tn;
 		if(Dim<=KeptStatesNum && MaxTruncateError==0)
 		{
-			//cout<<"!!!!!!!!!!!!!!!!!!!"<<endl;
+			//std::cout<<"!!!!!!!!!!!!!!!!!!!"<<std::endl;
 			tmatbase=denmatbase;
 			trunmat.geneye(denmatbase);
 			return;
@@ -137,7 +137,7 @@ void DTMat::findtmat(int tn)
 			return;
 		}
 		int subnum=denmatbase.subnum;
-		// cout<<"Make suer that Density Matrix is a block matrix"<<endl<<denmatC<<endl;
+		// std::cout<<"Make suer that Density Matrix is a block matrix"<<std::endl<<denmatC<<std::endl;
 		LaGenMatComplex eigvec(Dim,Dim);
 		LaVectorDouble eigval(Dim);
 
@@ -151,7 +151,7 @@ void DTMat::findtmat(int tn)
 /*!
     \fn DTMat::write(fout)
  */
-void DTMat::write(ofstream &fout)
+void DTMat::write(std::ofstream &fout)
 {
 
 	fout.write(&value_type,sizeof value_type);
@@ -175,7 +175,7 @@ void DTMat::write(ofstream &fout)
 /*!
     \fn DTMat::read(fin)
  */
-void DTMat::read(ifstream &fin)
+void DTMat::read(std::ifstream &fin)
 {
 	fin.read(&value_type,sizeof value_type);
 	fin.read(&handside,sizeof handside);
@@ -197,9 +197,9 @@ void DTMat::read(ifstream &fin)
 
 
 /*!
-    \fn DTMat::DTMat(ifstream &fin)
+    \fn DTMat::DTMat(std::ifstream &fin)
  */
-DTMat::DTMat(ifstream &fin)
+DTMat::DTMat(std::ifstream &fin)
 {
 	read(fin);
 }
@@ -260,7 +260,7 @@ double DTMat::vonNeumannEntropy(LaVectorDouble &eigvals)
 
 	double maxentropy=log(dim)/log(2.0);
 	entropy=entropy/maxentropy;
-	//if(entropy>0.5) cout<<eigvals<<endl;;
+	//if(entropy>0.5) std::cout<<eigvals<<std::endl;;
 	return entropy;
 }
 

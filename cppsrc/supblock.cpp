@@ -42,7 +42,7 @@ SupBlock::SupBlock(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatD
 
 void SupBlock::renormwfmat(DTMat &dtmat)
 {
-  //cout<<dtmat.trunmat<<endl;
+  //std::cout<<dtmat.trunmat<<std::endl;
   if(value_type=='r')
   {
     if(dtmat.handside=='l')
@@ -59,7 +59,7 @@ void SupBlock::renormwfmat(DTMat &dtmat)
       rightbase=dtmat.tmatbase;
     }
     else
-      cout<<"NO HANDSIDE INFORMATION!"<<endl;
+      std::cout<<"NO HANDSIDE INFORMATION!"<<std::endl;
   }
   else
   {
@@ -85,7 +85,7 @@ void SupBlock::renormwfmat(DTMat &dtmat)
       rightbase=dtmat.tmatbase;
     }
     else
-      cout<<"NO HANDSIDE INFORMATION!"<<endl;
+      std::cout<<"NO HANDSIDE INFORMATION!"<<std::endl;
   }
 }
 
@@ -107,14 +107,14 @@ void SupBlock::unrenormwfmat(DTMat &dtmat)
     }
     else if(dtmat.handside=='r')
     {
-    //cout<<dtmat.trunmat;
+    //std::cout<<dtmat.trunmat;
       wfmat=dtmat.trunmat*wfmat;
       rightbase=dtmat.rightbase;
     }
     else
     {
-      cout<<dtmat.handside<<endl;
-      cout<<"NO HANDSIDE INFORMATION!"<<endl;
+      std::cout<<dtmat.handside<<std::endl;
+      std::cout<<"NO HANDSIDE INFORMATION!"<<std::endl;
     }
   }
   else
@@ -134,7 +134,7 @@ void SupBlock::unrenormwfmat(DTMat &dtmat)
     }
     else if(dtmat.handside=='r')
     {
-    //cout<<dtmat.trunmat;
+    //std::cout<<dtmat.trunmat;
       wfmatC=dtmat.trunmatC*wfmatC;
       #if TARGET_TWO_WF
       wfmatC2=dtmat.trunmatC*wfmatC2;
@@ -143,8 +143,8 @@ void SupBlock::unrenormwfmat(DTMat &dtmat)
     }
     else
     {
-      cout<<dtmat.handside<<endl;
-      cout<<"NO HANDSIDE INFORMATION!"<<endl;
+      std::cout<<dtmat.handside<<std::endl;
+      std::cout<<"NO HANDSIDE INFORMATION!"<<std::endl;
     }
   }
 }
@@ -160,18 +160,18 @@ void SupBlock::unrenormwfmat(DTMat &dtmat)
 
 void SupBlock::prepare()
 {
-  cout<<leftbase<<endl;
-  cout<<rightbase<<endl;
-  cout<<oldleftbase<<endl;
-  cout<<oldrightbase<<endl;
+  std::cout<<leftbase<<std::endl;
+  std::cout<<rightbase<<std::endl;
+  std::cout<<oldleftbase<<std::endl;
+  std::cout<<oldrightbase<<std::endl;
   leftbase=L->base;
   rightbase=R->base;
   oldleftbase=oldL->base;
   oldrightbase=oldR->base;
-  cout<<leftbase<<endl;
-  cout<<rightbase<<endl;
-  cout<<oldleftbase<<endl;
-  cout<<oldrightbase<<endl;
+  std::cout<<leftbase<<std::endl;
+  std::cout<<rightbase<<std::endl;
+  std::cout<<oldleftbase<<std::endl;
+  std::cout<<oldrightbase<<std::endl;
   //genindex();
   //genmiddlemap();
 }
@@ -187,8 +187,8 @@ void SupBlock::applyop(LaGenMatComplex &op,int thesite)
     ///Move right
     for(int i=1;i<sitenum-1;i++)
     {
-      //cout<<"Left site is "<<i<<endl;
-      //cout<<"The mod of wfC is "<<Blas_Norm2(wfC)<<endl;
+      //std::cout<<"Left site is "<<i<<std::endl;
+      //std::cout<<"The mod of wfC is "<<Blas_Norm2(wfC)<<std::endl;
       if(i==thesite)
       {
       genmiddlemap(TargetGQN);
@@ -207,7 +207,7 @@ void SupBlock::applyop(LaGenMatComplex &op,int thesite)
     ///Move left
     for(int i=sitenum-1;i>1;i--)
     {
-      //cout<<"The mod of wfC is "<<Blas_Norm2(wfC)<<endl;
+      //std::cout<<"The mod of wfC is "<<Blas_Norm2(wfC)<<std::endl;
       moveleft(leftdtmat[i-1],rightdtmat[sitenum-i]);
       oldleftbase=leftdtmat[i-2].tmatbase;
     }
@@ -221,7 +221,7 @@ void SupBlock::applyop(LaGenMatComplex &op,int thesite)
  */
 void SupBlock::write(char *filename)
 {
-  ofstream fout(filename,ios_base::out|ios_base::binary);
+  std::ofstream fout(filename,std::ios_base::out|std::ios_base::binary);
   fout.write((char*)&sitenum,sizeof sitenum);
   int TargetGQNNum;
   TargetGQNNum=TargetGQN.size();
@@ -257,7 +257,7 @@ void SupBlock::write(char *filename)
  */
 void SupBlock::read(char *filename)
 {
-  ifstream fin(filename,ios_base::in|ios_base::binary);
+  std::ifstream fin(filename,std::ios_base::in|std::ios_base::binary);
   fin.read((char*)&sitenum,sizeof sitenum);
   int TargetGQNNum;
   fin.read((char*)&TargetGQNNum,sizeof(int));
@@ -297,7 +297,7 @@ void SupBlock::applyOPonDot(Rmatrix &OP)
 {
   normalize(wf);
   evalwfmat(wf,wfmat,TargetGQN);
- // cout<<wfmat<<endl;
+ // std::cout<<wfmat<<std::endl;
   Rmatrix tempmat(rightbase,leftbase);
   Mat_Mat_Trans_Mult(wfmat,OP,tempmat);
   extractwf(tempmat,wf,tnum2);
@@ -305,12 +305,12 @@ void SupBlock::applyOPonDot(Rmatrix &OP)
 
   Rmatrix tempdmat(leftbase,leftbase);
   Rmatrix tempmat2(rightbase,leftbase);
-    //cout<<wfmatC<<endl;
-    //cout<<freesite.cC[0]<<endl;
+    //std::cout<<wfmatC<<std::endl;
+    //std::cout<<freesite.cC[0]<<std::endl;
   Mat_Mat_Mult(wfmat,freesite.n[0],tempmat2);
   Mat_Trans_Mat_Mult(wfmat,tempmat2,tempdmat);
-  cout<<tempdmat.trace()<<endl;
- // cout<<wfmat<<endl;
+  std::cout<<tempdmat.trace()<<std::endl;
+ // std::cout<<wfmat<<std::endl;
 }
 */
 
@@ -335,7 +335,7 @@ renormright(tn);
     L->dtmat->gendenmat(wfmatC,L->base,R->base);
     R->dtmat->gendenmat(wfmatC,L->base,R->base);
   }
-  //cout<<L->dtmat->denmat<<endl;
+  //std::cout<<L->dtmat->denmat<<std::endl;
 
   L->dtmat->findtmat(tn);
   R->dtmat->findtmat(tn);
@@ -362,7 +362,7 @@ void SupBlock::renormright(int tn)
   }
   R->dtmat->findtmat(tn);
   R->renorm();
-  cout<<"NewRightDim="<<R->base.Dim<<"\t";
+  std::cout<<"NewRightDim="<<R->base.Dim<<"\t";
 }
 
 
@@ -383,10 +383,10 @@ void SupBlock::renormleft(int tn)
   }
 
   L->dtmat->findtmat(tn);
-  // cout<<L->dtmat->tmatbase<<endl;
-  // cout<<L->dtmat->trunmat<<endl;
+  // std::cout<<L->dtmat->tmatbase<<std::endl;
+  // std::cout<<L->dtmat->trunmat<<std::endl;
   L->renorm();
-  cout<<"NewLeftDim="<<L->base.Dim<<"\t";
+  std::cout<<"NewLeftDim="<<L->base.Dim<<"\t";
 }
 
 
@@ -397,18 +397,18 @@ void SupBlock::renormleft(int tn)
 void SupBlock::calCF(char *filename)
 {
 
-  ofstream fout(filename);
+  std::ofstream fout(filename);
 
   evalwfmat(wf,wfmat,TargetGQN);
   renormwfmat(*(L->dtmat));
   renormwfmat(*(R->dtmat));
   wfmat.normalize();
-  //cout<<wfmat<<endl;
+  //std::cout<<wfmat<<std::endl;
 
   for(int i=L->sitenum-1,j=R->sitenum-1;i>=0&&j>=0;i--,j--)
   {
     L->site[i].eval();
-    fout<<corrfunc(L->site[i].c[0],'l',R->site[R->sitenum-1].a[0],'r')<<endl;
+    fout<<corrfunc(L->site[i].c[0],'l',R->site[R->sitenum-1].a[0],'r')<<std::endl;
   }
 
   fout.close();
@@ -419,12 +419,12 @@ void SupBlock::calCF(char *filename)
  */
 double SupBlock::corrfunc(Rmatrix &m1,char hand1,Rmatrix &m0,char hand0)
 {
-  //cout<<m1<<endl;
-  //cout<<m0<<endl;
+  //std::cout<<m1<<std::endl;
+  //std::cout<<m0<<std::endl;
   Rmatrix tempmat(rightbase,leftbase),tempmat2(rightbase,leftbase);
   ///m0*wf
-  //cout<<wfmat<<endl;
-  //cout<<m0<<endl;
+  //std::cout<<wfmat<<std::endl;
+  //std::cout<<m0<<std::endl;
   if(hand0=='l')
     Mat_Mat_Mult(wfmat,m0,tempmat);
   else
@@ -441,11 +441,11 @@ double SupBlock::corrfunc(Rmatrix &m1,char hand1,Rmatrix &m0,char hand0)
 }
 
 /*!
- \fn SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat,vector<int> &rightordermap)
+ \fn SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
  */
 void SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 {
-	vector<int> temp;
+	std::vector<int> temp;
 
 	if(value_type=='r')
 	{
@@ -458,44 +458,44 @@ void SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 		LaGenMatDouble wfmatfull;
 		wfmat.Convert2Full(wfmatfull);
 		unordermat(rightbase.ordermap,temp,wfmatfull);
-		//cout<<wfmat<<endl;
+		//std::cout<<wfmat<<std::endl;
 		reshapewfmat(wfmatfull,'r');
-		//cout<<wfmat<<endl;
+		//std::cout<<wfmat<<std::endl;
 		oldleftbase=leftbase;
 		leftbase=kron(oldleftbase,freesite.base);
 		ordermat(temp,leftbase.ordermap,wfmatfull);
-		//cout<<wfmatfull<<endl;
+		//std::cout<<wfmatfull<<std::endl;
 		wfmat=Rmatrix(wfmatfull,oldrightbase,leftbase,TargetGQN);
 		unrenormwfmat(rightdtmat);
 		extractwf(wfmat,wf,TargetGQN);
 	}
 	else
 	{
-		//cout<<wfC.size()<<endl;
+		//std::cout<<wfC.size()<<std::endl;
 		evalwfmat(wfC,wfmatC,TargetGQN);
-		//cout<<wfmatC<<endl;
+		//std::cout<<wfmatC<<std::endl;
 		leftdtmat.gendenmat(wfmatC,leftbase,rightbase);
 
 #if TARGET_TWO_WF
 		Cmatrix denmat;
 		denmat=leftdtmat.denmatC;
-		// cout<<denmat<<endl;
+		// std::cout<<denmat<<std::endl;
 
 		evalwfmat(wfC2,wfmatC2,TargetGQN2);
 		leftdtmat.gendenmat(wfmatC2,leftbase,rightbase);
-		//cout<<leftdtmat.denmatC<<endl;
-		//cout<<denmat<<endl;
+		//std::cout<<leftdtmat.denmatC<<std::endl;
+		//std::cout<<denmat<<std::endl;
 		leftdtmat.denmatC+=denmat;
-		//cout<<leftdtmat.denmatC<<endl;
+		//std::cout<<leftdtmat.denmatC<<std::endl;
 		//denmat.delmat();
 #endif
 
 		leftdtmat.findtmat(KeptStatesNum);
-		//cout<<leftdtmat.tmatbase.Dim<<" "<<flush;
-		//cout<<leftdtmat.trunmatC<<endl;
+		//std::cout<<leftdtmat.tmatbase.Dim<<" "<<flush;
+		//std::cout<<leftdtmat.trunmatC<<std::endl;
 		leftdtmat.denmatC.delmat();
 		renormwfmat(leftdtmat);
-		//cout<<wfmatC<<endl;
+		//std::cout<<wfmatC<<std::endl;
 
 		LaGenMatComplex wfmatfull,gwfmatfull;
 		wfmatC.Convert2Full(wfmatfull);
@@ -506,15 +506,15 @@ void SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 		unordermat(rightbase.ordermap,temp,gwfmatfull);
 		reshapewfmat(gwfmatfull,'r');
 #endif
-		//cout<<wfmat<<endl;
+		//std::cout<<wfmat<<std::endl;
 		oldleftbase=leftbase;
 		leftbase=kron(oldleftbase,freesite.base);
 		ordermat(temp,leftbase.ordermap,wfmatfull);
-		//cout<<wfmatfull<<endl;
-		//cout<<oldrightbase<<endl;
-		//cout<<leftbase<<endl;
+		//std::cout<<wfmatfull<<std::endl;
+		//std::cout<<oldrightbase<<std::endl;
+		//std::cout<<leftbase<<std::endl;
 		wfmatC=Cmatrix(wfmatfull,oldrightbase,leftbase,TargetGQN);
-		//cout<<wfmatC<<endl;
+		//std::cout<<wfmatC<<std::endl;
 		//wfmatfull.resize(0,0);
 #if TARGET_TWO_WF
 		ordermat(temp,leftbase.ordermap,gwfmatfull);
@@ -522,93 +522,93 @@ void SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 		//gwfmatfull.resize(0,0);
 #endif
 		unrenormwfmat(rightdtmat);
-		//cout<<wfmatC<<endl;
+		//std::cout<<wfmatC<<std::endl;
 		extractwf(wfmatC,wfC,TargetGQN);
 #if TARGET_TWO_WF
 		extractwf(wfmatC2,wfC2,TargetGQN2);
 #endif
 	}
-	//cout<<wfmat<<endl;
+	//std::cout<<wfmat<<std::endl;
 }
 
 
 /*!
- \fn SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat,vector<int> &rightordermap)
+ \fn SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
  */
 void SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat)
 {
-	vector<int> temp;
+	std::vector<int> temp;
 
 	if(value_type=='r')
 	{
-		//cout<<wf<<endl;
+		//std::cout<<wf<<std::endl;
 		evalwfmat(wf,wfmat,TargetGQN);
-		//cout<<wfmat<<endl;
+		//std::cout<<wfmat<<std::endl;
 		rightdtmat.gendenmat(wfmat,leftbase,rightbase);
-		//cout<<rightdtmat.denmat<<endl;
+		//std::cout<<rightdtmat.denmat<<std::endl;
 		rightdtmat.findtmat(KeptStatesNum);
 		rightdtmat.denmat.delmat();
 		renormwfmat(rightdtmat);
-		// cout<<Mat_Dot_Prod(wfmat,wfmat)<<endl;
+		// std::cout<<Mat_Dot_Prod(wfmat,wfmat)<<std::endl;
 		LaGenMatDouble wfmatfull;
 		wfmat.Convert2Full(wfmatfull);
 		unordermat(temp,leftbase.ordermap,wfmatfull);
 		//printvector(leftbase.ordermap);
-		//cout<<wfmat<<endl;
-		//cout<<wfmatfull<<endl;
-		//cout<<leftbase<<endl;
-		//cout<<oldleftbase<<endl;
+		//std::cout<<wfmat<<std::endl;
+		//std::cout<<wfmatfull<<std::endl;
+		//std::cout<<leftbase<<std::endl;
+		//std::cout<<oldleftbase<<std::endl;
 		reshapewfmat(wfmatfull,'l');
-		//cout<<Blas_NormF(wfmatfull)<<endl;
-		//cout<<wfmatfull<<endl;
+		//std::cout<<Blas_NormF(wfmatfull)<<std::endl;
+		//std::cout<<wfmatfull<<std::endl;
 		oldrightbase=rightbase;
 		rightbase=kron(freesite.base,oldrightbase);
-		//cout<<rightbase<<endl;
-		//cout<<oldleftbase<<endl;
+		//std::cout<<rightbase<<std::endl;
+		//std::cout<<oldleftbase<<std::endl;
 		ordermat(rightbase.ordermap,temp,wfmatfull);
-		//cout<<wfmatfull<<endl;
-		//cout<<Blas_NormF(wfmatfull)<<endl;
+		//std::cout<<wfmatfull<<std::endl;
+		//std::cout<<Blas_NormF(wfmatfull)<<std::endl;
 		wfmat=Rmatrix(wfmatfull,rightbase,oldleftbase,TargetGQN);
-		//cout<<wfmat<<endl;
-		//cout<<Mat_Dot_Prod(wfmat,wfmat)<<endl;
+		//std::cout<<wfmat<<std::endl;
+		//std::cout<<Mat_Dot_Prod(wfmat,wfmat)<<std::endl;
 		unrenormwfmat(leftdtmat);
-		//cout<<Mat_Dot_Prod(wfmat,wfmat)<<endl<<endl;
-		//cout<<wfmat<<endl;
+		//std::cout<<Mat_Dot_Prod(wfmat,wfmat)<<std::endl<<std::endl;
+		//std::cout<<wfmat<<std::endl;
 		extractwf(wfmat,wf,TargetGQN);
 	}
 	else
 	{
 		evalwfmat(wfC,wfmatC,TargetGQN);
 		rightdtmat.gendenmat(wfmatC,leftbase,rightbase);
-        //cout<<wfmatC<<endl;
+        //std::cout<<wfmatC<<std::endl;
 #if TARGET_TWO_WF
 		Cmatrix denmat;
 		denmat=rightdtmat.denmatC;
-		//cout<<denmat<<endl;
+		//std::cout<<denmat<<std::endl;
 		evalwfmat(wfC2,wfmatC2,TargetGQN2);
 		rightdtmat.gendenmat(wfmatC2,leftbase,rightbase);
 		rightdtmat.denmatC+=denmat;
 		// denmat.delmat();
 #endif
 		rightdtmat.findtmat(KeptStatesNum);
-		//cout<<rightdtmat.tmatbase.Dim<<" "<<flush;
+		//std::cout<<rightdtmat.tmatbase.Dim<<" "<<flush;
 		rightdtmat.denmatC.delmat();
 		renormwfmat(rightdtmat);
-		//cout<<wfmatC<<endl;
+		//std::cout<<wfmatC<<std::endl;
 		LaGenMatComplex wfmatfull,gwfmatfull;
-		//cout<<wfmatC<<endl;
+		//std::cout<<wfmatC<<std::endl;
 		wfmatC.Convert2Full(wfmatfull);
-		//cout<<wfmatfull<<endl;
-		//cout<<wfmatfull<<endl;
+		//std::cout<<wfmatfull<<std::endl;
+		//std::cout<<wfmatfull<<std::endl;
 		unordermat(temp,leftbase.ordermap,wfmatfull);
 		reshapewfmat(wfmatfull,'l');
-		//cout<<wfmatfull<<endl;
+		//std::cout<<wfmatfull<<std::endl;
 #if TARGET_TWO_WF
 		wfmatC2.Convert2Full(gwfmatfull);
 		unordermat(temp,leftbase.ordermap,gwfmatfull);
 		reshapewfmat(gwfmatfull,'l');
 #endif
-		//cout<<wfmat<<endl;
+		//std::cout<<wfmat<<std::endl;
 		oldrightbase=rightbase;
 		rightbase=kron(freesite.base,oldrightbase);
 		ordermat(rightbase.ordermap,temp,wfmatfull);
@@ -620,7 +620,7 @@ void SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat)
 		//gwfmatfull.resize(0,0);
 #endif
 		unrenormwfmat(leftdtmat);
-		//cout<<wfmatC<<endl;
+		//std::cout<<wfmatC<<std::endl;
 		extractwf(wfmatC,wfC,TargetGQN);
 #if TARGET_TWO_WF
 		extractwf(wfmatC2,wfC2, TargetGQN2);

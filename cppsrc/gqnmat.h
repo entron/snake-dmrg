@@ -17,7 +17,6 @@ Class of partitioned matrix accoding to good quantum number.
 #include <algorithm>
 #include <vector>
 #include <iostream>
-using namespace std;
 
 
 template <class MType>
@@ -32,28 +31,28 @@ public:
   GQNBase colbase,rowbase;
 
   ///Sub matrix
-  vector<MType> submat;
+  std::vector<MType> submat;
 
   ///Position matrix. submat[pmat(i,j)] is the (i,j) submatrix
   LaGenMatInt pmat;
 
   LaGenMatInt temppmat;
   int tempsubnum;
-  vector<MType> tempsubmat;
+  std::vector<MType> tempsubmat;
 
 public:
   GQNMat();
   ~GQNMat();
-  GQNMat(ifstream& fin);
+  GQNMat(std::ifstream& fin);
   GQNMat(const GQNMat& mat);
   GQNMat(const GQNBase &row,const GQNBase &col);
 
   GQNMat(MType& mat, GQNBase &rowbase,GQNBase &colbase,int mode);
-  GQNMat(MType& mat, GQNBase &rowbase,GQNBase &colbase,vector<GQN> &TargetGQN);
+  GQNMat(MType& mat, GQNBase &rowbase,GQNBase &colbase, std::vector<GQN> &TargetGQN);
   void inject(const GQNMat& mat);
-  //  ostream& operator<<(ostream& os, const GQNMat& mat);
-  void write(ofstream& fout);
-  void read(ifstream& fin);
+  //  std::ostream& operator<<(std::ostream& os, const GQNMat& mat);
+  void write(std::ofstream& fout);
+  void read(std::ifstream& fin);
 
   void scale(typename MType::value_type s);
 
@@ -104,10 +103,10 @@ GQNMat<MType>::~GQNMat()
 
 
 /*!
-\fn GQNMat::GQNMat(ifstream& fin)
+\fn GQNMat::GQNMat(std::ifstream& fin)
  */
 template<class MType>
-GQNMat<MType>::GQNMat(ifstream& fin)
+GQNMat<MType>::GQNMat(std::ifstream& fin)
 {
   read(fin);
 }
@@ -207,18 +206,18 @@ GQNMat<MType>::GQNMat(MType& mat, GQNBase &row,GQNBase &col,int mode)
           pmat(i,j)=subnum-1;
 
 
-          cout<<rowstart+rowbase.dim[i]-1<<endl;
-          cout<<colstart+colbase.dim[j]-1<<endl;
+          std::cout<<rowstart+rowbase.dim[i]-1<<std::endl;
+          std::cout<<colstart+colbase.dim[j]-1<<std::endl;
           submat[subnum-1]=mat(LaIndex(rowstart,rowstart+rowbase.dim[i]-1),LaIndex(colstart,colstart+colbase.dim[j]-1));
           break;
         }
-        //cout<<rowstart<<endl;
+        //std::cout<<rowstart<<std::endl;
         rowstart+=rowbase.dim[i];
-        //cout<<rowstart<<endl;
+        //std::cout<<rowstart<<std::endl;
       }
-      //cout<<colstart<<endl;
+      //std::cout<<colstart<<std::endl;
       colstart+=colbase.dim[j];
-      //cout<<colstart<<endl;
+      //std::cout<<colstart<<std::endl;
     }
     break;
   case 4:///lower diagnal
@@ -247,7 +246,7 @@ GQNMat<MType>::GQNMat(MType& mat, GQNBase &row,GQNBase &col,int mode)
 
 
 template<class MType>
-GQNMat<MType>::GQNMat(MType& mat, GQNBase &row,GQNBase &col,vector<GQN> &TargetGQN)
+GQNMat<MType>::GQNMat(MType& mat, GQNBase &row,GQNBase &col, std::vector<GQN> &TargetGQN)
 {
   subnum=0;
   tempsubnum=0;
@@ -296,10 +295,10 @@ void GQNMat<MType>::inject(const GQNMat<MType>& mat)
 
 
 /*!
-\fn GQNMat::write(ofstream& fout)
+\fn GQNMat::write(std::ofstream& fout)
  */
 template<class MType>
-void GQNMat<MType>::write(ofstream& fout)
+void GQNMat<MType>::write(std::ofstream& fout)
 {
   fout.write((char*)&subnum,sizeof subnum);
   rowbase.write(fout);
@@ -311,10 +310,10 @@ void GQNMat<MType>::write(ofstream& fout)
 
 
 /*!
-\fn GQNMat::read(ifstream& fin)
+\fn GQNMat::read(std::ifstream& fin)
  */
 template<class MType>
-void GQNMat<MType>::read(ifstream& fin)
+void GQNMat<MType>::read(std::ifstream& fin)
 {
   fin.read((char*)&subnum,sizeof subnum);
   rowbase.read(fin);
@@ -346,7 +345,7 @@ int GQNMat<MType>::pmatequal(const GQNMat<MType>& mat) const
 {
   if(colbase!=mat.colbase||rowbase!=mat.rowbase||subnum!=mat.subnum)
   {
-    cout<<"Unequal base or subnum!"<<endl;
+    std::cout<<"Unequal base or subnum!"<<std::endl;
     return 0;
   }
 
@@ -367,7 +366,7 @@ void GQNMat<MType>::geneye(const GQNMat<MType>& mat)
 {
   if(mat.rowbase!=mat.colbase)
   {
-    cout<<"Different row and column base. Cannot generate eye matrix!"<<endl;
+    std::cout<<"Different row and column base. Cannot generate eye matrix!"<<std::endl;
     return;
   }
   else
@@ -474,7 +473,7 @@ typename MType::value_type GQNMat<MType>::trace()
   t.resize(1,1);
   if(rowbase!=colbase)
   {
-    cout<<"rowbase!=colbase"<<endl;
+    std::cout<<"rowbase!=colbase"<<std::endl;
   }
   else
   {
@@ -547,9 +546,9 @@ void Mat_Mat_Mult(const GQNMat<MType> &a,const GQNMat<MType> &b,GQNMat<MType> &c
         Blas_Mat_Mat_Mult(a.submat[a.pmat(i,k)],b.submat[b.pmat(k,j)],c.submat[c.pmat(i,j)]);
       }
     }
-    else cout<<"a.rowbase!=c.rowbase || b.colbase!=c.colbase"<<endl;
+    else std::cout<<"a.rowbase!=c.rowbase || b.colbase!=c.colbase"<<std::endl;
   }
-  else cout<<"a.colbase!=b.rowbase"<<endl;
+  else std::cout<<"a.colbase!=b.rowbase"<<std::endl;
 }
 
 
@@ -574,12 +573,12 @@ void Mat_Trans_Mat_Mult(const GQNMat<MType> &a,const GQNMat<MType> &b,GQNMat<MTy
         c.pmat(i,j)=c.subnum-1;
         c.submat[c.subnum-1].resize(a.submat[a.pmat(k,i)].size(1),b.submat[b.pmat(k,j)].size(1));
         Blas_Mat_Trans_Mat_Mult(a.submat[a.pmat(k,i)],b.submat[b.pmat(k,j)],c.submat[c.pmat(i,j)]);
-        //cout<<c.submat[c.pmat(i,j)]<<endl;
+        //std::cout<<c.submat[c.pmat(i,j)]<<std::endl;
       }
     }
-    else cout<<"a.colbase!=c.rowbase || b.colbase!=c.colbase"<<endl;
+    else std::cout<<"a.colbase!=c.rowbase || b.colbase!=c.colbase"<<std::endl;
   }
-  else cout<<"a.rowbase!=b.rowbase"<<endl;
+  else std::cout<<"a.rowbase!=b.rowbase"<<std::endl;
 }
 
 
@@ -606,9 +605,9 @@ void Mat_Mat_Trans_Mult(const GQNMat<MType> &a,const GQNMat<MType> &b,GQNMat<MTy
         Blas_Mat_Mat_Trans_Mult(a.submat[a.pmat(i,k)],b.submat[b.pmat(j,k)],c.submat[c.pmat(i,j)]);
       }
     }
-    else cout<<"a.rowbase!=c.rowbase || b.rowbase!=c.colbase"<<endl;
+    else std::cout<<"a.rowbase!=c.rowbase || b.rowbase!=c.colbase"<<std::endl;
   }
-  else cout<<"a.colbase!=b.colbase"<<endl;
+  else std::cout<<"a.colbase!=b.colbase"<<std::endl;
 }
 
 template<class MType>
@@ -633,13 +632,13 @@ void Transpose(const GQNMat<MType> &a,GQNMat<MType> &b)
         b.submat[i](c,r)=a.submat[i](r,c);
     /*
     MType eyemat;
-    cout<<a.submat[i]<<endl;
-    cout<<a.submat[i].size(0)<<endl;
-    cout<<eyemat.eye(a.submat[i].size(0),a.submat[i].size(0))<<endl;
+    std::cout<<a.submat[i]<<std::endl;
+    std::cout<<a.submat[i].size(0)<<std::endl;
+    std::cout<<eyemat.eye(a.submat[i].size(0),a.submat[i].size(0))<<std::endl;
     eyemat=eyemat.eye(a.submat[i].size(0),a.submat[i].size(0));
     b.submat[i].resize(a.submat[i].size(1),a.submat[i].size(0));
-    //cout<<eyemat<<endl;
-    //cout<<b.submat[i]<<endl;
+    //std::cout<<eyemat<<std::endl;
+    //std::cout<<b.submat[i]<<std::endl;
     Blas_Mat_Trans_Mat_Mult(a.submat[i],eyemat,b.submat[i]);
     */
   }
@@ -664,7 +663,7 @@ typename MType::value_type Mat_Dot_Prod(const GQNMat<MType> &a,const GQNMat<MTyp
         }
   }
   else
-    cout<<"Matrix bases are not equal, can't caculate Mat_Dot_Prod"<<endl;
+    std::cout<<"Matrix bases are not equal, can't caculate Mat_Dot_Prod"<<std::endl;
   return prod;
 
 }
@@ -679,9 +678,9 @@ void kron(GQNMat<MType> &a,GQNMat<MType> &b,GQNMat<MType> &c)
   int p,q;
 
   c.rowbase=kron(a.rowbase,b.rowbase);
-  // cout<<a.rowbase<<endl;
-  //cout<<b.rowbase<<endl;
-  //cout<<c.rowbase<<endl;
+  // std::cout<<a.rowbase<<std::endl;
+  //std::cout<<b.rowbase<<std::endl;
+  //std::cout<<c.rowbase<<std::endl;
   c.colbase=kron(a.rowbase,b.rowbase);
   c.temppmat.resize(arow*brow,acol*bcol);
   c.temppmat=-1;
@@ -719,11 +718,11 @@ template<class MType>
 void GQNMat<MType>::order()
 {
   ///Order pmat
-  //cout<<temppmat<<endl;
+  //std::cout<<temppmat<<std::endl;
   ordermat(rowbase.map,colbase.map,temppmat);
-  //cout<<temppmat<<endl;
+  //std::cout<<temppmat<<std::endl;
   ///Order tempdim
-  vector<int> v;
+  std::vector<int> v;
   v=rowbase.tempdim;
   for(int i=0;i<v.size();i++)
     rowbase.tempdim[i]=v[rowbase.map[i]];
@@ -737,9 +736,9 @@ void GQNMat<MType>::order()
 template<class MType>
 void GQNMat<MType>::combine()
 {
-  //cout<<rowbase.tempTargetGQN.size()<<endl;
-  vector<GQN> rowsubgqn(rowbase.tempsubgqn);
-  vector<GQN> colsubgqn(colbase.tempsubgqn);
+  //std::cout<<rowbase.tempTargetGQN.size()<<std::endl;
+  std::vector<GQN> rowsubgqn(rowbase.tempsubgqn);
+  std::vector<GQN> colsubgqn(colbase.tempsubgqn);
   pmat.resize(rowbase.subnum,colbase.subnum);
   pmat=-1;
 
@@ -787,18 +786,18 @@ void GQNMat<MType>::combine()
 }
 
 template<class MType>
-ostream & operator<<(ostream& os, const GQNMat<MType>& mat)
+std::ostream & operator<<(std::ostream& os, const GQNMat<MType>& mat)
 {
-  cout<<"+++++GQNMat Information+++++"<<endl;
-  cout<<"Subnum="<<mat.subnum<<endl;
-cout<<"Postion matrix is: "<<endl;
-  cout<<mat.pmat<<endl;
+  std::cout<<"+++++GQNMat Information+++++"<<std::endl;
+  std::cout<<"Subnum="<<mat.subnum<<std::endl;
+std::cout<<"Postion matrix is: "<<std::endl;
+  std::cout<<mat.pmat<<std::endl;
   for(int i=0;i<mat.subnum;i++)
   {
-  cout<<"The "<<i<<"th submatrix is: "<<endl;
-    cout<<mat.submat[i]<<endl;
+  std::cout<<"The "<<i<<"th submatrix is: "<<std::endl;
+    std::cout<<mat.submat[i]<<std::endl;
   }
-  cout<<"+++++End of GQNMat Information+++++"<<endl;
+  std::cout<<"+++++End of GQNMat Information+++++"<<std::endl;
   return os;
 
 }
@@ -845,7 +844,7 @@ void GQNMat<MType>::operator+=(const GQNMat<MType>& mat)
   }
   else
   {
-    cout<<"Matrix size are unequal. Can not add!"<<endl;
+    std::cout<<"Matrix size are unequal. Can not add!"<<std::endl;
   }
 }
 

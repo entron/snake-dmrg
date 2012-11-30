@@ -7,8 +7,6 @@ This class contains information related to a block.
 @author Cheng Guo
 */
 
-using namespace std;
-
 #include "gqnbase.h"
 #include "setting.h"
 #include "gqnmat.h"
@@ -28,7 +26,7 @@ public:
   int sitenum;
 
   ///Information of each site in the block;
-  vector<Site> site;
+  std::vector<Site> site;
 
   ///For the convenice of SupHam
   Site *siteadded;
@@ -65,7 +63,7 @@ public:
   //Block(Site& addsite,Block& old,int localsite);
 
   ///Construct Block from file
-  Block(string &filename);
+  Block(std::string &filename);
 
   /**This function calculate the interaction hamiiltonian of two site,
    *and is model depended.*/
@@ -76,10 +74,10 @@ public:
 
   ///Write the block information to a file,whose name starts with prefix
   void write(char* prefix);
-  void read(string &filename);
+  void read(std::string &filename);
 
   ///Calculat the average value of operator n at each site.
-  void calN(ofstream &fout,char hand);
+  void calN(std::ofstream &fout,char hand);
 
   void toComplex();
     void calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition);

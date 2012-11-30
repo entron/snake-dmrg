@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <fstream>
-using namespace std;
 #include <lavd.h>
 #include "gqn.h"
 
@@ -22,28 +21,28 @@ public:
   int subnum;
 
   ///Dimension of each subspace
-  vector<int> dim;
+  std::vector<int> dim;
 
   ///Good quantum number corresponding to each subspace
-  vector<GQN> subgqn;
+  std::vector<GQN> subgqn;
 
   ///Useful when the object of this class is generate by a kronecker product.
-  vector<int> map;
+  std::vector<int> map;
 
     /**ordermap is used to rearrange the order of newham's base vectors so
   *that they are ascendent according to newham->TargetGQN.
   */
-  vector<int> ordermap;
+  std::vector<int> ordermap;
 
-  vector<int> tempdim;
-  vector<GQN> tempsubgqn;
+  std::vector<int> tempdim;
+  std::vector<GQN> tempsubgqn;
 
 public:
   GQNBase();
   ~GQNBase();
 
-  void write(ofstream &fout);
-  void read(ifstream &fin);
+  void write(std::ofstream &fout);
+  void read(std::ifstream &fin);
 
   void genordermap(const GQNBase& b1,const GQNBase& b2);
   void genvacuumbase();
@@ -54,7 +53,7 @@ public:
 
   friend GQNBase kron(const GQNBase &b1,const GQNBase &b2);
   friend void truncate(GQNBase &dbase,GQNBase &tbase,LaVectorDouble &eigval,double cutedge,int *mark);
-  friend ostream & operator<<(ostream& os, const GQNBase& base);
+  friend std::ostream & operator<<(std::ostream& os, const GQNBase& base);
 
 };
 

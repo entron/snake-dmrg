@@ -40,7 +40,7 @@ Block::Block(Site &first, double OnSiteE)
 /*!
  \fn Block::Block(char *filename)
  */
-Block::Block(string &filename)
+Block::Block(std::string &filename)
 {
 	read(filename);
 }
@@ -60,9 +60,9 @@ Block::Block(string &filename)
  {
  old.hamiltonian->H=old.site[0].n[0];
  old.hamiltonian->H.scale(-10000.0);
- cout<<"!!!!!!!!!!!!!!!!Be Careful about the potential on the impurity!!!!!!!!!!!!!!!!!!!!!!"<<endl;
- cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Edit block.cpp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
- cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!This is a alpha version!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
+ std::cout<<"!!!!!!!!!!!!!!!!Be Careful about the potential on the impurity!!!!!!!!!!!!!!!!!!!!!!"<<std::endl;
+ std::cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Edit block.cpp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<std::endl;
+ std::cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!This is a alpha version!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<std::endl;
  }
  //old.site[0]
  initialadd(old,addsite);
@@ -92,7 +92,7 @@ Block::Block(string &filename)
  site[sitenum-1].addtoblock(old,'r');
 
  dtmat=new DTMat(value_type,'l');
- cout<<"Block dim is "<<base.Dim<<endl;
+ std::cout<<"Block dim is "<<base.Dim<<std::endl;
  }
 
  Block::Block(Site &addsite,Block &old)
@@ -122,7 +122,7 @@ Block::Block(string &filename)
  site[old.sitenum]=addsite;
  site[old.sitenum].addtoblock(old,'l');
  dtmat=new DTMat(value_type,'r');
- cout<<"Block dim is "<<base.Dim<<endl;
+ std::cout<<"Block dim is "<<base.Dim<<std::endl;
  }
  */
 
@@ -218,7 +218,7 @@ Block::Block(Site &addsite,Block &old,double HoppingT, double OnSiteE, double Tw
  site[old.sitenum]=addsite;
  site[old.sitenum].addtoblock(old,'l');
  dtmat=new DTMat(value_type,'r');
- cout<<"Block dim is "<<base.Dim<<endl;
+ std::cout<<"Block dim is "<<base.Dim<<std::endl;
  }
  */
 
@@ -288,13 +288,13 @@ void Block::initialadd(Block &old,Site &add)
  {
  calHinter_Heisenberg(siteA,siteB,addsiteposition);
  //calHinter_Hubbard(siteA,siteB,addsiteposition,include_onsite);
- //cout<<"Hinter"<<Hinter<<endl;
+ //std::cout<<"Hinter"<<Hinter<<std::endl;
 
  }
  */
 void Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,double HoppingT, double OnSiteE, double TwoSitesV)
 {
-	//cout<<"HoppingT="<<HoppingT<<endl;
+	//std::cout<<"HoppingT="<<HoppingT<<std::endl;
 
 
 	if(value_type=='r')
@@ -321,7 +321,7 @@ void Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,double Hoppin
 		//Onsite Potential Part
 		if(OnSiteE!=0)
 		{
-			cout<<"OnsiteE="<<OnSiteE<<endl;
+			std::cout<<"OnsiteE="<<OnSiteE<<std::endl;
 			Rmatrix tempeye,H_onsite;
 			if(addsiteposition=='r')
 			{
@@ -335,14 +335,14 @@ void Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,double Hoppin
 			H_onsite.scale(OnSiteE);
 			Hinter+=H_onsite;
 		}
-  	//cout<<Hinter<<endl;
+  	//std::cout<<Hinter<<std::endl;
 
 		//Two sites interaction term
-		//cout<<"!!!!!!!!!!Model Dependent Part!!!!!!!!!!"<<endl;
-		//cout<<"H_i=V(n_i-1/2)(n_{i+1}-1/2)"<<endl;
+		//std::cout<<"!!!!!!!!!!Model Dependent Part!!!!!!!!!!"<<std::endl;
+		//std::cout<<"H_i=V(n_i-1/2)(n_{i+1}-1/2)"<<std::endl;
 		if(TwoSitesV!=0)
 		{
-			cout<<"TwoSitesV="<<TwoSitesV<<endl;
+			std::cout<<"TwoSitesV="<<TwoSitesV<<std::endl;
 			Rmatrix temp1,temp2,temp3;
 			temp1.geneye(siteA.base);
 			temp2.geneye(siteB.base);
@@ -358,9 +358,9 @@ void Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,double Hoppin
 	}
 	else
 	{
-		cout<<"calHinter_Heisenberg() has not been inplemented for complex numbers"<<endl;
+		std::cout<<"calHinter_Heisenberg() has not been inplemented for complex numbers"<<std::endl;
 	}
-  //cout<<Hinter<<endl;
+  //std::cout<<Hinter<<std::endl;
 }
 
 /*!
@@ -404,12 +404,12 @@ void Block::renormsidesite()
  */
 void Block::write(char *prefix)
 {
-	string filename;
+	std::string filename;
 	stringstream stemp;
 	stemp<<sitenum;
 	filename=prefix+stemp.str();
-  //cout<<endl<<filename<<endl;
-	ofstream fout(filename.c_str(),ios_base::out|ios_base::binary);
+  //std::cout<<std::endl<<filename<<std::endl;
+	std::ofstream fout(filename.c_str(),std::ios_base::out|std::ios_base::binary);
 	fout.write(&value_type,sizeof value_type);
 	fout.write((char*)&sitenum,sizeof sitenum);
 #if CALCULATE_ALL_SITES
@@ -428,9 +428,9 @@ void Block::write(char *prefix)
 /*!
  \fn Block::read(char *filename)
  */
-void Block::read(string &filename)
+void Block::read(std::string &filename)
 {
-	ifstream fin(filename.c_str(),ios_base::in|ios_base::binary);
+	std::ifstream fin(filename.c_str(),std::ios_base::in|std::ios_base::binary);
 	fin.read(&value_type,sizeof value_type);
 	fin.read((char*)&sitenum,sizeof sitenum);
 	site.resize(sitenum);
@@ -448,9 +448,9 @@ void Block::read(string &filename)
 
 
 /*!
- \fn Block::calN(ofstream fout)
+ \fn Block::calN(std::ofstream fout)
  */
-void Block::calN(ofstream &fout,char hand)
+void Block::calN(std::ofstream &fout,char hand)
 {
 	if(value_type=='r')
 	{
@@ -459,16 +459,16 @@ void Block::calN(ofstream &fout,char hand)
 		if(hand=='l')
 			for(int i=0;i<sitenum;i++)
 			{
-				//cout<<"Calculate Site "<<i<<endl;
-				//cout<<dtmat->denmat.size(0)<<endl;
-				//cout<<site[i].n.size(0)<<endl;
+				//std::cout<<"Calculate Site "<<i<<std::endl;
+				//std::cout<<dtmat->denmat.size(0)<<std::endl;
+				//std::cout<<site[i].n.size(0)<<std::endl;
 				for(int j=0;j<site[i].num;j++)
 				{
 					Mat_Mat_Mult(dtmat->denmat,site[i].n[j],tempmat);
 					fout<<tempmat.trace()<<" ";
 				}
-				fout<<endl;
-				//cout<<trace(tempmat)<<endl;
+				fout<<std::endl;
+				//std::cout<<trace(tempmat)<<std::endl;
 			}
 		else
 			for(int i=sitenum-1;i>=0;i--)
@@ -478,7 +478,7 @@ void Block::calN(ofstream &fout,char hand)
 					Mat_Mat_Mult(dtmat->denmat,site[i].n[j],tempmat);
 					fout<<tempmat.trace()<<" ";
 				}
-				fout<<endl;
+				fout<<std::endl;
 			}
 	}
 	else
@@ -489,17 +489,17 @@ void Block::calN(ofstream &fout,char hand)
 		if(hand=='l')
 			for(int i=0;i<sitenum;i++)
 			{
-				//cout<<"Calculate Site "<<i<<endl;
-				//cout<<dtmat->denmat.size(0)<<endl;
-				//cout<<site[i].n.size(0)<<endl;
+				//std::cout<<"Calculate Site "<<i<<std::endl;
+				//std::cout<<dtmat->denmat.size(0)<<std::endl;
+				//std::cout<<site[i].n.size(0)<<std::endl;
 				for(int j=0;j<site[i].num;j++)
 				{
 					Mat_Mat_Mult(dtmat->denmatC,site[i].nC[j],tempmat2);
 					C2R(tempmat2,tempmat);
 					fout<<tempmat.trace()<<" ";
 				}
-				cout<<endl;
-				//cout<<trace(tempmat)<<endl;
+				std::cout<<std::endl;
+				//std::cout<<trace(tempmat)<<std::endl;
 			}
 		else
 			for(int i=sitenum-1;i>=0;i--)
@@ -510,7 +510,7 @@ void Block::calN(ofstream &fout,char hand)
 					C2R(tempmat2,tempmat);
 					fout<<tempmat.trace()<<" ";
 				}
-				cout<<endl;
+				std::cout<<std::endl;
 			}
 	}
 
@@ -550,39 +550,39 @@ void Block::calHinter_Hubbard(Site &siteA,Site &siteB,char addsiteposition,char 
 		if(addsiteposition=='r')
 		{
 			//Hopping term
-			//cout<<siteA.a[0]<<endl;
-			//cout<<siteB.c[0]<<endl;
+			//std::cout<<siteA.a[0]<<std::endl;
+			//std::cout<<siteB.c[0]<<std::endl;
 			kron(siteA.a[0],siteB.c[0],temp1);
-			//cout<<temp1<<endl;
+			//std::cout<<temp1<<std::endl;
 			kron(siteA.a[1],siteB.c[1],temp);
-			//cout<<temp<<endl;
+			//std::cout<<temp<<std::endl;
 			temp+=temp1;
-			//cout<<temp<<endl;
-			//cout<<temp.rowbase<<endl;
-			//cout<<temp.colbase<<endl;
+			//std::cout<<temp<<std::endl;
+			//std::cout<<temp.rowbase<<std::endl;
+			//std::cout<<temp.colbase<<std::endl;
 			Transpose(temp,temp2);
-			//cout<<temp<<endl;
-			//cout<<temp2<<endl;
+			//std::cout<<temp<<std::endl;
+			//std::cout<<temp2<<std::endl;
 			temp+=temp2;
 			temp.scale(T);
-			//cout<<temp<<endl;
+			//std::cout<<temp<<std::endl;
 		}
 		else
 		{
 			//Hopping term
 			Rmatrix signmat;
 			signmat.gensignmat(siteA.base,0);
-			//cout<<signmat<<endl;
+			//std::cout<<signmat<<std::endl;
 			temp=siteA.a[0]*signmat;
 			kron(temp,siteB.c[0],temp1);
 			signmat.gensignmat(siteA.base,1);
-			//cout<<signmat<<endl;
+			//std::cout<<signmat<<std::endl;
 			temp=siteA.a[1]*signmat;
 			kron(temp,siteB.c[1],temp2);
 			temp2+=temp1;
-			//cout<<temp2<<endl;
-			//cout<<temp2.rowbase<<endl;
-			//cout<<temp2.colbase<<endl;
+			//std::cout<<temp2<<std::endl;
+			//std::cout<<temp2.rowbase<<std::endl;
+			//std::cout<<temp2.colbase<<std::endl;
 			Transpose(temp2,temp);
 			temp+=temp2;
 			temp.scale(T);
@@ -608,11 +608,11 @@ void Block::calHinter_Hubbard(Site &siteA,Site &siteB,char addsiteposition,char 
 			}
 			Hinter.scale(U);
 
-			//cout<<Hinter<<endl;
+			//std::cout<<Hinter<<std::endl;
 			//Add
 			Hinter+=temp;
 			//for(int i=0;i<Hinter.rowbase.ordermap.size();i++)
-			//    cout<<Hinter.rowbase.ordermap[i]<<endl;
+			//    std::cout<<Hinter.rowbase.ordermap[i]<<std::endl;
 		}
 		else
 		{
@@ -621,7 +621,7 @@ void Block::calHinter_Hubbard(Site &siteA,Site &siteB,char addsiteposition,char 
 	}
 	else
 	{
-		cout<<"The evolution of hubbard chain is not supported yet."<<endl;
+		std::cout<<"The evolution of hubbard chain is not supported yet."<<std::endl;
 	}
 }
  */
@@ -638,16 +638,16 @@ void Block::calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition)
 		siteA.eval();
 		siteB.eval();
 		kron(siteA.c[0],siteB.a[0],tempx);
-		//cout<<temp<<endl;
+		//std::cout<<temp<<std::endl;
 		kron(siteA.a[0],siteB.c[0],tempy);
 
-		//cout<<temp2<<endl;
+		//std::cout<<temp2<<std::endl;
 		tempx+=tempy;
 		tempx.scale(T);
-		//cout<<temp<<endl;
+		//std::cout<<temp<<std::endl;
 		if(addsiteposition=='r'&& sitenum==1)
 		{
-			cout<<"This is if code in Block::calHinter_Heisenberg is noly for temperary use to include the U term in impurity models, this must be replaced by more general method (matlab generated operators)"<<endl;
+			std::cout<<"This is if code in Block::calHinter_Heisenberg is noly for temperary use to include the U term in impurity models, this must be replaced by more general method (matlab generated operators)"<<std::endl;
 			Rmatrix temp1,temp2;
 			temp1.geneye(siteA.base);
 			temp2.geneye(siteB.base);
@@ -668,7 +668,7 @@ void Block::calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition)
 	}
 	else
 	{
-		cout<<"calHinter_Heisenberg() has not been inplemented for complex numbers"<<endl;
+		std::cout<<"calHinter_Heisenberg() has not been inplemented for complex numbers"<<std::endl;
 	}
 }
  */

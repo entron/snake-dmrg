@@ -5,11 +5,11 @@
  */
 void SupBlock::CalGroundState()
 {
-  //cout<<leftbase<<endl;
-  //cout<<rightbase<<endl;
-  //cout<<Hlr<<endl;
-  //cout<<L->hamiltonian->H<<endl;
-  //cout<<R->hamiltonian->H<<endl;
+  //std::cout<<leftbase<<std::endl;
+  //std::cout<<rightbase<<std::endl;
+  //std::cout<<Hlr<<std::endl;
+  //std::cout<<L->hamiltonian->H<<std::endl;
+  //std::cout<<R->hamiltonian->H<<std::endl;
   
   midsite1=allfreesites[L->sitenum-1];
   midsite2=allfreesites[L->sitenum];
@@ -17,9 +17,9 @@ void SupBlock::CalGroundState()
   int dim=calDim();
   int EigStatesNum=1;
 
-  cout<<"SupL="<<sitenum<<"\t";
-  cout<<"TargetGQNNum="; printvector(TargetGQN); cout<<"\t";
-  cout<<"SupHamDim="<<dim<<"\t";
+  std::cout<<"SupL="<<sitenum<<"\t";
+  std::cout<<"TargetGQNNum="; printvector(TargetGQN); std::cout<<"\t";
+  std::cout<<"SupHamDim="<<dim<<"\t";
 
   mtimes=0;
   H2Dim=Hlr.size(0);
@@ -32,11 +32,11 @@ void SupBlock::CalGroundState()
   genmiddlemap(TargetGQN);
   dsaupd(dim,EigStatesNum,eigval,eigvec);
 
-  cout<<"MultTimes="<<mtimes<<"\t";
+  std::cout<<"MultTimes="<<mtimes<<"\t";
   multnum+=mtimes;
-  //cout.width(20);
-  cout.precision(15);
-  cout<<"Eg="<<eigval[0]<<"\t";
+  //std::cout.width(20);
+  std::cout.precision(15);
+  std::cout<<"Eg="<<eigval[0]<<"\t";
 
   wf.resize(dim,1);
   for(int i=0;i<dim;i++) wf(i)=eigvec[i][0];
@@ -58,7 +58,7 @@ int SupBlock::calDim()
   for(int i=0;i<leftbase.subnum;i++)
     for(int j=0;j<rightbase.subnum;j++)
     {
-    	//cout<<leftbase.subgqn[i]+rightbase.subgqn[j]<<endl;
+    	//std::cout<<leftbase.subgqn[i]+rightbase.subgqn[j]<<std::endl;
     	//printvector(TargetGQN);
     	if(leftbase.subgqn[i]+rightbase.subgqn[j]==TargetGQN)
     		Dim+=leftbase.dim[i]*rightbase.dim[j];
@@ -131,7 +131,7 @@ void SupBlock::genindex()
 {
   GQNBase b1=midsite1.base;
   GQNBase b2=midsite2.base;
-  //cout<<b<<endl;
+  //std::cout<<b<<std::endl;
   index=new int*** [b1.subnum];
   for(int j=0;j<b1.subnum;j++)
   {
@@ -178,7 +178,7 @@ void SupBlock::delindex()
 /*!
 \fn SupBlock::reshape(LaGenMatDouble &mat,Site &freesite,char hand)
 */
-void SupBlock::genmiddlemap(vector<GQN> &tgqn)
+void SupBlock::genmiddlemap(std::vector<GQN> &tgqn)
 {
   int middleDim=midsite1.base.Dim*midsite2.base.Dim;
   int count[middleDim];
@@ -326,21 +326,21 @@ void SupBlock::dsaupd(int n,int nev,double *Evals,double **Evecs)
   } while ((ido==1)||(ido==-1));
 
   if (info<0) {
-    cout << "Error with dsaupd, info = " << info << "\n";
-    cout << "Check documentation in dsaupd\n\n";
+    std::cout << "Error with dsaupd, info = " << info << "\n";
+    std::cout << "Check documentation in dsaupd\n\n";
   } else {
     dseupd_(&rvec, "All", select, d, v, &ldv, &sigma, bmat,
             &n, which, &nev, &tol, resid, &ncv, v, &ldv,
             iparam, ipntr, workd, workl, &lworkl, &ierr);
 
     if (ierr!=0) {
-      cout << "Error with dseupd, info = " << ierr << "\n";
-      cout << "Check the documentation of dseupd.\n\n";
+      std::cout << "Error with dseupd, info = " << ierr << "\n";
+      std::cout << "Check the documentation of dseupd.\n\n";
     } else if (info==1) {
-      cout << "Maximum number of iterations reached.\n\n";
+      std::cout << "Maximum number of iterations reached.\n\n";
     } else if (info==3) {
-      cout << "No shifts could be applied during implicit\n";
-      cout << "Arnoldi update, try increasing NCV.\n\n";
+      std::cout << "No shifts could be applied during implicit\n";
+      std::cout << "Arnoldi update, try increasing NCV.\n\n";
     }
 
      /* Before exiting, we copy the solution information over to

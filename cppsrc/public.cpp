@@ -99,7 +99,7 @@ double trace(LaGenMatDouble &mat)
   int col=mat.size(1);
   double t=0;
   if(row!=col)
-    cout<<"Trace only works for square matrices."<<endl;
+    std::cout<<"Trace only works for square matrices."<<std::endl;
   else
     for(int i=0;i<row;i++)
       t+=mat(i,i);
@@ -134,7 +134,7 @@ void combine(char *s1, int ks,char *str)
 ///Calculate square matrix exponent
 LaGenMatDouble expm(LaGenMatDouble &m)
 {
-  //cout<<m<<endl;
+  //std::cout<<m<<std::endl;
   int dim=m.size(0);
   LaGenMatDouble r(dim,dim);
   LaGenMatDouble eigvec(dim,dim);
@@ -146,7 +146,7 @@ LaGenMatDouble expm(LaGenMatDouble &m)
     eigval(i)=exp(eigval(i));
     LaGenMatDouble temp(dim,dim);
   temp=temp.from_diag(eigval);
-  //cout<<temp<<endl;
+  //std::cout<<temp<<std::endl;
 
   Blas_Mat_Mat_Trans_Mult(temp,eigvec,m);
   Blas_Mat_Mat_Mult(eigvec,m,r);
@@ -157,7 +157,7 @@ LaGenMatDouble expm(LaGenMatDouble &m)
 ///Calculate Exp[I*m]
 LaGenMatComplex expm2(LaGenMatDouble &m)
 {
-  //cout<<m<<endl;
+  //std::cout<<m<<std::endl;
   int dim=m.size(0);
   LaGenMatComplex r(dim,dim);
   LaGenMatDouble eigvec(dim,dim);
@@ -175,7 +175,7 @@ LaGenMatComplex expm2(LaGenMatDouble &m)
     temp(i,i)=eigvalim(i);
 
   chop(temp,1e-15);
-  //cout<<temp<<endl;
+  //std::cout<<temp<<std::endl;
   eigvecC=eigvec.to_LaGenMatComplex();
   LaGenMatComplex tempx(dim,dim);
   Blas_Mat_Mat_Trans_Mult(temp,eigvecC,tempx);
@@ -204,9 +204,9 @@ void SSMED(double* Matrix,int Dim,double* EigenValue)
   
   delete []work;
   
-  //if(info==0) cout<<"successful in SSMDiag"<<endl;
+  //if(info==0) std::cout<<"successful in SSMDiag"<<std::endl;
 //
-  // else cout<<"fail in SSMDiag"<<endl;
+  // else std::cout<<"fail in SSMDiag"<<std::endl;
 //
 }
 
@@ -235,9 +235,9 @@ delete []rwork;
 
 delete []work;
 
-  //if(info==0) cout<<"successful in SSMDiag"<<endl;
+  //if(info==0) std::cout<<"successful in SSMDiag"<<std::endl;
 //
-  //else cout<<"fail in SSMDiag"<<endl;
+  //else std::cout<<"fail in SSMDiag"<<std::endl;
 //
 }
 
@@ -263,13 +263,13 @@ double average(LaGenMatComplex &mat,LaVectorComplex &v)
 COMPLEX average(LaVectorComplex &v1,LaGenMatComplex &mat,LaVectorComplex &v2)
 {
   COMPLEX z;
-  // cout<<v2<<endl;
+  // std::cout<<v2<<std::endl;
   LaVectorComplex tempv(v2.size());
-  //cout<<tempv<<endl;
+  //std::cout<<tempv<<std::endl;
   Blas_Mat_Vec_Mult(mat,v2,tempv);
 
   z=Dot_Prod(v1,tempv);
-  //cout<<LaComplex(z)<<endl;
+  //std::cout<<LaComplex(z)<<std::endl;
   return z;
 }
 

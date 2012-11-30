@@ -3,7 +3,6 @@
 
 #include<vector>
 #include<fstream>
-using namespace std;
 
 #include "gqnbase.h"
 
@@ -28,9 +27,9 @@ void chop(LaGenMatComplex &a,double err=1e-15);
 /**Order matrix bases coording to map
 */
 template<class MType>
-void ordermat(vector<int> &rowmap,vector<int> &colmap,MType &matrix)
+void ordermat(std::vector<int> &rowmap,std::vector<int> &colmap,MType &matrix)
 {
-  //cout<<matrix<<endl;
+  //std::cout<<matrix<<std::endl;
   int row=matrix.size(0);
   int col=matrix.size(1);
 
@@ -45,7 +44,7 @@ void ordermat(vector<int> &rowmap,vector<int> &colmap,MType &matrix)
     }
     matrix.inject(temp);
   }
-  //cout<<temp<<endl;
+  //std::cout<<temp<<std::endl;
   //Order row
   if(rowmap.size()!=0)
   {
@@ -57,15 +56,15 @@ void ordermat(vector<int> &rowmap,vector<int> &colmap,MType &matrix)
     }
     matrix.inject(temp);
   }
-  //  cout<<matrix<<endl;
+  //  std::cout<<matrix<<std::endl;
 };
 
 
 template<class MType>
-void unordermat(vector<int> &rowmap,vector<int> &colmap,MType &matrix)
+void unordermat(std::vector<int> &rowmap,std::vector<int> &colmap,MType &matrix)
 {
-  //cout<<rowmap<<endl;
-  // cout<<colmap<<endl;
+  //std::cout<<rowmap<<std::endl;
+  // std::cout<<colmap<<std::endl;
   int row=matrix.size(0);
   int col=matrix.size(1);
   MType temp(row,col),tempvec;
@@ -79,7 +78,7 @@ void unordermat(vector<int> &rowmap,vector<int> &colmap,MType &matrix)
     }
     matrix.inject(temp);
   }
-  //cout<<temp<<endl;
+  //std::cout<<temp<<std::endl;
   //Order row
   if(rowmap.size()!=0)
   {
@@ -90,13 +89,13 @@ void unordermat(vector<int> &rowmap,vector<int> &colmap,MType &matrix)
     }
     matrix.inject(temp);
   }
-  //cout<<matrix<<endl;
+  //std::cout<<matrix<<std::endl;
 };
 
 /**Read matrix from file
 */
 template<class MType>
-void readmat(ifstream &fin,MType &mat)
+void readmat(std::ifstream &fin,MType &mat)
 {
   int row,col;
   fin.read((char*)&row,sizeof row);
@@ -109,7 +108,7 @@ void readmat(ifstream &fin,MType &mat)
 /**Write matrix information to file
 */
 template<class MType>
-void writemat(ofstream &fout,MType &mat)
+void writemat(std::ofstream &fout,MType &mat)
 {
   int row,col;
   row=mat.size(0);
@@ -122,7 +121,7 @@ void writemat(ofstream &fout,MType &mat)
 /**Read matrix from file
 */
 template<class VType>
-void readvec(ifstream &fin,VType &vec)
+void readvec(std::ifstream &fin,VType &vec)
 {
   int row;
   fin.read((char*)&row,sizeof row);
@@ -134,7 +133,7 @@ void readvec(ifstream &fin,VType &vec)
 /**Write matrix information to file
 */
 template<class VType>
-void writevec(ofstream &fout,VType &vec)
+void writevec(std::ofstream &fout,VType &vec)
 {
   int row;
   row=vec.size();
@@ -143,7 +142,7 @@ void writevec(ofstream &fout,VType &vec)
 };
 
 template<class Type>
-void readvector(ifstream &fin,vector<Type> &v)
+void readvector(std::ifstream &fin, std::vector<Type> &v)
 {
   int dim;
   dim=v.size();
@@ -155,12 +154,12 @@ void readvector(ifstream &fin,vector<Type> &v)
   for(int i=0;i<dim;i++)
   {
     fin.read((char*)&v[i],sizeof(Type));
-    //cout<<v[i]<<endl;
+    //std::cout<<v[i]<<std::endl;
   }
 };
 
 template<class Type>
-void writevector(ofstream &fout,vector<Type> &v)
+void writevector(std::ofstream &fout, std::vector<Type> &v)
 {
   int dim=v.size();
   fout.write((char*)&dim,sizeof dim);
@@ -191,12 +190,12 @@ void mat2vec(VType &v,MType &mat)
 template<class MType,class VType>
 void vecCmat(VType &v,MType &mat)
 {
-  //  cout<<v<<endl;
+  //  std::cout<<v<<std::endl;
   int row=mat.size(0);
   int col=mat.size(1);
   if(v.size()!=row*col)
   {
-    cout<<"Wrong matrix size.Can't covert vector to matrix."<<endl;
+    std::cout<<"Wrong matrix size.Can't covert vector to matrix."<<std::endl;
     return;
   }
   int pointer=0;
@@ -207,9 +206,9 @@ void vecCmat(VType &v,MType &mat)
     pointer+=row;
   }
 
-  //cout<<mat.size(0)<<endl;
+  //std::cout<<mat.size(0)<<std::endl;
   //mat.inject(v);
-  //cout<<mat.size(0)<<endl;
+  //std::cout<<mat.size(0)<<std::endl;
 };
 
 
@@ -218,7 +217,7 @@ template<class VType>
 void join(VType &v,VType &u)
 {
   VType newv(v.size()+u.size());
-  //cout<<v.size()+u.size()<<endl;
+  //std::cout<<v.size()+u.size()<<std::endl;
   if(v.size()!=0)
     newv(LaIndex(0,v.size()-1)).inject(v);
   newv(LaIndex(v.size(),newv.size()-1)).inject(u);
@@ -247,27 +246,27 @@ void addmat(LaGenMatComplex &mat,const LaGenMatComplex &addmat);
 void addmat(LaGenMatDouble &mat,const LaGenMatDouble &addmat);
 
 template<class Type>
-void printvector(vector<Type> &v)
+void printvector(std::vector<Type> &v)
 {
   int dim=v.size();
   if(dim==0)
-    cout<<"Vector size is zero!!!"<<endl;
+    std::cout<<"Vector size is zero!!!"<<std::endl;
   else
   {
     for(int i=0;i<dim;i++)
-      cout<<v[i]<<" ";
-    //cout<<endl;
+      std::cout<<v[i]<<" ";
+    //std::cout<<std::endl;
   }
 
 };
 
 ///Read matlab generated operators
 template <class MType>
-void ReadOperators(ifstream &fin,vector<MType> &OP, int num)
+void ReadOperators(std::ifstream &fin, std::vector<MType> &OP, int num)
 {
 	//Initialize OP
     OP.resize(num);
-	//cout<<"***********"<<sizeof(typename MType::value_type)<<endl;
+    //std::cout<<"***********"<<sizeof(typename MType::value_type)<<std::endl;
 	//Read from the file
     for(int i=0;i<num;i++)
     {
@@ -277,13 +276,13 @@ void ReadOperators(ifstream &fin,vector<MType> &OP, int num)
 }
 
 template <class MType>
-void ReadOneOperator(ifstream &fin,MType &OP)
+void ReadOneOperator(std::ifstream &fin,MType &OP)
 {
 	int row,col;
 	fin.read((char *)&row,sizeof(int));
 	fin.read((char *)&col,sizeof(int));
 		OP.resize(row,col);
-	//cout<<"***********"<<sizeof(typename MType::value_type)<<endl;
+    //std::cout<<"***********"<<sizeof(typename MType::value_type)<<std::endl;
 	//Read from the file
 		fin.read((char *)OP.addr(),sizeof(typename MType::value_type)*row*col);
 

@@ -24,7 +24,7 @@ GQNBase kron(const GQNBase& b1,const GQNBase& b2)
 
   b.tempdim.resize(b1.subnum*b2.subnum);
   b.tempsubgqn.resize(b1.subnum*b2.subnum);
-  vector<GQN> tempsubgqnC(b1.subnum*b2.subnum);
+  std::vector<GQN> tempsubgqnC(b1.subnum*b2.subnum);
 
   int n=0;
   for(int i=0;i<b1.subnum;i++)
@@ -36,10 +36,10 @@ GQNBase kron(const GQNBase& b1,const GQNBase& b2)
       n++;
     }
 
-  vector<GQN> subgqnordered(b.tempsubgqn);
+  std::vector<GQN> subgqnordered(b.tempsubgqn);
   sort(subgqnordered.begin(),subgqnordered.end());
   //for(int i=0;i<subgqnordered.size();i++)
-  // cout<<subgqnordered[i]<<endl;
+  // std::cout<<subgqnordered[i]<<std::endl;
 
   ///Caculate map
   b.map.resize(b1.subnum*b2.subnum);
@@ -51,7 +51,7 @@ GQNBase kron(const GQNBase& b1,const GQNBase& b2)
         tempsubgqnC[j].none();///This means pass j in the following step as in ordinary problem good quantum number are not so big
         break;
       }
-  // for(int i=0;i<b.map.size();i++) cout<<b.map[i]<<" ";  cout<<endl;
+  // for(int i=0;i<b.map.size();i++) std::cout<<b.map[i]<<" ";  std::cout<<std::endl;
 
   b.Dim=b1.Dim*b2.Dim;
 
@@ -129,7 +129,7 @@ void truncate(GQNBase &denmatbase,GQNBase &tmatbase,LaVectorDouble &eigval,doubl
 /*!
 \fn GQNBase::write(fstream &fout)
  */
-void GQNBase::write(ofstream &fout)
+void GQNBase::write(std::ofstream &fout)
 {
   fout.write((char*)&Dim,sizeof Dim);
   fout.write((char*)&subnum,sizeof subnum);
@@ -142,9 +142,9 @@ void GQNBase::write(ofstream &fout)
 
 
 /*!
-\fn GQNBase::read(ifstream &fin)
+\fn GQNBase::read(std::ifstream &fin)
  */
-void GQNBase::read(ifstream &fin)
+void GQNBase::read(std::ifstream &fin)
 {
   fin.read((char*)&Dim,sizeof Dim);
   fin.read((char*)&subnum,sizeof subnum);
@@ -235,14 +235,14 @@ int GQNBase::operator!=(const GQNBase& base) const
     return 1;
 }
 
-ostream & operator<<(ostream& os, const GQNBase& base)
+std::ostream & operator<<(std::ostream& os, const GQNBase& base)
 {
-  cout<<"-----GQNBase-----"<<endl;
-  cout<<"Dim="<<base.Dim<<"  subnum="<<base.subnum<<endl;
-  cout<<"subgqn       dim"<<endl;
+  std::cout<<"-----GQNBase-----"<<std::endl;
+  std::cout<<"Dim="<<base.Dim<<"  subnum="<<base.subnum<<std::endl;
+  std::cout<<"subgqn       dim"<<std::endl;
   for(int i=0;i<base.subnum;i++)
   {
-    cout<<base.subgqn[i]<<"     "<<base.dim[i]<<endl;
+    std::cout<<base.subgqn[i]<<"     "<<base.dim[i]<<std::endl;
   }
   return os;
 }

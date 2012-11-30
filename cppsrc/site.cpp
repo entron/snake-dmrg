@@ -80,8 +80,8 @@ void Site::renorm(DTMat &mat)
   else
   {
     Cmatrix midx(mat.tmatbase,base),midy(mat.tmatbase,mat.tmatbase);
-    //cout<<mat.trunmattrans2<<endl;
-    //cout<<aC<<endl;
+    //std::cout<<mat.trunmattrans2<<std::endl;
+    //std::cout<<aC<<std::endl;
     for(int i=0;i<num;i++)
     {
       Mat_Trans_Mat_Mult(mat.trunmatC,aC[i],midx);
@@ -181,8 +181,8 @@ void Site::addtoblock(Block &b,char hand)
         Rmatrix signmat,tempmat;
         signmat.gensignmat(base,i);
         tempmat=a[i]*signmat;
-        //cout<<identity<<endl;
-        //cout<<tempmat<<endl;
+        //std::cout<<identity<<std::endl;
+        //std::cout<<tempmat<<std::endl;
         kron(identity,tempmat,a[i]);
         kron(identity,n[i],temp);
         n[i]=temp;
@@ -246,10 +246,10 @@ void Site::addtoblock(Block &b,char hand)
 void Site::genfreesite()
 {
 
-	string fname="./model/site_operators.dat";
-	ifstream opfin(fname.c_str(),ios_base::in|ios_base::binary);
-	string fname2="./model/site_base.dat";
-	ifstream basefin(fname2.c_str(),ios_base::in|ios_base::binary);
+	std::string fname="./model/site_operators.dat";
+	std::ifstream opfin(fname.c_str(),std::ios_base::in|std::ios_base::binary);
+	std::string fname2="./model/site_base.dat";
+	std::ifstream basefin(fname2.c_str(),std::ios_base::in|std::ios_base::binary);
 
 	readsite(basefin, opfin);
 	opfin.close();
@@ -258,12 +258,12 @@ void Site::genfreesite()
   //genspin();
   //genspinlessfermion();
   //genfermion();
-	//cout<<"==========Free site information:"<<endl;
-	//cout<<*this;
+	//std::cout<<"==========Free site information:"<<std::endl;
+	//std::cout<<*this;
 }
 */
 
-void Site::readsite(ifstream &basefin, ifstream &siteopfin)
+void Site::readsite(std::ifstream &basefin, std::ifstream &siteopfin)
 {
   value_type='r';
   num=NUMBER_OF_KINDS_OF_PARTICLES;
@@ -273,25 +273,25 @@ void Site::readsite(ifstream &basefin, ifstream &siteopfin)
 	n.resize(num);
 
 	base.read(basefin);
-  //cout<<base<<endl;
+  //std::cout<<base<<std::endl;
 	ReadOneOperator(siteopfin, afull);
-  //cout<<afull<<endl;
+  //std::cout<<afull<<std::endl;
 	ReadOneOperator(siteopfin, nfull);
-  //cout<<nfull<<endl;
+  //std::cout<<nfull<<std::endl;
 	if(base.subnum==1)
 		a[0]=Rmatrix(afull,base,base,1);
 	else
 		a[0]=Rmatrix(afull,base,base,3);
-	//cout<<a[0]<<endl;
+	//std::cout<<a[0]<<std::endl;
 	n[0]=Rmatrix(nfull,base,base,1);
-	//cout<<n[0]<<endl;
+	//std::cout<<n[0]<<std::endl;
 }
 
 
 /*!
-    \fn Site::write(ofstream &fout)
+    \fn Site::write(std::ofstream &fout)
  */
-void Site::write(ofstream &fout)
+void Site::write(std::ofstream &fout)
 {
   fout.write(&value_type,sizeof value_type);
   base.write(fout);
@@ -299,7 +299,7 @@ void Site::write(ofstream &fout)
   {
   if(value_type=='r')
   {
-    //cout<<a[i]<<endl;
+    //std::cout<<a[i]<<std::endl;
     a[i].write(fout);
     n[i].write(fout);
   }
@@ -313,9 +313,9 @@ void Site::write(ofstream &fout)
 
 
 /*!
-    \fn Site::read(ifstream &fin)
+    \fn Site::read(std::ifstream &fin)
  */
-void Site::read(ifstream &fin)
+void Site::read(std::ifstream &fin)
 {
   fin.read(&value_type,sizeof value_type);
   base.read(fin);
@@ -339,9 +339,9 @@ void Site::read(ifstream &fin)
 
 
 /*!
-    \fn Site::Site(ifstream &fin)
+    \fn Site::Site(std::ifstream &fin)
  */
-Site::Site(ifstream &fin)
+Site::Site(std::ifstream &fin)
 {
   num=NUMBER_OF_KINDS_OF_PARTICLES;
   read(fin);
@@ -388,15 +388,15 @@ void Site::toComplex()
   }
 }
 
-ostream & operator<<(ostream& os, const Site& site)
+std::ostream & operator<<(std::ostream& os, const Site& site)
 {
-  cout<<"===Site Information==="<<endl;
-  cout<<site.base<<endl;
+  std::cout<<"===Site Information==="<<std::endl;
+  std::cout<<site.base<<std::endl;
   for(int i=0;i<site.num;i++)
   {
-  cout<<"Particle "<<i<<":"<<endl;
-    cout<<site.a[i]<<endl;
-    cout<<site.n[i]<<endl;
+  std::cout<<"Particle "<<i<<":"<<std::endl;
+    std::cout<<site.a[i]<<std::endl;
+    std::cout<<site.n[i]<<std::endl;
   }
   return os;
 }
@@ -411,8 +411,8 @@ void Site::multsignmat()
   {
     Rmatrix signmat;
     signmat.gensignmat(base,i);
-    // cout<<a[i]<<endl;
-    //cout<<signmat<<endl;
+    // std::cout<<a[i]<<std::endl;
+    //std::cout<<signmat<<std::endl;
     a[i]=a[i]*signmat;
   }
 }
@@ -646,11 +646,11 @@ void Site::genspinFTDMRG()
   n.resize(num);
   GQN gqn;
   a[0]=Rmatrix(afull,base,base,3,gqn);
-  //cout<<a;
+  //std::cout<<a;
   c[0]=Rmatrix(cfull,base,base,4,gqn);
-  //cout<<c;
+  //std::cout<<c;
   n[0]=Rmatrix(nfull,base,base,1,gqn);
-  //cout<<n;
+  //std::cout<<n;
 
 }
 */
