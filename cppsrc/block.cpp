@@ -8,7 +8,6 @@
 #include <blaspp.h>
 #include <sstream>
 #include <iostream>
-using namespace std;
 
 Block::Block()
 {
@@ -405,7 +404,7 @@ void Block::renormsidesite()
 void Block::write(char *prefix)
 {
 	std::string filename;
-	stringstream stemp;
+    std::stringstream stemp;
 	stemp<<sitenum;
 	filename=prefix+stemp.str();
   //std::cout<<std::endl<<filename<<std::endl;

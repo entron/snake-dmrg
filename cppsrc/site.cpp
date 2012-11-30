@@ -9,8 +9,6 @@
 #include <blas3pp.h>
 #include <blaspp.h>
 
-using namespace std;
-
 
 Site::Site()
 {

@@ -12,7 +12,6 @@
 #include<algorithm>
 
 
-using namespace std;
 
 double DTMat::MaxTruncateError=0;
 

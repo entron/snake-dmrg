@@ -5,7 +5,6 @@
 #include <iostream>
 #include <cstdlib>
 
-using namespace std;
 #include<gmd.h>
 #include<lavd.h>
 #include"site.h"
@@ -25,7 +24,7 @@ using namespace std;
 long int multnum=0; //Using for debug
 //Site freesite;
 double totaltrunerror=0;
-vector<Site> allfreesites;
+std::vector<Site> allfreesites;
 //std::ofstream foccnum,;
 
 int main()
