@@ -24,7 +24,7 @@ para.L=BathL+2
 
 folder=sprintf('ratio%gLambda%gBathL%gz%g',omegaratio,Lambda,BathL,z);
 mkdir(folder);
-system(['cp ./cppsrc/Snake ' folder]);
+system(['cp ./build/cppsrc/Snake ' folder]);
 para.folder=[folder,'/model'];
 mkdir(para.folder);
 

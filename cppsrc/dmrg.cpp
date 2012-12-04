@@ -1,6 +1,6 @@
 #include "dmrg.h"
 #include "dtmat.h"
-#include "supblock.h"
+#include "SuperChain.h"
 #include <algorithm>
 
 namespace snake
@@ -39,15 +39,15 @@ void snake::physics::DMRG::iDMRG()
     std::cout<<"==========Start Infinite DMRG."<<std::endl;
 	
 	///The initial left and right block each with one site.
-    left=new Block(snake::physics::allfreesites[0],OnSitePotentials[0]);
-    right=new Block(snake::physics::allfreesites[ChainLength-1],OnSitePotentials[ChainLength-1]);
+    left=new snake::physics::Chain(snake::physics::allfreesites[0],OnSitePotentials[0]);
+    right=new snake::physics::Chain(snake::physics::allfreesites[ChainLength-1],OnSitePotentials[ChainLength-1]);
 	left->write("./data/L");
 	right->write("./data/R");
 	if(ChainLength%2==1)
 	{
 		///Add one more site to the initial left block if the ChainLengh is odd. 
 		///This is used for the case when there is an extra impurity site at the left most.
-        newleft=new Block(*left,snake::physics::allfreesites[1],HoppingIntegrals[0], OnSitePotentials[1], TwoSitesInteraction[0]);
+        newleft=new snake::physics::Chain(*left,snake::physics::allfreesites[1],HoppingIntegrals[0], OnSitePotentials[1], TwoSitesInteraction[0]);
 		delete left;
 		left=newleft;
 		left->write("./data/L");
@@ -73,7 +73,7 @@ void snake::physics::DMRG::iDMRG()
             //std::cout<<tempTargetGQN[0].gqn[0]<<std::endl;
 		if(i>1) delete supblock;
 		AddTwoSites(NewLeftL-1,NewRightL-1);
-		supblock=new SupBlock(newleft,newright,left,right,H[NewLeftL-1]);
+        supblock=new SuperChain(newleft,newright,left,right,H[NewLeftL-1]);
 		supblock->TargetGQN=tempTargetGQN;
         //snake::math::printvector(tempTargetGQN);
 		supblock->CalGroundState();
@@ -222,7 +222,7 @@ void snake::physics::DMRG::iDMRG2tDMRG()
 	///Pass the DMRG supblock to the tDMRG
 	ReadSavedLRBlocks(fDMRG_finalNewLeftL-1);
 	AddTwoSites(fDMRG_finalNewLeftL-1,fDMRG_finalNewLeftL-2);
-	supblock=new SupBlock(newleft,newright,left,right,H[fDMRG_finalNewLeftL-1]);
+    supblock=new SuperChain(newleft,newright,left,right,H[fDMRG_finalNewLeftL-1]);
 	//TargetGQN.resize(2);
 	supblock->TargetGQN=TargetGQN;
 	supblock->CalGroundState();
@@ -278,7 +278,7 @@ void snake::physics::DMRG::fDMRG_Sweep2Right(int StartLeftChainLength, int EndLe
 	{
 		ReadSavedLRBlocks(i);
 		AddTwoSites(i,ChainLength-i-2);
-		supblock=new SupBlock(newleft,newright,left,right,H[i]);
+        supblock=new SuperChain(newleft,newright,left,right,H[i]);
 		supblock->TargetGQN=TargetGQN;
 		supblock->CalGroundState();
 		//	if(newleft->base.Dim>KeptStatesNum)
@@ -304,7 +304,7 @@ void snake::physics::DMRG::fDMRG_Sweep2Left(int StartLeftChainLength, int EndLef
 	{
 		ReadSavedLRBlocks(i);
 		AddTwoSites(i,ChainLength-i-2);
-		supblock=new SupBlock(newleft,newright,left,right,H[i]);
+        supblock=new SuperChain(newleft,newright,left,right,H[i]);
 		supblock->TargetGQN=TargetGQN;
 		supblock->CalGroundState();
         //std::cout<<supblock->wf<<std::endl;break;
@@ -333,12 +333,12 @@ void snake::physics::DMRG::ReadSavedLRBlocks(int LeftChainLength)
 	stl<<LeftChainLength;
 	fname=fname+stl.str();
   // std::cout<<fname<<std::endl;
-	left=new Block(fname);
+    left=new snake::physics::Chain(fname);
 	fname="./data/R";
 	str<<(ChainLength-LeftChainLength-2);
 	fname=fname+str.str();
     //std::cout<<fname<<std::endl;
-	right=new Block(fname);
+    right=new snake::physics::Chain(fname);
 }
 
 
@@ -350,7 +350,7 @@ void snake::physics::DMRG::CalN()
     std::cout<<"Calculate N of Everysites when Chain sweeped to the middle."<<std::endl;
 	ReadSavedLRBlocks(fDMRG_finalNewLeftL-1);
 	AddTwoSites(fDMRG_finalNewLeftL-1,fDMRG_finalNewLeftL-2);
-	supblock=new SupBlock(newleft,newright,left,right,H[fDMRG_finalNewLeftL-1]);
+    supblock=new SuperChain(newleft,newright,left,right,H[fDMRG_finalNewLeftL-1]);
 	supblock->TargetGQN=TargetGQN;
 	supblock->CalGroundState();
 	if(newleft->base.Dim>KeptStatesNum)
@@ -376,9 +376,9 @@ void snake::physics::DMRG::CalN()
  */
 void snake::physics::DMRG::AddTwoSites(int LeftChainLength, int RightChainLength)
 {
-    newleft=new Block(*left,snake::physics::allfreesites[LeftChainLength],HoppingIntegrals[LeftChainLength-1], OnSitePotentials[LeftChainLength], TwoSitesInteraction[LeftChainLength-1]);
+    newleft=new snake::physics::Chain(*left,snake::physics::allfreesites[LeftChainLength],HoppingIntegrals[LeftChainLength-1], OnSitePotentials[LeftChainLength], TwoSitesInteraction[LeftChainLength-1]);
     std::cout<<"NewLeftL="<<newleft->sitenum<<"\t";
-    newright=new Block(snake::physics::allfreesites[ChainLength-RightChainLength-1],*right,HoppingIntegrals[ChainLength-RightChainLength-1], OnSitePotentials[ChainLength-RightChainLength-1], TwoSitesInteraction[ChainLength-RightChainLength-1]);
+    newright=new snake::physics::Chain(snake::physics::allfreesites[ChainLength-RightChainLength-1],*right,HoppingIntegrals[ChainLength-RightChainLength-1], OnSitePotentials[ChainLength-RightChainLength-1], TwoSitesInteraction[ChainLength-RightChainLength-1]);
     std::cout<<"NewRightL="<<newright->sitenum<<"\t";
 }
 

@@ -1,6 +1,6 @@
-#include "block.h"
+#include "Chain.h"
 #include "dtmat.h"
-#include "blocham.h"
+#include "ChainHamiltonian.h"
 #include "site.h"
 #include "public.h"
 #include "setting.h"
@@ -9,12 +9,12 @@
 #include <sstream>
 #include <iostream>
 
-snake::physics::Block::Block()
+snake::physics::Chain::Chain()
 {
 	value_type='r';
 }
 
-snake::physics::Block::~Block()
+snake::physics::Chain::~Chain()
 {
 	delete hamiltonian;
 
@@ -24,10 +24,10 @@ snake::physics::Block::~Block()
 /*!
  \fn snake::physics::Block::Block(Site site)
  */
-snake::physics::Block::Block(Site &first, double OnSiteE)
+snake::physics::Chain::Chain(Site &first, double OnSiteE)
 {
 	value_type=first.value_type;
-	hamiltonian=new BlocHam(first, OnSiteE);
+    hamiltonian=new ChainHamiltonian(first, OnSiteE);
 	site.resize(1);
 	site[0]=first;
 	siteadded=&first;
@@ -39,7 +39,7 @@ snake::physics::Block::Block(Site &first, double OnSiteE)
 /*!
  \fn snake::physics::Block::Block(char *filename)
  */
-snake::physics::Block::Block(std::string &filename)
+snake::physics::Chain::Chain(std::string &filename)
 {
 	read(filename);
 }
@@ -68,11 +68,11 @@ snake::physics::Block::Block(std::string &filename)
  calHinter(old.site[old.sitenum-1],addsite,'r');
  if(value_type=='r')
  {
- hamiltonian=new BlocHam(old.hamiltonian,addsite,Hinter,'r');
+ hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,Hinter,'r');
  }
  else
  {
- hamiltonian=new BlocHam(old.hamiltonian,addsite,HinterC,'r');
+ hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,HinterC,'r');
  }
 
  base=hamiltonian->base;
@@ -102,11 +102,11 @@ snake::physics::Block::Block(std::string &filename)
  calHinter(addsite,old.site[old.sitenum-1],'l');
  if(value_type=='r')
  {
- hamiltonian=new BlocHam(old.hamiltonian,addsite,Hinter,'l');
+ hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,Hinter,'l');
  }
  else
  {
- hamiltonian=new BlocHam(old.hamiltonian,addsite,HinterC,'l');
+ hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,HinterC,'l');
 
  }
 
@@ -125,7 +125,7 @@ snake::physics::Block::Block(std::string &filename)
  }
  */
 
-snake::physics::Block::Block(Block &old,Site &addsite, double HoppingT, double OnSiteE, double TwoSitesV)
+snake::physics::Chain::Chain(Chain &old,Site &addsite, double HoppingT, double OnSiteE, double TwoSitesV)
 {
 	value_type=old.value_type;
 #if FERMIONSIGN
@@ -135,11 +135,11 @@ snake::physics::Block::Block(Block &old,Site &addsite, double HoppingT, double O
 	calHinter(old.site[old.sitenum-1],addsite,'r',HoppingT, OnSiteE,TwoSitesV);
 	if(value_type=='r')
 	{
-     		hamiltonian=new BlocHam(old.hamiltonian,addsite,Hinter,'r');
+            hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,Hinter,'r');
 	}
 	else
 	{
-		hamiltonian=new BlocHam(old.hamiltonian,addsite,HinterC,'r');
+        hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,HinterC,'r');
 	}
 	base=hamiltonian->base;
 
@@ -160,7 +160,7 @@ snake::physics::Block::Block(Block &old,Site &addsite, double HoppingT, double O
 }
 
 
-snake::physics::Block::Block(Site &addsite,Block &old,double HoppingT, double OnSiteE, double TwoSitesV)
+snake::physics::Chain::Chain(Site &addsite,Chain &old,double HoppingT, double OnSiteE, double TwoSitesV)
 {
 	value_type=old.value_type;
 
@@ -168,11 +168,11 @@ snake::physics::Block::Block(Site &addsite,Block &old,double HoppingT, double On
 	calHinter(addsite,old.site[old.sitenum-1],'l',HoppingT, OnSiteE,TwoSitesV);
 	if(value_type=='r')
 	{
-		hamiltonian=new BlocHam(old.hamiltonian,addsite,Hinter,'l');
+        hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,Hinter,'l');
 	}
 	else
 	{
-		hamiltonian=new BlocHam(old.hamiltonian,addsite,HinterC,'l');
+        hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,HinterC,'l');
 
 	}
 
@@ -198,11 +198,11 @@ snake::physics::Block::Block(Site &addsite,Block &old,double HoppingT, double On
  calHinter(addsite,old.site[old.sitenum-1],'l');
  if(value_type=='r')
  {
- hamiltonian=new BlocHam(old.hamiltonian,addsite,Hinter,'l');
+ hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,Hinter,'l');
  }
  else
  {
- hamiltonian=new BlocHam(old.hamiltonian,addsite,HinterC,'l');
+ hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,HinterC,'l');
 
  }
 
@@ -235,20 +235,20 @@ snake::physics::Block::Block(Site& addsite,Block& old,int localsite)
 		if(localsite==sitenum-1)
 		{
 			calHinter(addsite,old.site[old.sitenum-1],'l');
-			hamiltonian=new BlocHam(old.hamiltonian,addsite,Hinter,'l');
+            hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,Hinter,'l');
 		}
 		else
-			hamiltonian=new BlocHam(old.hamiltonian,addsite,'l');
+            hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,'l');
 	}
 	else
 	{
 		if(localsite==sitenum-1)
 		{
 			calHinter(addsite,old.site[old.sitenum-1],'l');
-			hamiltonian=new BlocHam(old.hamiltonian,addsite,HinterC,'l');
+            hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,HinterC,'l');
 		}
 		else
-			hamiltonian=new BlocHam(old.hamiltonian,addsite,'l');
+            hamiltonian=new ChainHamiltonian(old.hamiltonian,addsite,'l');
 	}
 
 
@@ -271,7 +271,7 @@ snake::physics::Block::Block(Site& addsite,Block& old,int localsite)
 /*!
  \fn snake::physics::Block::initialadd(Block &old,Site &add)
  */
-void snake::physics::Block::initialadd(Block &old,Site &add)
+void snake::physics::Chain::initialadd(Chain &old,Site &add)
 {
 	siteadded=&add;///Might be rewrite the way to store steadded.
 	sitenum=old.sitenum+1;
@@ -291,7 +291,7 @@ void snake::physics::Block::initialadd(Block &old,Site &add)
 
  }
  */
-void snake::physics::Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,double HoppingT, double OnSiteE, double TwoSitesV)
+void snake::physics::Chain::calHinter(Site &siteA,Site &siteB,char addsiteposition,double HoppingT, double OnSiteE, double TwoSitesV)
 {
 	//std::cout<<"HoppingT="<<HoppingT<<std::endl;
 
@@ -365,7 +365,7 @@ void snake::physics::Block::calHinter(Site &siteA,Site &siteB,char addsitepositi
 /*!
  \fn snake::physics::Block::renorm(LaGenMatDouble &tmat)
  */
-void snake::physics::Block::renorm()
+void snake::physics::Chain::renorm()
 {
 	hamiltonian->renorm(*dtmat);
 
@@ -382,7 +382,7 @@ void snake::physics::Block::renorm()
 /*!
  \fn snake::physics::Block::renormsites(DTMat &mat)
  */
-void snake::physics::Block::renormsites()
+void snake::physics::Chain::renormsites()
 {
 	for(int i=0;i<sitenum;i++)
 		site[i].renorm(*dtmat);
@@ -392,7 +392,7 @@ void snake::physics::Block::renormsites()
 /*!
  \fn snake::physics::Block::renormsidesite(DTMat &mat)
  */
-void snake::physics::Block::renormsidesite()
+void snake::physics::Chain::renormsidesite()
 {
 	site[sitenum-1].renorm(*dtmat);
 }
@@ -401,7 +401,7 @@ void snake::physics::Block::renormsidesite()
 /*!
  \fn snake::physics::Block::write(char *prefix)
  */
-void snake::physics::Block::write(char *prefix)
+void snake::physics::Chain::write(char *prefix)
 {
 	std::string filename;
     std::stringstream stemp;
@@ -427,7 +427,7 @@ void snake::physics::Block::write(char *prefix)
 /*!
  \fn snake::physics::Block::read(char *filename)
  */
-void snake::physics::Block::read(std::string &filename)
+void snake::physics::Chain::read(std::string &filename)
 {
 	std::ifstream fin(filename.c_str(),std::ios_base::in|std::ios_base::binary);
 	fin.read(&value_type,sizeof value_type);
@@ -438,7 +438,7 @@ void snake::physics::Block::read(std::string &filename)
 #else
 	site[sitenum-1].read(fin);
 #endif
-	hamiltonian=new BlocHam(fin);
+    hamiltonian=new ChainHamiltonian(fin);
 
 	dtmat=new DTMat(fin);
 	base.read(fin);
@@ -449,7 +449,7 @@ void snake::physics::Block::read(std::string &filename)
 /*!
  \fn snake::physics::Block::calN(std::ofstream fout)
  */
-void snake::physics::Block::calN(std::ofstream &fout,char hand)
+void snake::physics::Chain::calN(std::ofstream &fout,char hand)
 {
 	if(value_type=='r')
 	{
@@ -519,7 +519,7 @@ void snake::physics::Block::calN(std::ofstream &fout,char hand)
 /*!
  \fn snake::physics::Block::toComplex()
  */
-void snake::physics::Block::toComplex()
+void snake::physics::Chain::toComplex()
 {
 	if(value_type=='r')
 	{

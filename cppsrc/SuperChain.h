@@ -21,9 +21,9 @@
 #include "setting.h"
 #include "gqnmat.h"
 #include "gqn.h"
-#include"block.h"
+#include"Chain.h"
 #include "dtmat.h"
-#include "blocham.h"
+#include "ChainHamiltonian.h"
 #include "site.h"
 
 using namespace snake::math;
@@ -36,7 +36,7 @@ namespace physics
 extern long int multnum;
 extern std::vector<snake::physics::Site> allfreesites;
 
-class SupBlock {
+class SuperChain {
 public:
     char value_type;
     int KeptStatesNum;
@@ -45,7 +45,7 @@ public:
     int sitenum;
 
     ///Left and right block.
-    Block *L,*R,*oldL,*oldR;
+    Chain *L,*R,*oldL,*oldR;
 
     ///Ground state wave function.
     LaVectorDouble wf;
@@ -75,11 +75,11 @@ private:
     LaGenMatDouble Hlr;
     std::ofstream fout_1stsite_n_t, fout_entropy_t, fout_steperror_t;
 public:
-    SupBlock();
-    ~SupBlock();
-    //SupBlock(Block *left,Block *right,Block *oleft,Block *oright);
+    SuperChain();
+    ~SuperChain();
+    //SuperChain(Block *left,Block *right,Block *oleft,Block *oright);
     ///For interaction Terms are different
-    SupBlock(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatDouble &Hi);
+    SuperChain(Chain *left,Chain *right,Chain *oleft,Chain *oright,LaGenMatDouble &Hi);
     ///Find the ground state of target good quantum number tTargetGQN.
     void CalGroundState();
 
@@ -160,7 +160,7 @@ public:
     void closeoutputfiles();
 
     /*!
-     \fn SupBlock::evalwavefuncmat()
+     \fn SuperChain::evalwavefuncmat()
      */
     template<class WFType,class WFMATType>
     void evalwfmat(WFType &f,WFMATType &mat, std::vector<snake::math::GQN> TGQN)
@@ -196,7 +196,7 @@ public:
 
 
     /*!
-     \fn SupBlock::extractwf(int TargetGQN)
+     \fn SuperChain::extractwf(int TargetGQN)
      */
     template<class WFType,class WFMATType>
     void extractwf(WFMATType &mat,WFType &f, std::vector<snake::math::GQN> TGQN)

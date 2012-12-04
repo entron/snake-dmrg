@@ -7,12 +7,12 @@
  *
  */
 
-#include"supblock.h"
+#include"SuperChain.h"
 
 /*!
- \fn snake::physics::SupBlock::geninitialwf();
+ \fn snake::physics::SuperChain::geninitialwf();
  */
-void snake::physics::SupBlock::geninitialwf()
+void snake::physics::SuperChain::geninitialwf()
 {
 	wfmat.resize(rightbase,leftbase);
 	wfmat.subnum=1;
@@ -25,9 +25,9 @@ void snake::physics::SupBlock::geninitialwf()
 
 
 /*!
- \fn snake::physics::SupBlock::geninitialbases()
+ \fn snake::physics::SuperChain::geninitialbases()
  */
-void snake::physics::SupBlock::geninitialbases()
+void snake::physics::SuperChain::geninitialbases()
 {
 	leftbase.Dim=4;
 	leftbase.subnum=3;
@@ -53,9 +53,9 @@ void snake::physics::SupBlock::geninitialbases()
 
 
 /*!
- \fn snake::physics::SupBlock::geninitialdtmats(std::vector<DTMat> &left, std::vector<DTMat> &right)
+ \fn snake::physics::SuperChain::geninitialdtmats(std::vector<DTMat> &left, std::vector<DTMat> &right)
 */
-void snake::physics::SupBlock::geninitialdtmats(std::vector<DTMat> &leftdt, std::vector<DTMat> &rightdt)
+void snake::physics::SuperChain::geninitialdtmats(std::vector<DTMat> &leftdt, std::vector<DTMat> &rightdt)
 {
 	LaGenMatDouble trunmat,trunmattrans;
 	leftdt.resize(sitenum);
@@ -88,9 +88,9 @@ void snake::physics::SupBlock::geninitialdtmats(std::vector<DTMat> &leftdt, std:
 }
 
 /*!
- \fn snake::physics::SupBlock::evolve(LaGenMatDouble &T,int timesteps)
+ \fn snake::physics::SuperChain::evolve(LaGenMatDouble &T,int timesteps)
  */
-void snake::physics::SupBlock::evolve(std::vector<LaGenMatDouble> &gs_proj,int timesteps)
+void snake::physics::SuperChain::evolve(std::vector<LaGenMatDouble> &gs_proj,int timesteps)
 {
 	///Initialize
 	geninitialdtmats(leftdtmat,rightdtmat);

@@ -23,10 +23,10 @@ namespace physics
 {
 
 class Site;
-class BlocHam;
+class ChainHamiltonian;
 class DTMat;
 
-class Block{
+class Chain{
 public:
   int sitenum;
 
@@ -36,7 +36,7 @@ public:
   ///For the convenice of SupHam
   Site *siteadded;
 
-  BlocHam *hamiltonian;
+  ChainHamiltonian *hamiltonian;
 
   DTMat *dtmat;
 
@@ -50,25 +50,25 @@ public:
 
 public:
 
-  Block();
-  ~Block();
+  Chain();
+  ~Chain();
 
   ///Generate block with only one site
-  Block(Site &first,double OnSiteE);
+  Chain(Site &first,double OnSiteE);
 
-  ///New block with the site added to the right of the old block.
-  Block(Block &old,Site &add,double HoppingT, double OnSiteE, double TwoSitesV);
+  ///new snake::physics::Chain with the site added to the right of the old block.
+  Chain(Chain &old,Site &add,double HoppingT, double OnSiteE, double TwoSitesV);
 
-  ///New block with the site added to the left of the old block.
+  ///new snake::physics::Chain with the site added to the left of the old block.
   //Block(Site &add,Block &old);
-	Block(Site &addsite,Block &old,double HoppingT, double OnSiteE, double TwoSitesV);
+    Chain(Site &addsite,Chain &old,double HoppingT, double OnSiteE, double TwoSitesV);
 
    /**The block hamiltonian is only the local energy of localsite
   *and localsite+1.This function is used in time evolution*/
   //Block(Site& addsite,Block& old,int localsite);
 
   ///Construct Block from file
-  Block(std::string &filename);
+  Chain(std::string &filename);
 
   /**This function calculate the interaction hamiiltonian of two site,
    *and is model depended.*/
@@ -89,7 +89,7 @@ public:
 
 private:
 
-  void initialadd(Block &old,Site &add);
+  void initialadd(Chain &old,Site &add);
   ///Renorm all sites
   void renormsites();
   ///Renorm only the side site

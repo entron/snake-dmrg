@@ -1,5 +1,5 @@
 #include "site.h"
-#include "block.h"
+#include "Chain.h"
 #include "public.h"
 #include "dtmat.h"
 #include "setting.h"
@@ -164,7 +164,7 @@ void snake::physics::Site::addsite(Site&  add,char hand)
 /*!
     \fn snake::physics::Site::addtoblock(Block &b,char hand)
  */
-void snake::physics::Site::addtoblock(Block &b,char hand)
+void snake::physics::Site::addtoblock(snake::physics::Chain &b,char hand)
 {
   if(value_type=='r')
   {

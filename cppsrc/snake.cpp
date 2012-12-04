@@ -8,9 +8,9 @@
 #include<gmd.h>
 #include<lavd.h>
 #include"site.h"
-#include"block.h"
-#include"supblock.h"
-#include "blocham.h"
+#include"Chain.h"
+#include"SuperChain.h"
+#include "ChainHamiltonian.h"
 #include "public.h"
 #include "setting.h"
 #include <blaspp.h>

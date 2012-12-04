@@ -1,5 +1,5 @@
-#ifndef BLOCHAM_H
-#define BLOCHAM_H
+#ifndef ChainHamiltonian_H
+#define ChainHamiltonian_H
 
 /**
 Hamiltonian of a block. Sometimes the class can be used as other block operators
@@ -26,7 +26,7 @@ namespace physics
 class DTMat;
 class Site;
 
-class BlocHam{
+class ChainHamiltonian{
 public:
 
 /**The block hamiltonian.Make sure that the bases are aligned in the
@@ -37,26 +37,26 @@ public:
 /**If value_type='r', the data are real and use H; if value_type='c', the data *are complex and use HC */
   char value_type;
 
-  ///Base of BlocHam
+  ///Base of ChainHamiltonian
   snake::math::GQNBase base;
 
 public:
-    BlocHam();
-    ~BlocHam();
+    ChainHamiltonian();
+    ~ChainHamiltonian();
 
 ///Block hamiltonian of a block with only one site.Model depended.
-  BlocHam(Site &first,double OnSiteE);
+  ChainHamiltonian(Site &first,double OnSiteE);
 
-  ///Construct BlocHam from file "fin"
-  BlocHam(std::ifstream &fin);
+  ///Construct ChainHamiltonian from file "fin"
+  ChainHamiltonian(std::ifstream &fin);
 
 
-  ///Evaluate new BlocHam
-  BlocHam(BlocHam *oldham,Site &add,Rmatrix &Hinter,char hand);
-  BlocHam(BlocHam *oldham,Site &add,Cmatrix &Hinter,char hand);
+  ///Evaluate new ChainHamiltonian
+  ChainHamiltonian(ChainHamiltonian *oldham,Site &add,Rmatrix &Hinter,char hand);
+  ChainHamiltonian(ChainHamiltonian *oldham,Site &add,Cmatrix &Hinter,char hand);
 
-  ///Evaluate new BlocHam,useful when calulate local energy
-  BlocHam(BlocHam *oldham,Site &add,char hand);
+  ///Evaluate new ChainHamiltonian,useful when calulate local energy
+  ChainHamiltonian(ChainHamiltonian *oldham,Site &add,char hand);
 
   ///Truncate the Block hamiltonian with truncation matrix.
   void renorm(DTMat &mat);

@@ -1,10 +1,10 @@
-#include "supblock.h"
+#include "SuperChain.h"
 
 
 /*!
- \fn snake::physics::SupBlock::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
+ \fn snake::physics::SuperChain::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
  */
-void snake::physics::SupBlock::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
+void snake::physics::SuperChain::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
 {
 	/////////////////////Output reduced density matrix////////////////////////
 	std::string filename;
@@ -88,7 +88,7 @@ void snake::physics::SupBlock::evolve(std::vector<LaGenMatComplex> &rt_td_impuri
   //delindex();
 }
 
-void snake::physics::SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatComplex>& rt_OP)
+void snake::physics::SuperChain::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatComplex>& rt_OP)
 {
 	///Move right
 	//std::cout<<"LKeptStatesNum="<<flush;
@@ -191,7 +191,7 @@ void snake::physics::SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::
 
 
 
-void snake::physics::SupBlock::creatoutputfiles()
+void snake::physics::SuperChain::creatoutputfiles()
 {
 	std::string filename;
 #if CAL_DURING_TIME_EVOLVE
@@ -211,7 +211,7 @@ void snake::physics::SupBlock::creatoutputfiles()
 	fout_steperror_t.precision(15);
 }
 
-void snake::physics::SupBlock::closeoutputfiles()
+void snake::physics::SuperChain::closeoutputfiles()
 {
 #if CAL_DURING_TIME_EVOLVE
 	fout_1stsite_n_t.close();
@@ -222,9 +222,9 @@ void snake::physics::SupBlock::closeoutputfiles()
 }
 
 /*!
- \fn snake::physics::SupBlock::loaddtmats(int n)
+ \fn snake::physics::SuperChain::loaddtmats(int n)
  */
-void snake::physics::SupBlock::loaddtmats()
+void snake::physics::SuperChain::loaddtmats()
 {
 	rightdtmat.resize(sitenum);
 	leftdtmat.resize(sitenum);
@@ -237,10 +237,10 @@ void snake::physics::SupBlock::loaddtmats()
 		stemp2<<i;
 		filename="./data/L";
 		filename+=stemp2.str();
-		Block lb(filename);
+        snake::physics::Chain lb(filename);
 		filename="./data/R";
 		filename+=stemp2.str();
-		Block rb(filename);
+        snake::physics::Chain rb(filename);
 		leftdtmat[i]=*lb.dtmat;
 		rightdtmat[i]=*rb.dtmat;
 		if(i==1)
@@ -275,9 +275,9 @@ void snake::physics::SupBlock::loaddtmats()
 }
 
 /*!
- \fn snake::physics::SupBlock::sweep2left()
+ \fn snake::physics::SuperChain::sweep2left()
  */
-void snake::physics::SupBlock::sweep2left(int NewLeftChainLength)
+void snake::physics::SuperChain::sweep2left(int NewLeftChainLength)
 {
 	for(int i=NewLeftChainLength;i>1;i--)
 	{
@@ -291,7 +291,7 @@ void snake::physics::SupBlock::sweep2left(int NewLeftChainLength)
 	}
 }
 
-void snake::physics::SupBlock::sweep2leftmost()
+void snake::physics::SuperChain::sweep2leftmost()
 {
 	
 	//	std::cout<<leftbase<<std::endl;
@@ -311,9 +311,9 @@ void snake::physics::SupBlock::sweep2leftmost()
 }
 
 /*!
- \fn snake::physics::SupBlock::toComplex()
+ \fn snake::physics::SuperChain::toComplex()
  */
-void snake::physics::SupBlock::toComplex()
+void snake::physics::SuperChain::toComplex()
 {
 	if(value_type=='r')
 	{

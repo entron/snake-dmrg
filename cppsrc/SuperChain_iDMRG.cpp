@@ -1,4 +1,4 @@
-#include "supblock.h"
+#include "SuperChain.h"
 
 namespace snake
 {
@@ -9,9 +9,9 @@ long int multnum;
 }
 
 /*!
-\fn snake::physics::SupBlock::CalGroundState(GQN tTargetGQN)
+\fn snake::physics::SuperChain::CalGroundState(GQN tTargetGQN)
  */
-void snake::physics::SupBlock::CalGroundState()
+void snake::physics::SuperChain::CalGroundState()
 {
   //std::cout<<leftbase<<std::endl;
   //std::cout<<rightbase<<std::endl;
@@ -58,9 +58,9 @@ void snake::physics::SupBlock::CalGroundState()
 }
 
 /*!
-\fn snake::physics::SupBlock::calDim()
+\fn snake::physics::SuperChain::calDim()
  */
-int snake::physics::SupBlock::calDim()
+int snake::physics::SuperChain::calDim()
 {
   int Dim=0;
   for(int i=0;i<leftbase.subnum;i++)
@@ -74,7 +74,7 @@ int snake::physics::SupBlock::calDim()
   return Dim;
 }
 
-void snake::physics::SupBlock::av(int n,double *in,double *out)
+void snake::physics::SuperChain::av(int n,double *in,double *out)
 {
   rightmult(in,out);
   leftmult(in,out);
@@ -84,9 +84,9 @@ void snake::physics::SupBlock::av(int n,double *in,double *out)
 
 
 /*!
-\fn snake::physics::SupBlock::rightmult(double *in,double *out)
+\fn snake::physics::SuperChain::rightmult(double *in,double *out)
  */
-void snake::physics::SupBlock::rightmult(double *in,double *out)
+void snake::physics::SuperChain::rightmult(double *in,double *out)
 {
   double *instart,*outstart;
   instart=in;
@@ -103,9 +103,9 @@ void snake::physics::SupBlock::rightmult(double *in,double *out)
 
 
 /*!
-\fn snake::physics::SupBlock::leftmult(double *in ,double *out)
+\fn snake::physics::SuperChain::leftmult(double *in ,double *out)
  */
-void snake::physics::SupBlock::leftmult(double *in ,double *out)
+void snake::physics::SuperChain::leftmult(double *in ,double *out)
 {
   double *instart,*outstart;
   instart=in;
@@ -121,7 +121,7 @@ void snake::physics::SupBlock::leftmult(double *in ,double *out)
 }
 
 /*
-void snake::physics::SupBlock::middlemult(LaGenMatDouble &TO,double *in,double *out)
+void snake::physics::SuperChain::middlemult(LaGenMatDouble &TO,double *in,double *out)
 {
   for(int i=0;i<H2Dim;i++)
     for(int k=0;k<H2Dim;k++)
@@ -133,9 +133,9 @@ void snake::physics::SupBlock::middlemult(LaGenMatDouble &TO,double *in,double *
 
 
 /*!
-\fn snake::physics::SupBlock::genindex()
+\fn snake::physics::SuperChain::genindex()
 */
-void snake::physics::SupBlock::genindex()
+void snake::physics::SuperChain::genindex()
 {
   GQNBase b1=midsite1.base;
   GQNBase b2=midsite2.base;
@@ -163,9 +163,9 @@ void snake::physics::SupBlock::genindex()
 }
 
 /*!
-\fn snake::physics::SupBlock::delindex()
+\fn snake::physics::SuperChain::delindex()
 */
-void snake::physics::SupBlock::delindex()
+void snake::physics::SuperChain::delindex()
 {
   GQNBase b1=midsite1.base;
   GQNBase b2=midsite2.base;
@@ -184,9 +184,9 @@ void snake::physics::SupBlock::delindex()
 
 
 /*!
-\fn snake::physics::SupBlock::reshape(LaGenMatDouble &mat,Site &freesite,char hand)
+\fn snake::physics::SuperChain::reshape(LaGenMatDouble &mat,Site &freesite,char hand)
 */
-void snake::physics::SupBlock::genmiddlemap(std::vector<snake::math::GQN> &tgqn)
+void snake::physics::SuperChain::genmiddlemap(std::vector<snake::math::GQN> &tgqn)
 {
   int middleDim=midsite1.base.Dim*midsite2.base.Dim;
   int count[middleDim];
@@ -239,9 +239,9 @@ void snake::physics::SupBlock::genmiddlemap(std::vector<snake::math::GQN> &tgqn)
 }
 
 /*!
-\fn snake::physics::SupBlock::deletemiddlemap()
+\fn snake::physics::SuperChain::deletemiddlemap()
 */
-void snake::physics::SupBlock::deletemiddlemap()
+void snake::physics::SuperChain::deletemiddlemap()
 {
   int middleDim=midsite1.base.Dim*midsite2.base.Dim;
   for(int i=0;i<middleDim;i++)
@@ -255,7 +255,7 @@ void snake::physics::SupBlock::deletemiddlemap()
 /*!
 \fn SupHam::dsaupd(int n,int nev,double *Evals,double **Evecs)
  */
-void snake::physics::SupBlock::dsaupd(int n,int nev,double *Evals,double **Evecs)
+void snake::physics::SuperChain::dsaupd(int n,int nev,double *Evals,double **Evecs)
 {
   int ido = 0;/* Initialization of the reverse communication
 		  parameter. */

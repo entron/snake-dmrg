@@ -25,7 +25,7 @@ namespace physics
 {
 
 
-class Block;
+class Chain;
 class DTMat;
 
 class Site
@@ -60,7 +60,7 @@ public:
   void addsite(Site &add,char hand);
   
   ///Generate the information of the site after being added to the block.
-  void addtoblock(Block &b,char hand);
+  void addtoblock(Chain &b,char hand);
   
   ///Generate a sigle site.  
  // void genfreesite();

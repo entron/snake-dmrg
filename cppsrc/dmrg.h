@@ -1,8 +1,8 @@
 #ifndef DMRG_H
 #define DMRG_H
 
-#include "block.h"
-#include "supblock.h"
+#include "Chain.h"
+#include "SuperChain.h"
 #include "setting.h"
 #include "gqn.h"
 #include "site.h"
@@ -44,8 +44,8 @@ public:
     int KeptStatesNum;
 
 private:
-  Block *left,*right,*newleft,*newright;
-  SupBlock *supblock;
+  Chain *left,*right,*newleft,*newright;
+  SuperChain *supblock;
 	int NewLeftL, NewRightL;
 	int fDMRG_finalNewLeftL;
   ///The number of site which are exact.

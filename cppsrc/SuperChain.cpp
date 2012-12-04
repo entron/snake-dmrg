@@ -1,4 +1,4 @@
-#include "supblock.h"
+#include "SuperChain.h"
 #include "public.h"
 
 
@@ -6,21 +6,21 @@
 #include <blaspp.h>
 
 
-snake::physics::SupBlock::SupBlock()
+snake::physics::SuperChain::SuperChain()
 {
   value_type='r';
 }
 
 
-snake::physics::SupBlock::~SupBlock()
+snake::physics::SuperChain::~SuperChain()
 {
 }
 
 
 /*!
-\fn snake::physics::SupBlock::SupBlock(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatDouble &Hi)
+\fn snake::physics::SuperChain::SuperChain(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatDouble &Hi)
  */
-snake::physics::SupBlock::SupBlock(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatDouble &Hi)
+snake::physics::SuperChain::SuperChain(Chain *left,Chain *right,Chain *oleft,Chain *oright,LaGenMatDouble &Hi)
 {
   value_type='r';
   L=left;
@@ -37,10 +37,10 @@ snake::physics::SupBlock::SupBlock(Block *left,Block *right,Block *oleft,Block *
 
 
 /*!
-    \fn snake::physics::SupBlock::renormwf(DTMat &dtmat)
+    \fn snake::physics::SuperChain::renormwf(DTMat &dtmat)
  */
 
-void snake::physics::SupBlock::renormwfmat(DTMat &dtmat)
+void snake::physics::SuperChain::renormwfmat(DTMat &dtmat)
 {
   //std::cout<<dtmat.trunmat<<std::endl;
   if(value_type=='r')
@@ -91,9 +91,9 @@ void snake::physics::SupBlock::renormwfmat(DTMat &dtmat)
 
 
 /*!
-    \fn snake::physics::SupBlock::unrenormwfDTMat &dtmat)
+    \fn snake::physics::SuperChain::unrenormwfDTMat &dtmat)
  */
-void snake::physics::SupBlock::unrenormwfmat(DTMat &dtmat)
+void snake::physics::SuperChain::unrenormwfmat(DTMat &dtmat)
 {
   if(value_type=='r')
   {
@@ -154,11 +154,11 @@ void snake::physics::SupBlock::unrenormwfmat(DTMat &dtmat)
 
 
 /*!
-    \fn snake::physics::SupBlock::prepare()
+    \fn snake::physics::SuperChain::prepare()
  */
 ///This function haven been complished and tested
 
-void snake::physics::SupBlock::prepare()
+void snake::physics::SuperChain::prepare()
 {
   std::cout<<leftbase<<std::endl;
   std::cout<<rightbase<<std::endl;
@@ -179,9 +179,9 @@ void snake::physics::SupBlock::prepare()
 
 
 /*!
-    \fn snake::physics::SupBlock::applyop(Rmatrix &op,int thesite)
+    \fn snake::physics::SuperChain::applyop(Rmatrix &op,int thesite)
  */
-void snake::physics::SupBlock::applyop(LaGenMatComplex &op,int thesite)
+void snake::physics::SuperChain::applyop(LaGenMatComplex &op,int thesite)
 {
   genindex();
     ///Move right
@@ -217,9 +217,9 @@ void snake::physics::SupBlock::applyop(LaGenMatComplex &op,int thesite)
 
 
 /*!
-    \fn snake::physics::SupBlock::write(char *filename)
+    \fn snake::physics::SuperChain::write(char *filename)
  */
-void snake::physics::SupBlock::write(char *filename)
+void snake::physics::SuperChain::write(char *filename)
 {
   std::ofstream fout(filename,std::ios_base::out|std::ios_base::binary);
   fout.write((char*)&sitenum,sizeof sitenum);
@@ -253,9 +253,9 @@ void snake::physics::SupBlock::write(char *filename)
 
 
 /*!
-    \fn snake::physics::SupBlock::read(char *filename)
+    \fn snake::physics::SuperChain::read(char *filename)
  */
-void snake::physics::SupBlock::read(char *filename)
+void snake::physics::SuperChain::read(char *filename)
 {
   std::ifstream fin(filename,std::ios_base::in|std::ios_base::binary);
   fin.read((char*)&sitenum,sizeof sitenum);
@@ -290,10 +290,10 @@ void snake::physics::SupBlock::read(char *filename)
 
 
 /*!
-    \fn snake::physics::SupBlock::applyOPonDot(Rmatrix &OP)
+    \fn snake::physics::SuperChain::applyOPonDot(Rmatrix &OP)
  */
 /*
-void snake::physics::SupBlock::applyOPonDot(Rmatrix &OP)
+void snake::physics::SuperChain::applyOPonDot(Rmatrix &OP)
 {
   normalize(wf);
   evalwfmat(wf,wfmat,TargetGQN);
@@ -315,9 +315,9 @@ void snake::physics::SupBlock::applyOPonDot(Rmatrix &OP)
 */
 
 /*!
-\fn snake::physics::SupBlock::renorm()
+\fn snake::physics::SuperChain::renorm()
  */
-void snake::physics::SupBlock::renorm(int tn)
+void snake::physics::SuperChain::renorm(int tn)
 {
 renormleft(tn);
 renormright(tn);
@@ -346,9 +346,9 @@ renormright(tn);
 
 
 /*!
-\fn snake::physics::SupBlock::renormright()
+\fn snake::physics::SuperChain::renormright()
  */
-void snake::physics::SupBlock::renormright(int tn)
+void snake::physics::SuperChain::renormright(int tn)
 {
   if(value_type=='r')
   {
@@ -367,9 +367,9 @@ void snake::physics::SupBlock::renormright(int tn)
 
 
 /*!
-\fn snake::physics::SupBlock::renormleft()
+\fn snake::physics::SuperChain::renormleft()
  */
-void snake::physics::SupBlock::renormleft(int tn)
+void snake::physics::SuperChain::renormleft(int tn)
 {
   if(value_type=='r')
   {
@@ -392,9 +392,9 @@ void snake::physics::SupBlock::renormleft(int tn)
 
 
 /*!
-\fn snake::physics::SupBlock::calCF()
+\fn snake::physics::SuperChain::calCF()
  */
-void snake::physics::SupBlock::calCF(char *filename)
+void snake::physics::SuperChain::calCF(char *filename)
 {
 
   std::ofstream fout(filename);
@@ -415,9 +415,9 @@ void snake::physics::SupBlock::calCF(char *filename)
 }
 
 /*!
-\fn snake::physics::SupBlock::corrfunc(LaGenMatDouble &m1,char hand1,LaGenMatDouble &m0,char hand0)
+\fn snake::physics::SuperChain::corrfunc(LaGenMatDouble &m1,char hand1,LaGenMatDouble &m0,char hand0)
  */
-double snake::physics::SupBlock::corrfunc(Rmatrix &m1,char hand1,Rmatrix &m0,char hand0)
+double snake::physics::SuperChain::corrfunc(Rmatrix &m1,char hand1,Rmatrix &m0,char hand0)
 {
   //std::cout<<m1<<std::endl;
   //std::cout<<m0<<std::endl;
@@ -441,9 +441,9 @@ double snake::physics::SupBlock::corrfunc(Rmatrix &m1,char hand1,Rmatrix &m0,cha
 }
 
 /*!
- \fn snake::physics::SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
+ \fn snake::physics::SuperChain::moveright(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
  */
-void snake::physics::SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
+void snake::physics::SuperChain::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 {
 	std::vector<int> temp;
 
@@ -533,9 +533,9 @@ void snake::physics::SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 
 
 /*!
- \fn snake::physics::SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
+ \fn snake::physics::SuperChain::moveleft(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
  */
-void snake::physics::SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat)
+void snake::physics::SuperChain::moveleft(DTMat &leftdtmat,DTMat &rightdtmat)
 {
 	std::vector<int> temp;
 

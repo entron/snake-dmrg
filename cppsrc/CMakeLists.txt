@@ -9,17 +9,17 @@ link_directories($ENV{HOME}/usr/lib)
 
 add_executable(Snake 
 snake.cpp
-blocham.cpp        
+ChainHamiltonian.cpp        
 public.cpp          
 dmrg.cpp        
 gqnmat.cpp              
-block.cpp                   
+Chain.cpp                   
 dtmat.cpp           
 site.cpp    
-supblock.cpp  
-supblock_iDMRG.cpp
-supblock_tDMRG.cpp
-supblock_FTDMRG.cpp
+SuperChain.cpp
+SuperChain_iDMRG.cpp
+SuperChain_tDMRG.cpp
+SuperChain_FTDMRG.cpp
 gqnbase.cpp
 gqn.cpp
 setting.h
