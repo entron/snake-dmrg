@@ -1,17 +1,6 @@
-/*
- *  supblock_FTDMRG.cpp
- *  snake
- *
- *  Created by Cheng Guo on 12/14/08.
- *  Copyright 2008 __MyCompanyName__. All rights reserved.
- *
- */
-
 #include"SuperChain.h"
 
-/*!
- \fn snake::physics::SuperChain::geninitialwf();
- */
+
 void snake::physics::SuperChain::geninitialwf()
 {
 	wfmat.resize(rightbase,leftbase);
@@ -24,9 +13,6 @@ void snake::physics::SuperChain::geninitialwf()
 }
 
 
-/*!
- \fn snake::physics::SuperChain::geninitialbases()
- */
 void snake::physics::SuperChain::geninitialbases()
 {
 	leftbase.Dim=4;
@@ -52,9 +38,6 @@ void snake::physics::SuperChain::geninitialbases()
 }
 
 
-/*!
- \fn snake::physics::SuperChain::geninitialdtmats(std::vector<DTMat> &left, std::vector<DTMat> &right)
-*/
 void snake::physics::SuperChain::geninitialdtmats(std::vector<DTMat> &leftdt, std::vector<DTMat> &rightdt)
 {
 	LaGenMatDouble trunmat,trunmattrans;
@@ -87,9 +70,7 @@ void snake::physics::SuperChain::geninitialdtmats(std::vector<DTMat> &leftdt, st
 
 }
 
-/*!
- \fn snake::physics::SuperChain::evolve(LaGenMatDouble &T,int timesteps)
- */
+
 void snake::physics::SuperChain::evolve(std::vector<LaGenMatDouble> &gs_proj,int timesteps)
 {
 	///Initialize

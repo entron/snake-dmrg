@@ -28,9 +28,7 @@ snake::physics::DMRG::~DMRG()
 		system("rm -rf data");
 }
 
-/*!
- \fn snake::physics::DMRG::iDMRG()
- */
+
 void snake::physics::DMRG::iDMRG()
 {
 	iDMRG_ReadParameters();
@@ -96,9 +94,7 @@ void snake::physics::DMRG::iDMRG()
 }
 
 
-/*!
- \fn snake::physics::DMRG::fDMRG()
- */
+
 void snake::physics::DMRG::fDMRG()
 {
     std::cout<<"==========Start Finite DMRG."<<std::endl;
@@ -115,18 +111,13 @@ void snake::physics::DMRG::fDMRG()
 }
 
 
-/*!
- \fn snake::physics::DMRG::FTDMRG()
- */
+
 void snake::physics::DMRG::FTDMRG()
 {
 	/// @todo implement me
 }
 
 
-/*!
- \fn snake::physics::DMRG::tDMRG
- */
 void snake::physics::DMRG::tDMRG()
 {
 	
@@ -155,9 +146,7 @@ void snake::physics::DMRG::iDMRG_ReadFreesites()
 	basefin.close();
 }
 
-/*!
- \fn snake::physics::DMRG::ReadParameters()
- */
+
 void snake::physics::DMRG::iDMRG_ReadParameters()
 {
     std::cout<<"==========Reading model parameters from Matlab generated file."<<std::endl;
@@ -201,9 +190,6 @@ void snake::physics::DMRG::iDMRG_ReadParameters()
 }
 
 
-/*!
- \fn snake::physics::DMRG::mkdir
- */
 void snake::physics::DMRG::mkdir()
 {
 	system("rm -rf results");
@@ -213,9 +199,7 @@ void snake::physics::DMRG::mkdir()
 }
 
 
-/*!
- \fn snake::physics::DMRG::iDMRG2tDMRG()
- */
+
 void snake::physics::DMRG::iDMRG2tDMRG()
 {
     std::cout<<"==========Passing fDMRG supblock to the t-DMRG."<<std::endl;
@@ -267,10 +251,6 @@ system("rm -rf data");
 
 
 
-
-/*!
- \fn snake::physics::DMRG::fDMRG_Sweep2Right(int StartChainLength, int EndChainLength)
- */
 void snake::physics::DMRG::fDMRG_Sweep2Right(int StartLeftChainLength, int EndLeftChainLength)
 {
     std::cout<<"-----Start sweeping to right."<<std::endl;
@@ -294,9 +274,6 @@ void snake::physics::DMRG::fDMRG_Sweep2Right(int StartLeftChainLength, int EndLe
 }
 
 
-/*!
- \fn snake::physics::DMRG::fDMRG_Sweep2Left(int StartChainLength, int EndChainLength)
- */
 void snake::physics::DMRG::fDMRG_Sweep2Left(int StartLeftChainLength, int EndLeftChainLength)
 {
     std::cout<<"-----Start sweeping to left."<<std::endl;
@@ -322,9 +299,6 @@ void snake::physics::DMRG::fDMRG_Sweep2Left(int StartLeftChainLength, int EndLef
 }
 
 
-/*!
- \fn snake::physics::DMRG::ReadSavedLRBlocks(int LeftChainLength)
- */
 void snake::physics::DMRG::ReadSavedLRBlocks(int LeftChainLength)
 {
 	std::string fname;
@@ -342,9 +316,6 @@ void snake::physics::DMRG::ReadSavedLRBlocks(int LeftChainLength)
 }
 
 
-/*!
- \fn snake::physics::DMRG::CalN_After_fDMRG()
- */
 void snake::physics::DMRG::CalN()
 {
     std::cout<<"Calculate N of Everysites when Chain sweeped to the middle."<<std::endl;
@@ -371,9 +342,7 @@ void snake::physics::DMRG::CalN()
 	delete supblock;
 }
 
-/*!
- \fn snake::physics::DMRG::AddTwoSites(int LeftSitePosition)
- */
+
 void snake::physics::DMRG::AddTwoSites(int LeftChainLength, int RightChainLength)
 {
     newleft=new snake::physics::Chain(*left,snake::physics::allfreesites[LeftChainLength],HoppingIntegrals[LeftChainLength-1], OnSitePotentials[LeftChainLength], TwoSitesInteraction[LeftChainLength-1]);
@@ -383,9 +352,7 @@ void snake::physics::DMRG::AddTwoSites(int LeftChainLength, int RightChainLength
 }
 
 
-/*!
- \fn snake::physics::DMRG::tDMRG_ReadParameters()
- */
+
 void snake::physics::DMRG::tDMRG_ReadParameters()
 {
     std::cout<<"==========Reading model parameters for t-DMRG from Matlab generated files."<<std::endl;

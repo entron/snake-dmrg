@@ -117,9 +117,7 @@ std::ostream& snake::math::operator<<(std::ostream& output,const snake::math::GQ
     return output;
 }
 
-/*!
-    \fn snake::math::GQN::none()
- */
+
 void snake::math::GQN::none()
 {
   for(int i=0;i<num;i++)
@@ -127,9 +125,7 @@ void snake::math::GQN::none()
 }
 
 
-/*!
-    \fn snake::math::GQN::write(std::ofstream &fout)
- */
+
 void snake::math::GQN::write(std::ofstream &fout)
 {
   fout.write((char*)&num,sizeof num);
@@ -138,9 +134,6 @@ void snake::math::GQN::write(std::ofstream &fout)
 }
 
 
-/*!
-    \fn snake::math::GQN::read(std::ifstream &fin)
- */
 void snake::math::GQN::read(std::ifstream &fin)
 {
   fin.read((char*)&num,sizeof num);
@@ -149,10 +142,7 @@ void snake::math::GQN::read(std::ifstream &fin)
 }
 
 
-/*!
-    \fn snake::math::GQN::operator=(int n)
-///For the compatibility with earlier codes
- */
+
 snake::math::GQN& snake::math::GQN::operator=(int n)
 {
   if(num==1)

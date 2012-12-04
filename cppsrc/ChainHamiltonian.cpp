@@ -20,9 +20,7 @@ snake::physics::ChainHamiltonian::~ChainHamiltonian()
 {
 }
 
-/*!
-\fn snake::physics::ChainHamiltonian::ChainHamiltonian(Site &first)
- */
+
 snake::physics::ChainHamiltonian::ChainHamiltonian(Site &first,double OnSiteE)
 {
     value_type=first.value_type;
@@ -48,20 +46,13 @@ snake::physics::ChainHamiltonian::ChainHamiltonian(Site &first,double OnSiteE)
     }
 }
 
-/*!
-\fn snake::physics::ChainHamiltonian::ChainHamiltonian(std::ifstream &fin)
- */
+
 snake::physics::ChainHamiltonian::ChainHamiltonian(std::ifstream &fin)
 {
     read(fin);
 }
 
 
-
-
-/*!
-\fn snake::physics::ChainHamiltonian::newChainHamiltonian(Site &add)
- */
 
 snake::physics::ChainHamiltonian::ChainHamiltonian(ChainHamiltonian *oldham,Site &add,Rmatrix &Hinter,char hand)
 {
@@ -109,9 +100,7 @@ snake::physics::ChainHamiltonian::ChainHamiltonian(ChainHamiltonian *oldham,Site
 }
 
 
-/*!
-\fn snake::physics::ChainHamiltonian::ChainHamiltonian(ChainHamiltonian *oldham,Site &add,LaGenMatDouble &Hinter,char hand,int NOinter)
- */
+
 snake::physics::ChainHamiltonian::ChainHamiltonian(ChainHamiltonian *oldham,Site &add,char hand)
 {
     value_type=oldham->value_type;
@@ -152,9 +141,6 @@ snake::physics::ChainHamiltonian::ChainHamiltonian(ChainHamiltonian *oldham,Site
 }
 
 
-/*!
-\fn snake::physics::ChainHamiltonian::renorm(LaGenMatDouble &tmat)
- */
 void snake::physics::ChainHamiltonian::renorm(DTMat &mat)
 {
     if(value_type=='r')
@@ -180,9 +166,6 @@ void snake::physics::ChainHamiltonian::renorm(DTMat &mat)
 
 
 
-/*!
-    \fn snake::physics::ChainHamiltonian::write(std::ofstream &fout)
- */
 void snake::physics::ChainHamiltonian::write(std::ofstream &fout)
 {
     fout.write(&value_type,sizeof value_type);
@@ -200,9 +183,6 @@ void snake::physics::ChainHamiltonian::write(std::ofstream &fout)
 }
 
 
-/*!
-    \fn snake::physics::ChainHamiltonian::read(std::ifstream &fin)
- */
 void snake::physics::ChainHamiltonian::read(std::ifstream &fin)
 {
     fin.read(&value_type,sizeof value_type);
@@ -220,10 +200,6 @@ void snake::physics::ChainHamiltonian::read(std::ifstream &fin)
 }
 
 
-
-/*!
-    \fn snake::physics::ChainHamiltonian::toComplex()
- */
 void snake::physics::ChainHamiltonian::toComplex()
 {
     value_type='c';

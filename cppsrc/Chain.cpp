@@ -21,9 +21,7 @@ snake::physics::Chain::~Chain()
 	delete dtmat;
 }
 
-/*!
- \fn snake::physics::Block::Block(Site site)
- */
+
 snake::physics::Chain::Chain(Site &first, double OnSiteE)
 {
 	value_type=first.value_type;
@@ -36,18 +34,14 @@ snake::physics::Chain::Chain(Site &first, double OnSiteE)
 	base=first.base;
 }
 
-/*!
- \fn snake::physics::Block::Block(char *filename)
- */
+
 snake::physics::Chain::Chain(std::string &filename)
 {
 	read(filename);
 }
 
 
-/*!
- \fn snake::physics::Block::Block(Block &old,Site add)
- */
+
 /*
  snake::physics::Block::Block(Block &old,Site &addsite)
  {
@@ -221,9 +215,7 @@ snake::physics::Chain::Chain(Site &addsite,Chain &old,double HoppingT, double On
  }
  */
 
-/*!
- \fn snake::physics::Block::Block(Site& addsite,Block& old,int localsite)
- */
+
 /*
 snake::physics::Block::Block(Site& addsite,Block& old,int localsite)
 {
@@ -268,9 +260,7 @@ snake::physics::Block::Block(Site& addsite,Block& old,int localsite)
 }
  */
 
-/*!
- \fn snake::physics::Block::initialadd(Block &old,Site &add)
- */
+
 void snake::physics::Chain::initialadd(Chain &old,Site &add)
 {
 	siteadded=&add;///Might be rewrite the way to store steadded.
@@ -279,9 +269,6 @@ void snake::physics::Chain::initialadd(Chain &old,Site &add)
 }
 
 
-/*!
- \fn snake::physics::Block::interaction(Site &a,Site &b)
- */
 /*
  void snake::physics::Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,char include_onsite)
  {
@@ -362,9 +349,7 @@ void snake::physics::Chain::calHinter(Site &siteA,Site &siteB,char addsitepositi
   //std::cout<<Hinter<<std::endl;
 }
 
-/*!
- \fn snake::physics::Block::renorm(LaGenMatDouble &tmat)
- */
+
 void snake::physics::Chain::renorm()
 {
 	hamiltonian->renorm(*dtmat);
@@ -379,9 +364,6 @@ void snake::physics::Chain::renorm()
 
 
 
-/*!
- \fn snake::physics::Block::renormsites(DTMat &mat)
- */
 void snake::physics::Chain::renormsites()
 {
 	for(int i=0;i<sitenum;i++)
@@ -389,18 +371,13 @@ void snake::physics::Chain::renormsites()
 }
 
 
-/*!
- \fn snake::physics::Block::renormsidesite(DTMat &mat)
- */
+
 void snake::physics::Chain::renormsidesite()
 {
 	site[sitenum-1].renorm(*dtmat);
 }
 
 
-/*!
- \fn snake::physics::Block::write(char *prefix)
- */
 void snake::physics::Chain::write(char *prefix)
 {
 	std::string filename;
@@ -424,9 +401,6 @@ void snake::physics::Chain::write(char *prefix)
 }
 
 
-/*!
- \fn snake::physics::Block::read(char *filename)
- */
 void snake::physics::Chain::read(std::string &filename)
 {
 	std::ifstream fin(filename.c_str(),std::ios_base::in|std::ios_base::binary);
@@ -446,9 +420,7 @@ void snake::physics::Chain::read(std::string &filename)
 }
 
 
-/*!
- \fn snake::physics::Block::calN(std::ofstream fout)
- */
+
 void snake::physics::Chain::calN(std::ofstream &fout,char hand)
 {
 	if(value_type=='r')
@@ -516,9 +488,6 @@ void snake::physics::Chain::calN(std::ofstream &fout,char hand)
 }
 
 
-/*!
- \fn snake::physics::Block::toComplex()
- */
 void snake::physics::Chain::toComplex()
 {
 	if(value_type=='r')
@@ -533,9 +502,6 @@ void snake::physics::Chain::toComplex()
 }
 
 
-/*!
- \fn snake::physics::Block::calHinter_Hubbard(Site &siteA,Site &siteB)
- */
 /*
 void snake::physics::Block::calHinter_Hubbard(Site &siteA,Site &siteB,char addsiteposition,char include_onsite)
 {
@@ -625,9 +591,7 @@ void snake::physics::Block::calHinter_Hubbard(Site &siteA,Site &siteB,char addsi
 }
  */
 
-/*!
- \fn snake::physics::Block::calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition)
- */
+
 /*
 void snake::physics::Block::calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition)
 {

@@ -21,9 +21,7 @@ snake::physics::Site::~Site()
 {
 }
 
-/*!
-\fn snake::physics::Site::Site(constsnake::physics::Site& s)
- */
+
 snake::physics::Site::Site(const snake::physics::Site& s)
 {
     /// @todo implement me
@@ -55,9 +53,7 @@ void snake::physics::Site::eval()
 }
 }
 
-/*!
-    \fn snake::physics::Site::renorm(LaGenMat &trunmat)
- */
+
 void snake::physics::Site::renorm(DTMat &mat)
 {
   int KeptStatesNum;
@@ -94,9 +90,7 @@ void snake::physics::Site::renorm(DTMat &mat)
 }
 
 
-/*!
-    \fn snake::physics::Site::addsite(Site&  add,char hand)
- */
+
 void snake::physics::Site::addsite(Site&  add,char hand)
 {
   if(value_type=='r')
@@ -161,9 +155,6 @@ void snake::physics::Site::addsite(Site&  add,char hand)
 
 
 
-/*!
-    \fn snake::physics::Site::addtoblock(Block &b,char hand)
- */
 void snake::physics::Site::addtoblock(snake::physics::Chain &b,char hand)
 {
   if(value_type=='r')
@@ -286,9 +277,6 @@ void snake::physics::Site::readsite(std::ifstream &basefin, std::ifstream &siteo
 }
 
 
-/*!
-    \fn snake::physics::Site::write(std::ofstream &fout)
- */
 void snake::physics::Site::write(std::ofstream &fout)
 {
   fout.write(&value_type,sizeof value_type);
@@ -310,9 +298,6 @@ void snake::physics::Site::write(std::ofstream &fout)
 }
 
 
-/*!
-    \fn snake::physics::Site::read(std::ifstream &fin)
- */
 void snake::physics::Site::read(std::ifstream &fin)
 {
   fin.read(&value_type,sizeof value_type);
@@ -336,19 +321,12 @@ void snake::physics::Site::read(std::ifstream &fin)
 }
 
 
-/*!
-    \fn snake::physics::Site::Site(std::ifstream &fin)
- */
 snake::physics::Site::Site(std::ifstream &fin)
 {
   num=NUMBER_OF_KINDS_OF_PARTICLES;
   read(fin);
 }
 
-
-/*!
-    \fn snake::physics::Site::operator=(Site& s)
- */
 
 snake::physics::Site& snake::physics::Site::operator=(const snake::physics::Site& s)
 {
@@ -366,9 +344,6 @@ snake::physics::Site& snake::physics::Site::operator=(const snake::physics::Site
 
 
 
-/*!
-    \fn snake::physics::Site::toComplex()
- */
 void snake::physics::Site::toComplex()
 {
   if(value_type=='r')
@@ -400,9 +375,7 @@ std::ostream & operator<<(std::ostream& os, const snake::physics::Site& site)
 }
 
 
-/*!
-\fn snake::physics::Site::multsignmat()
- */
+
 void snake::physics::Site::multsignmat()
 {
   for(int i=0;i<num;i++)
@@ -416,10 +389,6 @@ void snake::physics::Site::multsignmat()
 }
 
 
-
-/*!
-    \fn snake::physics::Site::genfermion()
- */
 /*
 void snake::physics::Site::genfermion()
 {
@@ -493,9 +462,7 @@ void snake::physics::Site::genfermion()
 }
 */
 
-/*!
-    \fn snake::physics::Site::genspin()
- */
+
 /*
 void snake::physics::Site::genspin()
 {
@@ -540,9 +507,6 @@ void snake::physics::Site::genspin()
 //}
 
 
-/*!
-    \fn snake::physics::Site::genspinlessfermion()
- */
 /*
 void snake::physics::Site::genspinlessfermion()
 {
@@ -581,9 +545,7 @@ void snake::physics::Site::genspinlessfermion()
 }
 
 */
-/*!
-    \fn snake::physics::Site::genspinFTDMRG()
- */
+
 /*
 void snake::physics::Site::genspinFTDMRG()
 {

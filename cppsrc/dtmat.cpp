@@ -31,9 +31,7 @@ snake::physics::DTMat::DTMat(char vtype,char hand)
 }
 
 
-/*!
-\fn snake::physics::DTMat::DTMat(DTMat &mat)
- */
+
 snake::physics::DTMat::DTMat(const DTMat &mat)
 {
 	denmat=mat.denmat;
@@ -52,9 +50,7 @@ snake::physics::DTMat::DTMat(const DTMat &mat)
 }
 
 
-/*!
-\fn snake::physics::DTMat::gendenmat(LaVectorDouble &wf)
- */
+
 void snake::physics::DTMat::gendenmat(Rmatrix &wfmat, snake::math::GQNBase &left, snake::math::GQNBase &right)
 {
 	leftbase=left;
@@ -96,9 +92,6 @@ void snake::physics::DTMat::gendenmat(Cmatrix &wfmat, snake::math::GQNBase &left
 }
 
 
-/*!
-\fn snake::physics::DTMat::findtmat()
- */
 void snake::physics::DTMat::findtmat(int tn)
 {
 	if(value_type=='r')
@@ -144,9 +137,7 @@ void snake::physics::DTMat::findtmat(int tn)
 }
 
 
-/*!
-    \fn snake::physics::DTMat::write(fout)
- */
+
 void snake::physics::DTMat::write(std::ofstream &fout)
 {
 
@@ -168,9 +159,7 @@ void snake::physics::DTMat::write(std::ofstream &fout)
 }
 
 
-/*!
-    \fn snake::physics::DTMat::read(fin)
- */
+
 void snake::physics::DTMat::read(std::ifstream &fin)
 {
 	fin.read(&value_type,sizeof value_type);
@@ -192,18 +181,14 @@ void snake::physics::DTMat::read(std::ifstream &fin)
 }
 
 
-/*!
-    \fn snake::physics::DTMat::DTMat(std::ifstream &fin)
- */
+
 snake::physics::DTMat::DTMat(std::ifstream &fin)
 {
 	read(fin);
 }
 
 
-/*!
-    \fn snake::physics::DTMat::renorm()
- */
+
 void snake::physics::DTMat::renorm()
 {
 	if(value_type=='r')
@@ -226,9 +211,7 @@ void snake::physics::DTMat::renorm()
 }
 
 
-/*!
-    \fn snake::physics::DTMat::toComplex()
- */
+
 void snake::physics::DTMat::toComplex()
 {
 	if(value_type=='r')
@@ -244,9 +227,7 @@ void snake::physics::DTMat::toComplex()
 }
 
 
-/*!
-    \fn snake::physics::DTMat::vonNeumannEntropy(LaVectorDouble &eigvals)
- */
+
 double snake::physics::DTMat::vonNeumannEntropy(LaVectorDouble &eigvals)
 {
 	double entropy=0;
@@ -261,9 +242,7 @@ double snake::physics::DTMat::vonNeumannEntropy(LaVectorDouble &eigvals)
 }
 
 
-/*!
-    \fn snake::physics::DTMat::operator=(const DTMat& dtmat)
- */
+
 snake::physics::DTMat& snake::physics::DTMat::operator=(const DTMat& dtmat)
 {
 	value_type=dtmat.value_type;

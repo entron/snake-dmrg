@@ -8,9 +8,6 @@ long int multnum;
 }
 }
 
-/*!
-\fn snake::physics::SuperChain::CalGroundState(GQN tTargetGQN)
- */
 void snake::physics::SuperChain::CalGroundState()
 {
   //std::cout<<leftbase<<std::endl;
@@ -57,9 +54,7 @@ void snake::physics::SuperChain::CalGroundState()
   delindex();
 }
 
-/*!
-\fn snake::physics::SuperChain::calDim()
- */
+
 int snake::physics::SuperChain::calDim()
 {
   int Dim=0;
@@ -83,9 +78,6 @@ void snake::physics::SuperChain::av(int n,double *in,double *out)
 }
 
 
-/*!
-\fn snake::physics::SuperChain::rightmult(double *in,double *out)
- */
 void snake::physics::SuperChain::rightmult(double *in,double *out)
 {
   double *instart,*outstart;
@@ -102,9 +94,6 @@ void snake::physics::SuperChain::rightmult(double *in,double *out)
 }
 
 
-/*!
-\fn snake::physics::SuperChain::leftmult(double *in ,double *out)
- */
 void snake::physics::SuperChain::leftmult(double *in ,double *out)
 {
   double *instart,*outstart;
@@ -132,9 +121,6 @@ void snake::physics::SuperChain::middlemult(LaGenMatDouble &TO,double *in,double
 */
 
 
-/*!
-\fn snake::physics::SuperChain::genindex()
-*/
 void snake::physics::SuperChain::genindex()
 {
   GQNBase b1=midsite1.base;
@@ -162,9 +148,7 @@ void snake::physics::SuperChain::genindex()
         }
 }
 
-/*!
-\fn snake::physics::SuperChain::delindex()
-*/
+
 void snake::physics::SuperChain::delindex()
 {
   GQNBase b1=midsite1.base;
@@ -183,9 +167,6 @@ void snake::physics::SuperChain::delindex()
 }
 
 
-/*!
-\fn snake::physics::SuperChain::reshape(LaGenMatDouble &mat,Site &freesite,char hand)
-*/
 void snake::physics::SuperChain::genmiddlemap(std::vector<snake::math::GQN> &tgqn)
 {
   int middleDim=midsite1.base.Dim*midsite2.base.Dim;
@@ -238,9 +219,7 @@ void snake::physics::SuperChain::genmiddlemap(std::vector<snake::math::GQN> &tgq
   }
 }
 
-/*!
-\fn snake::physics::SuperChain::deletemiddlemap()
-*/
+
 void snake::physics::SuperChain::deletemiddlemap()
 {
   int middleDim=midsite1.base.Dim*midsite2.base.Dim;
@@ -251,10 +230,6 @@ void snake::physics::SuperChain::deletemiddlemap()
 }
 
 
-
-/*!
-\fn SupHam::dsaupd(int n,int nev,double *Evals,double **Evecs)
- */
 void snake::physics::SuperChain::dsaupd(int n,int nev,double *Evals,double **Evecs)
 {
   int ido = 0;/* Initialization of the reverse communication

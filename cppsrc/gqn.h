@@ -17,10 +17,6 @@ class GQN
 public:
     GQN();
     ~GQN();
-
-    std::vector<int> gqn;
-
-
     GQN& operator= (const GQN&)     ;
     GQN& operator+=(const GQN&)     ;
     GQN& operator-=(const GQN& Gvar);
@@ -31,12 +27,14 @@ public:
     bool operator!=(const GQN&)const;
     bool operator> (const GQN&)const;
     bool operator< (const GQN&)const;
-
-    friend std::ostream& snake::math::operator<<(std::ostream&, const GQN&);
     void none();
     void write(std::ofstream &fout);
     void read(std::ifstream &fin);
     GQN& operator=(int n);
+
+friend std::ostream& snake::math::operator<<(std::ostream&, const GQN&);
+
+    std::vector<int> gqn;
     int num;
 };
 

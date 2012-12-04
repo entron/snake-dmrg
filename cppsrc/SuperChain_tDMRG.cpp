@@ -1,9 +1,6 @@
 #include "SuperChain.h"
 
 
-/*!
- \fn snake::physics::SuperChain::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
- */
 void snake::physics::SuperChain::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
 {
 	/////////////////////Output reduced density matrix////////////////////////
@@ -188,9 +185,6 @@ void snake::physics::SuperChain::onetimestep(LaGenMatComplex& impurity_OP_t, std
 }
 
 
-
-
-
 void snake::physics::SuperChain::creatoutputfiles()
 {
 	std::string filename;
@@ -221,9 +215,7 @@ void snake::physics::SuperChain::closeoutputfiles()
 	
 }
 
-/*!
- \fn snake::physics::SuperChain::loaddtmats(int n)
- */
+
 void snake::physics::SuperChain::loaddtmats()
 {
 	rightdtmat.resize(sitenum);
@@ -274,9 +266,7 @@ void snake::physics::SuperChain::loaddtmats()
 	}
 }
 
-/*!
- \fn snake::physics::SuperChain::sweep2left()
- */
+
 void snake::physics::SuperChain::sweep2left(int NewLeftChainLength)
 {
 	for(int i=NewLeftChainLength;i>1;i--)
@@ -310,9 +300,7 @@ void snake::physics::SuperChain::sweep2leftmost()
 	//std::cout<<wfmat<<std::endl;
 }
 
-/*!
- \fn snake::physics::SuperChain::toComplex()
- */
+
 void snake::physics::SuperChain::toComplex()
 {
 	if(value_type=='r')

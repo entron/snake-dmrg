@@ -14,10 +14,6 @@ snake::math::GQNBase::~GQNBase()
 }
 
 
-/*!
-\fn snake::math::GQNBase::kron(snake::math::GQNBase &b1,snake::math::GQNBase &b2)
- */
-
 snake::math::GQNBase snake::math::kron(const snake::math::GQNBase& b1,const snake::math::GQNBase& b2)
 {
   snake::math::GQNBase b;
@@ -87,9 +83,6 @@ snake::math::GQNBase snake::math::kron(const snake::math::GQNBase& b1,const snak
 }
 
 
-/*!
-\fn snake::math::GQNBase::truncate(snake::math::GQNBase &dbase,snake::math::GQNBase &tbase,LaVectorDouble &eigval,double cutedge,int *mark)
- */
 void snake::math::truncate(snake::math::GQNBase &denmatbase,snake::math::GQNBase &tmatbase,LaVectorDouble &eigval,double cutedge,int *mark)
 {
   int subnum=denmatbase.subnum;
@@ -126,9 +119,6 @@ void snake::math::truncate(snake::math::GQNBase &denmatbase,snake::math::GQNBase
 }
 
 
-/*!
-\fn snake::math::GQNBase::write(fstream &fout)
- */
 void snake::math::GQNBase::write(std::ofstream &fout)
 {
   fout.write((char*)&Dim,sizeof Dim);
@@ -141,9 +131,6 @@ void snake::math::GQNBase::write(std::ofstream &fout)
 }
 
 
-/*!
-\fn snake::math::GQNBase::read(std::ifstream &fin)
- */
 void snake::math::GQNBase::read(std::ifstream &fin)
 {
   fin.read((char*)&Dim,sizeof Dim);
@@ -159,9 +146,6 @@ void snake::math::GQNBase::read(std::ifstream &fin)
 }
 
 
-/*!
-\fn snake::math::GQNBase::genordermap(snake::math::GQNBase& b1,snake::math::GQNBase& b2)
- */
 void snake::math::GQNBase::genordermap(const snake::math::GQNBase& b1,const snake::math::GQNBase& b2)
 {
   ordermap.resize(Dim);
@@ -196,10 +180,6 @@ void snake::math::GQNBase::genvacuumbase()
 }
 
 
-/*!
-\fn snake::math::GQNBase::operator=(snake::math::GQNBase &b)
- */
-
 snake::math::GQNBase& snake::math::GQNBase::operator=(const snake::math::GQNBase& b)
 {
   dim=b.dim;
@@ -212,9 +192,7 @@ snake::math::GQNBase& snake::math::GQNBase::operator=(const snake::math::GQNBase
   map=b.map;
 }
 
-/*!
-\fn snake::math::GQNBase::operator==(snake::math::GQNBase& base)
- */
+
 int snake::math::GQNBase::operator==(const snake::math::GQNBase& base) const
 {
   if(dim==base.dim&&Dim==base.Dim&&subgqn==base.subgqn&&subnum==base.subnum)
@@ -224,9 +202,6 @@ int snake::math::GQNBase::operator==(const snake::math::GQNBase& base) const
 }
 
 
-/*!
-\fn snake::math::GQNBase::operator!=(snake::math::GQNBase& base)
- */
 int snake::math::GQNBase::operator!=(const snake::math::GQNBase& base) const
 {
   if(*this==base)
