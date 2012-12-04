@@ -6,21 +6,21 @@
 #include <blaspp.h>
 
 
-SupBlock::SupBlock()
+snake::physics::SupBlock::SupBlock()
 {
   value_type='r';
 }
 
 
-SupBlock::~SupBlock()
+snake::physics::SupBlock::~SupBlock()
 {
 }
 
 
 /*!
-\fn SupBlock::SupBlock(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatDouble &Hi)
+\fn snake::physics::SupBlock::SupBlock(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatDouble &Hi)
  */
-SupBlock::SupBlock(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatDouble &Hi)
+snake::physics::SupBlock::SupBlock(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatDouble &Hi)
 {
   value_type='r';
   L=left;
@@ -37,10 +37,10 @@ SupBlock::SupBlock(Block *left,Block *right,Block *oleft,Block *oright,LaGenMatD
 
 
 /*!
-    \fn SupBlock::renormwf(DTMat &dtmat)
+    \fn snake::physics::SupBlock::renormwf(DTMat &dtmat)
  */
 
-void SupBlock::renormwfmat(DTMat &dtmat)
+void snake::physics::SupBlock::renormwfmat(DTMat &dtmat)
 {
   //std::cout<<dtmat.trunmat<<std::endl;
   if(value_type=='r')
@@ -91,9 +91,9 @@ void SupBlock::renormwfmat(DTMat &dtmat)
 
 
 /*!
-    \fn SupBlock::unrenormwfDTMat &dtmat)
+    \fn snake::physics::SupBlock::unrenormwfDTMat &dtmat)
  */
-void SupBlock::unrenormwfmat(DTMat &dtmat)
+void snake::physics::SupBlock::unrenormwfmat(DTMat &dtmat)
 {
   if(value_type=='r')
   {
@@ -154,11 +154,11 @@ void SupBlock::unrenormwfmat(DTMat &dtmat)
 
 
 /*!
-    \fn SupBlock::prepare()
+    \fn snake::physics::SupBlock::prepare()
  */
 ///This function haven been complished and tested
 
-void SupBlock::prepare()
+void snake::physics::SupBlock::prepare()
 {
   std::cout<<leftbase<<std::endl;
   std::cout<<rightbase<<std::endl;
@@ -179,9 +179,9 @@ void SupBlock::prepare()
 
 
 /*!
-    \fn SupBlock::applyop(Rmatrix &op,int thesite)
+    \fn snake::physics::SupBlock::applyop(Rmatrix &op,int thesite)
  */
-void SupBlock::applyop(LaGenMatComplex &op,int thesite)
+void snake::physics::SupBlock::applyop(LaGenMatComplex &op,int thesite)
 {
   genindex();
     ///Move right
@@ -217,9 +217,9 @@ void SupBlock::applyop(LaGenMatComplex &op,int thesite)
 
 
 /*!
-    \fn SupBlock::write(char *filename)
+    \fn snake::physics::SupBlock::write(char *filename)
  */
-void SupBlock::write(char *filename)
+void snake::physics::SupBlock::write(char *filename)
 {
   std::ofstream fout(filename,std::ios_base::out|std::ios_base::binary);
   fout.write((char*)&sitenum,sizeof sitenum);
@@ -239,23 +239,23 @@ void SupBlock::write(char *filename)
   }
   if(value_type=='r')
   {
-    writevec(fout,wf);
+    snake::math::writevec(fout,wf);
     wfmat.write(fout);
   }
   else
   {
-    writevec(fout,wfC);
+    snake::math::writevec(fout,wfC);
     wfmatC.write(fout);
-    //writevec(fout,wfC2);
+    //snake::math::writevec(fout,wfC2);
     //wfmatC2.write(fout);
   }
 }
 
 
 /*!
-    \fn SupBlock::read(char *filename)
+    \fn snake::physics::SupBlock::read(char *filename)
  */
-void SupBlock::read(char *filename)
+void snake::physics::SupBlock::read(char *filename)
 {
   std::ifstream fin(filename,std::ios_base::in|std::ios_base::binary);
   fin.read((char*)&sitenum,sizeof sitenum);
@@ -276,24 +276,24 @@ void SupBlock::read(char *filename)
   }
   if(value_type=='r')
   {
-    readvec(fin,wf);
+    snake::math::readvec(fin,wf);
     wfmat.read(fin);
   }
   else
   {
-    readvec(fin,wfC);
+    snake::math::readvec(fin,wfC);
     wfmatC.read(fin);
-    //readvec(fin,wfC2);
+    //snake::math::readvec(fin,wfC2);
     //wfmatC2.read(fin);
   }
 }
 
 
 /*!
-    \fn SupBlock::applyOPonDot(Rmatrix &OP)
+    \fn snake::physics::SupBlock::applyOPonDot(Rmatrix &OP)
  */
 /*
-void SupBlock::applyOPonDot(Rmatrix &OP)
+void snake::physics::SupBlock::applyOPonDot(Rmatrix &OP)
 {
   normalize(wf);
   evalwfmat(wf,wfmat,TargetGQN);
@@ -315,9 +315,9 @@ void SupBlock::applyOPonDot(Rmatrix &OP)
 */
 
 /*!
-\fn SupBlock::renorm()
+\fn snake::physics::SupBlock::renorm()
  */
-void SupBlock::renorm(int tn)
+void snake::physics::SupBlock::renorm(int tn)
 {
 renormleft(tn);
 renormright(tn);
@@ -346,9 +346,9 @@ renormright(tn);
 
 
 /*!
-\fn SupBlock::renormright()
+\fn snake::physics::SupBlock::renormright()
  */
-void SupBlock::renormright(int tn)
+void snake::physics::SupBlock::renormright(int tn)
 {
   if(value_type=='r')
   {
@@ -367,9 +367,9 @@ void SupBlock::renormright(int tn)
 
 
 /*!
-\fn SupBlock::renormleft()
+\fn snake::physics::SupBlock::renormleft()
  */
-void SupBlock::renormleft(int tn)
+void snake::physics::SupBlock::renormleft(int tn)
 {
   if(value_type=='r')
   {
@@ -392,9 +392,9 @@ void SupBlock::renormleft(int tn)
 
 
 /*!
-\fn SupBlock::calCF()
+\fn snake::physics::SupBlock::calCF()
  */
-void SupBlock::calCF(char *filename)
+void snake::physics::SupBlock::calCF(char *filename)
 {
 
   std::ofstream fout(filename);
@@ -415,9 +415,9 @@ void SupBlock::calCF(char *filename)
 }
 
 /*!
-\fn SupBlock::corrfunc(LaGenMatDouble &m1,char hand1,LaGenMatDouble &m0,char hand0)
+\fn snake::physics::SupBlock::corrfunc(LaGenMatDouble &m1,char hand1,LaGenMatDouble &m0,char hand0)
  */
-double SupBlock::corrfunc(Rmatrix &m1,char hand1,Rmatrix &m0,char hand0)
+double snake::physics::SupBlock::corrfunc(Rmatrix &m1,char hand1,Rmatrix &m0,char hand0)
 {
   //std::cout<<m1<<std::endl;
   //std::cout<<m0<<std::endl;
@@ -441,9 +441,9 @@ double SupBlock::corrfunc(Rmatrix &m1,char hand1,Rmatrix &m0,char hand0)
 }
 
 /*!
- \fn SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
+ \fn snake::physics::SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
  */
-void SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
+void snake::physics::SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 {
 	std::vector<int> temp;
 
@@ -457,13 +457,13 @@ void SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 
 		LaGenMatDouble wfmatfull;
 		wfmat.Convert2Full(wfmatfull);
-		unordermat(rightbase.ordermap,temp,wfmatfull);
+        snake::math::unordermat(rightbase.ordermap,temp,wfmatfull);
 		//std::cout<<wfmat<<std::endl;
 		reshapewfmat(wfmatfull,'r');
 		//std::cout<<wfmat<<std::endl;
 		oldleftbase=leftbase;
 		leftbase=kron(oldleftbase,freesite.base);
-		ordermat(temp,leftbase.ordermap,wfmatfull);
+        snake::math::ordermat(temp,leftbase.ordermap,wfmatfull);
 		//std::cout<<wfmatfull<<std::endl;
 		wfmat=Rmatrix(wfmatfull,oldrightbase,leftbase,TargetGQN);
 		unrenormwfmat(rightdtmat);
@@ -499,17 +499,17 @@ void SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 
 		LaGenMatComplex wfmatfull,gwfmatfull;
 		wfmatC.Convert2Full(wfmatfull);
-		unordermat(rightbase.ordermap,temp,wfmatfull);
+        snake::math::unordermat(rightbase.ordermap,temp,wfmatfull);
 		reshapewfmat(wfmatfull,'r');
 #if TARGET_TWO_WF
 		wfmatC2.Convert2Full(gwfmatfull);
-		unordermat(rightbase.ordermap,temp,gwfmatfull);
+        snake::math::unordermat(rightbase.ordermap,temp,gwfmatfull);
 		reshapewfmat(gwfmatfull,'r');
 #endif
 		//std::cout<<wfmat<<std::endl;
 		oldleftbase=leftbase;
 		leftbase=kron(oldleftbase,freesite.base);
-		ordermat(temp,leftbase.ordermap,wfmatfull);
+        snake::math::ordermat(temp,leftbase.ordermap,wfmatfull);
 		//std::cout<<wfmatfull<<std::endl;
 		//std::cout<<oldrightbase<<std::endl;
 		//std::cout<<leftbase<<std::endl;
@@ -517,7 +517,7 @@ void SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 		//std::cout<<wfmatC<<std::endl;
 		//wfmatfull.resize(0,0);
 #if TARGET_TWO_WF
-		ordermat(temp,leftbase.ordermap,gwfmatfull);
+        snake::math::ordermat(temp,leftbase.ordermap,gwfmatfull);
 		wfmatC2=Cmatrix(gwfmatfull,oldrightbase,leftbase,TargetGQN2);
 		//gwfmatfull.resize(0,0);
 #endif
@@ -533,9 +533,9 @@ void SupBlock::moveright(DTMat &leftdtmat,DTMat &rightdtmat)
 
 
 /*!
- \fn SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
+ \fn snake::physics::SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat,std::vector<int> &rightordermap)
  */
-void SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat)
+void snake::physics::SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat)
 {
 	std::vector<int> temp;
 
@@ -552,7 +552,7 @@ void SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat)
 		// std::cout<<Mat_Dot_Prod(wfmat,wfmat)<<std::endl;
 		LaGenMatDouble wfmatfull;
 		wfmat.Convert2Full(wfmatfull);
-		unordermat(temp,leftbase.ordermap,wfmatfull);
+        snake::math::unordermat(temp,leftbase.ordermap,wfmatfull);
 		//printvector(leftbase.ordermap);
 		//std::cout<<wfmat<<std::endl;
 		//std::cout<<wfmatfull<<std::endl;
@@ -565,7 +565,7 @@ void SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat)
 		rightbase=kron(freesite.base,oldrightbase);
 		//std::cout<<rightbase<<std::endl;
 		//std::cout<<oldleftbase<<std::endl;
-		ordermat(rightbase.ordermap,temp,wfmatfull);
+        snake::math::ordermat(rightbase.ordermap,temp,wfmatfull);
 		//std::cout<<wfmatfull<<std::endl;
 		//std::cout<<Blas_NormF(wfmatfull)<<std::endl;
 		wfmat=Rmatrix(wfmatfull,rightbase,oldleftbase,TargetGQN);
@@ -600,22 +600,22 @@ void SupBlock::moveleft(DTMat &leftdtmat,DTMat &rightdtmat)
 		wfmatC.Convert2Full(wfmatfull);
 		//std::cout<<wfmatfull<<std::endl;
 		//std::cout<<wfmatfull<<std::endl;
-		unordermat(temp,leftbase.ordermap,wfmatfull);
+        snake::math::unordermat(temp,leftbase.ordermap,wfmatfull);
 		reshapewfmat(wfmatfull,'l');
 		//std::cout<<wfmatfull<<std::endl;
 #if TARGET_TWO_WF
 		wfmatC2.Convert2Full(gwfmatfull);
-		unordermat(temp,leftbase.ordermap,gwfmatfull);
+        snake::math::unordermat(temp,leftbase.ordermap,gwfmatfull);
 		reshapewfmat(gwfmatfull,'l');
 #endif
 		//std::cout<<wfmat<<std::endl;
 		oldrightbase=rightbase;
 		rightbase=kron(freesite.base,oldrightbase);
-		ordermat(rightbase.ordermap,temp,wfmatfull);
+        snake::math::ordermat(rightbase.ordermap,temp,wfmatfull);
 		wfmatC=Cmatrix(wfmatfull,rightbase,oldleftbase,TargetGQN);
 		//wfmatfull.resize(0,0);
 #if TARGET_TWO_WF
-		ordermat(rightbase.ordermap,temp,gwfmatfull);
+        snake::math::ordermat(rightbase.ordermap,temp,gwfmatfull);
 		wfmatC2=Cmatrix(gwfmatfull,rightbase,oldleftbase,TargetGQN2);
 		//gwfmatfull.resize(0,0);
 #endif

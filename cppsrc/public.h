@@ -13,6 +13,12 @@
 #include <gmc.h>
 #include <lavc.h>
 
+namespace snake
+{
+
+namespace math
+{
+
 
 LaGenMatDouble kron(LaGenMatDouble &a,LaGenMatDouble &b);
 
@@ -57,7 +63,7 @@ void ordermat(std::vector<int> &rowmap,std::vector<int> &colmap,MType &matrix)
     matrix.inject(temp);
   }
   //  std::cout<<matrix<<std::endl;
-};
+}
 
 
 template<class MType>
@@ -90,7 +96,7 @@ void unordermat(std::vector<int> &rowmap,std::vector<int> &colmap,MType &matrix)
     matrix.inject(temp);
   }
   //std::cout<<matrix<<std::endl;
-};
+}
 
 /**Read matrix from file
 */
@@ -103,7 +109,7 @@ void readmat(std::ifstream &fin,MType &mat)
   mat.resize(row,col);
   fin.read((char*)mat.addr(),row*col*sizeof(typename MType::value_type));
 
-};
+}
 
 /**Write matrix information to file
 */
@@ -116,7 +122,7 @@ void writemat(std::ofstream &fout,MType &mat)
   fout.write((char*)&row,sizeof row);
   fout.write((char*)&col,sizeof col);
   fout.write((char*)mat.addr(),row*col*sizeof(typename MType::value_type));
-};
+}
 
 /**Read matrix from file
 */
@@ -128,7 +134,7 @@ void readvec(std::ifstream &fin,VType &vec)
   vec.resize(row,1);
   fin.read((char*)vec.addr(),row*sizeof(typename VType::value_type));
 
-};
+}
 
 /**Write matrix information to file
 */
@@ -139,7 +145,7 @@ void writevec(std::ofstream &fout,VType &vec)
   row=vec.size();
   fout.write((char*)&row,sizeof row);
   fout.write((char*)vec.addr(),row*sizeof(typename VType::value_type));
-};
+}
 
 template<class Type>
 void readvector(std::ifstream &fin, std::vector<Type> &v)
@@ -156,7 +162,7 @@ void readvector(std::ifstream &fin, std::vector<Type> &v)
     fin.read((char*)&v[i],sizeof(Type));
     //std::cout<<v[i]<<std::endl;
   }
-};
+}
 
 template<class Type>
 void writevector(std::ofstream &fout, std::vector<Type> &v)
@@ -165,7 +171,7 @@ void writevector(std::ofstream &fout, std::vector<Type> &v)
   fout.write((char*)&dim,sizeof dim);
   for(int i=0;i<dim;i++)
     fout.write((char*)&v[i],sizeof(Type));
-};
+}
 
 
 
@@ -185,7 +191,7 @@ void mat2vec(VType &v,MType &mat)
     v(LaIndex(pointer,pointer+row-1)).inject(mat(LaIndex(),LaIndex(i)));
     pointer+=row;
   }
-};
+}
 
 template<class MType,class VType>
 void vecCmat(VType &v,MType &mat)
@@ -209,7 +215,7 @@ void vecCmat(VType &v,MType &mat)
   //std::cout<<mat.size(0)<<std::endl;
   //mat.inject(v);
   //std::cout<<mat.size(0)<<std::endl;
-};
+}
 
 
 ///Add u to the end of v,so that the new v is of size v.size()+u.size()
@@ -222,7 +228,7 @@ void join(VType &v,VType &u)
     newv(LaIndex(0,v.size()-1)).inject(v);
   newv(LaIndex(v.size(),newv.size()-1)).inject(u);
   v=newv;
-};
+}
 
 
 LaGenMatDouble expm(LaGenMatDouble &m);
@@ -258,7 +264,7 @@ void printvector(std::vector<Type> &v)
     //std::cout<<std::endl;
   }
 
-};
+}
 
 ///Read matlab generated operators
 template <class MType>
@@ -346,6 +352,7 @@ void SSMED(COMPLEX* Matrix,int Dim,double* EigenValue);
 
 void blas_mat_mat_mult(double *a,long int arow,long int acol,double *b,long int brow,long int bcol,double *c,long int crow,long int ccol,double alpha=1.0,double beta=0.0);
 
-
+}
+}
 
 #endif

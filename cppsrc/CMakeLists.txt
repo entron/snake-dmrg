@@ -12,16 +12,17 @@ snake.cpp
 blocham.cpp        
 public.cpp          
 dmrg.cpp        
-gqnbase.cpp  
 gqnmat.cpp              
 block.cpp                   
-dtmat.cpp       
-gqn.cpp      
+dtmat.cpp           
 site.cpp    
 supblock.cpp  
 supblock_iDMRG.cpp
 supblock_tDMRG.cpp
 supblock_FTDMRG.cpp
+gqnbase.cpp
+gqn.cpp
+setting.h
 )
 
 target_link_libraries(Snake

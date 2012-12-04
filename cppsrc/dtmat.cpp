@@ -12,22 +12,19 @@
 #include<algorithm>
 
 
-
-double DTMat::MaxTruncateError=0;
-
-DTMat::DTMat()
+snake::physics::DTMat::DTMat()
 {
 	value_type='r';
 	KeptStatesNum=0;
 }
 
 
-DTMat::~DTMat()
+snake::physics::DTMat::~DTMat()
 {
 }
 
 
-DTMat::DTMat(char vtype,char hand)
+snake::physics::DTMat::DTMat(char vtype,char hand)
 {
 	value_type=vtype;
 	handside=hand;
@@ -35,9 +32,9 @@ DTMat::DTMat(char vtype,char hand)
 
 
 /*!
-\fn DTMat::DTMat(DTMat &mat)
+\fn snake::physics::DTMat::DTMat(DTMat &mat)
  */
-DTMat::DTMat(const DTMat &mat)
+snake::physics::DTMat::DTMat(const DTMat &mat)
 {
 	denmat=mat.denmat;
 	denmatC=mat.denmatC;
@@ -56,9 +53,9 @@ DTMat::DTMat(const DTMat &mat)
 
 
 /*!
-\fn DTMat::gendenmat(LaVectorDouble &wf)
+\fn snake::physics::DTMat::gendenmat(LaVectorDouble &wf)
  */
-void DTMat::gendenmat(Rmatrix &wfmat,GQNBase &left,GQNBase &right)
+void snake::physics::DTMat::gendenmat(Rmatrix &wfmat, snake::math::GQNBase &left, snake::math::GQNBase &right)
 {
 	leftbase=left;
 	rightbase=right;
@@ -79,7 +76,7 @@ void DTMat::gendenmat(Rmatrix &wfmat,GQNBase &left,GQNBase &right)
 }
 
 
-void DTMat::gendenmat(Cmatrix &wfmat,GQNBase &left,GQNBase &right)
+void snake::physics::DTMat::gendenmat(Cmatrix &wfmat, snake::math::GQNBase &left, snake::math::GQNBase &right)
 {
 	leftbase=left;
 	rightbase=right;
@@ -100,15 +97,15 @@ void DTMat::gendenmat(Cmatrix &wfmat,GQNBase &left,GQNBase &right)
 
 
 /*!
-\fn DTMat::findtmat()
+\fn snake::physics::DTMat::findtmat()
  */
-void DTMat::findtmat(int tn)
+void snake::physics::DTMat::findtmat(int tn)
 {
 	if(value_type=='r')
 	{
 		int Dim=denmatbase.Dim;
 		KeptStatesNum=tn;
-		if(Dim<=KeptStatesNum && MaxTruncateError==0)
+        if(Dim<=KeptStatesNum && Max_Truncate_Error==0)
 		{
 			//std::cout<<"!!!!!!!!!!!!!!!!!!!"<<std::endl;
 			tmatbase=denmatbase;
@@ -129,7 +126,7 @@ void DTMat::findtmat(int tn)
 	{
 		int Dim=denmatbase.Dim;
 		KeptStatesNum=tn;
-		if(Dim<=KeptStatesNum && MaxTruncateError==0)
+        if(Dim<=KeptStatesNum && Max_Truncate_Error==0)
 		{
 			tmatbase=denmatbase;
 			trunmatC.geneye(denmatbase);
@@ -148,9 +145,9 @@ void DTMat::findtmat(int tn)
 
 
 /*!
-    \fn DTMat::write(fout)
+    \fn snake::physics::DTMat::write(fout)
  */
-void DTMat::write(std::ofstream &fout)
+void snake::physics::DTMat::write(std::ofstream &fout)
 {
 
 	fout.write(&value_type,sizeof value_type);
@@ -172,9 +169,9 @@ void DTMat::write(std::ofstream &fout)
 
 
 /*!
-    \fn DTMat::read(fin)
+    \fn snake::physics::DTMat::read(fin)
  */
-void DTMat::read(std::ifstream &fin)
+void snake::physics::DTMat::read(std::ifstream &fin)
 {
 	fin.read(&value_type,sizeof value_type);
 	fin.read(&handside,sizeof handside);
@@ -196,18 +193,18 @@ void DTMat::read(std::ifstream &fin)
 
 
 /*!
-    \fn DTMat::DTMat(std::ifstream &fin)
+    \fn snake::physics::DTMat::DTMat(std::ifstream &fin)
  */
-DTMat::DTMat(std::ifstream &fin)
+snake::physics::DTMat::DTMat(std::ifstream &fin)
 {
 	read(fin);
 }
 
 
 /*!
-    \fn DTMat::renorm()
+    \fn snake::physics::DTMat::renorm()
  */
-void DTMat::renorm()
+void snake::physics::DTMat::renorm()
 {
 	if(value_type=='r')
 	{
@@ -230,9 +227,9 @@ void DTMat::renorm()
 
 
 /*!
-    \fn DTMat::toComplex()
+    \fn snake::physics::DTMat::toComplex()
  */
-void DTMat::toComplex()
+void snake::physics::DTMat::toComplex()
 {
 	if(value_type=='r')
 	{
@@ -248,9 +245,9 @@ void DTMat::toComplex()
 
 
 /*!
-    \fn DTMat::vonNeumannEntropy(LaVectorDouble &eigvals)
+    \fn snake::physics::DTMat::vonNeumannEntropy(LaVectorDouble &eigvals)
  */
-double DTMat::vonNeumannEntropy(LaVectorDouble &eigvals)
+double snake::physics::DTMat::vonNeumannEntropy(LaVectorDouble &eigvals)
 {
 	double entropy=0;
 	int dim=eigvals.size();
@@ -265,9 +262,9 @@ double DTMat::vonNeumannEntropy(LaVectorDouble &eigvals)
 
 
 /*!
-    \fn DTMat::operator=(const DTMat& dtmat)
+    \fn snake::physics::DTMat::operator=(const DTMat& dtmat)
  */
-DTMat& DTMat::operator=(const DTMat& dtmat)
+snake::physics::DTMat& snake::physics::DTMat::operator=(const DTMat& dtmat)
 {
 	value_type=dtmat.value_type;
 	denmat=dtmat.denmat;

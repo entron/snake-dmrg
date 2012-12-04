@@ -1,19 +1,19 @@
 #include "setting.h"
 #include "gqn.h"
 
-GQN::GQN()
+snake::math::GQN::GQN()
 {
   num=NUMBER_OF_GOOD_QUANTUM_NUMBER;
   gqn.resize(num);
 }
 
-GQN::~GQN()
+snake::math::GQN::~GQN()
 {
 
 }
 
 
-GQN& GQN::operator= (const GQN& Gvar)
+snake::math::GQN& snake::math::GQN::operator= (const snake::math::GQN& Gvar)
 {
     for(int i=0;i<NUMBER_OF_GOOD_QUANTUM_NUMBER;i++)
     {
@@ -21,7 +21,7 @@ GQN& GQN::operator= (const GQN& Gvar)
     }
     return *this;
 }
-bool GQN::operator==(const GQN& Gvar)const
+bool snake::math::GQN::operator==(const snake::math::GQN& Gvar)const
 {
     for(int i=0;i<NUMBER_OF_GOOD_QUANTUM_NUMBER;i++)
     {
@@ -29,7 +29,7 @@ bool GQN::operator==(const GQN& Gvar)const
     }
     return true;
 }
-bool GQN::operator==(const std::vector<GQN>& Gvecvar)const
+bool snake::math::GQN::operator==(const std::vector<snake::math::GQN>& Gvecvar)const
 {
 	int vlen=Gvecvar.size();
 	for(int n=0;n<vlen;n++)
@@ -40,7 +40,7 @@ bool GQN::operator==(const std::vector<GQN>& Gvecvar)const
 }
 
 
-bool GQN::operator!=(const GQN& Gvar)const
+bool snake::math::GQN::operator!=(const snake::math::GQN& Gvar)const
 {
     for(int i=0;i<NUMBER_OF_GOOD_QUANTUM_NUMBER;i++)
     {
@@ -48,7 +48,7 @@ bool GQN::operator!=(const GQN& Gvar)const
     }
     return false;
 }
-bool GQN::operator> (const GQN& Gvar)const
+bool snake::math::GQN::operator> (const snake::math::GQN& Gvar)const
 {
     for(int i=0;i<NUMBER_OF_GOOD_QUANTUM_NUMBER;i++)
     {
@@ -57,7 +57,7 @@ bool GQN::operator> (const GQN& Gvar)const
     }
     return false;
 }
-bool GQN::operator< (const GQN& Gvar)const
+bool snake::math::GQN::operator< (const snake::math::GQN& Gvar)const
 {
     for(int i=0;i<NUMBER_OF_GOOD_QUANTUM_NUMBER;i++)
     {
@@ -66,7 +66,7 @@ bool GQN::operator< (const GQN& Gvar)const
     }
     return false;
 }
-GQN& GQN::operator+=(const GQN& Gvar)
+snake::math::GQN& snake::math::GQN::operator+=(const snake::math::GQN& Gvar)
 {
     for(int i=0;i<NUMBER_OF_GOOD_QUANTUM_NUMBER;i++)
     {
@@ -75,7 +75,7 @@ GQN& GQN::operator+=(const GQN& Gvar)
     return *this;
 }
 
-GQN& GQN::operator-=(const GQN& Gvar)
+snake::math::GQN& snake::math::GQN::operator-=(const snake::math::GQN& Gvar)
 {
   for(int i=0;i<NUMBER_OF_GOOD_QUANTUM_NUMBER;i++)
   {
@@ -84,22 +84,22 @@ GQN& GQN::operator-=(const GQN& Gvar)
   return *this;
 }
 
-GQN  GQN::operator+ (const GQN& Gvar)const
+snake::math::GQN  snake::math::GQN::operator+ (const snake::math::GQN& Gvar)const
 {
-    GQN Gsum=*this;
+    snake::math::GQN Gsum=*this;
     Gsum+=Gvar;
     return Gsum;
 }
 
 
-GQN  GQN::operator- (const GQN& Gvar)const
+snake::math::GQN  snake::math::GQN::operator- (const snake::math::GQN& Gvar)const
 {
-  GQN Gminus=*this;
+  snake::math::GQN Gminus=*this;
   Gminus-=Gvar;
   return Gminus;
 }
 
-std::ostream& operator<<(std::ostream& output,const GQN& GQvar)
+std::ostream& snake::math::operator<<(std::ostream& output,const snake::math::GQN& GQvar)
 {
     output<<"(";
     if(NUMBER_OF_GOOD_QUANTUM_NUMBER==1)
@@ -118,9 +118,9 @@ std::ostream& operator<<(std::ostream& output,const GQN& GQvar)
 }
 
 /*!
-    \fn GQN::none()
+    \fn snake::math::GQN::none()
  */
-void GQN::none()
+void snake::math::GQN::none()
 {
   for(int i=0;i<num;i++)
     gqn[i]=99999;
@@ -128,9 +128,9 @@ void GQN::none()
 
 
 /*!
-    \fn GQN::write(std::ofstream &fout)
+    \fn snake::math::GQN::write(std::ofstream &fout)
  */
-void GQN::write(std::ofstream &fout)
+void snake::math::GQN::write(std::ofstream &fout)
 {
   fout.write((char*)&num,sizeof num);
   for(int i=0;i<num;i++)
@@ -139,9 +139,9 @@ void GQN::write(std::ofstream &fout)
 
 
 /*!
-    \fn GQN::read(std::ifstream &fin)
+    \fn snake::math::GQN::read(std::ifstream &fin)
  */
-void GQN::read(std::ifstream &fin)
+void snake::math::GQN::read(std::ifstream &fin)
 {
   fin.read((char*)&num,sizeof num);
   for(int i=0;i<num;i++)
@@ -150,10 +150,10 @@ void GQN::read(std::ifstream &fin)
 
 
 /*!
-    \fn GQN::operator=(int n)
+    \fn snake::math::GQN::operator=(int n)
 ///For the compatibility with earlier codes
  */
-GQN& GQN::operator=(int n)
+snake::math::GQN& snake::math::GQN::operator=(int n)
 {
   if(num==1)
     gqn[0]=n;

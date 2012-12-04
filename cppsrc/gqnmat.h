@@ -18,6 +18,11 @@ Class of partitioned matrix accoding to good quantum number.
 #include <vector>
 #include <iostream>
 
+namespace snake
+{
+
+namespace math
+{
 
 template <class MType>
 class GQNMat{
@@ -48,7 +53,7 @@ public:
   GQNMat(const GQNBase &row,const GQNBase &col);
 
   GQNMat(MType& mat, GQNBase &rowbase,GQNBase &colbase,int mode);
-  GQNMat(MType& mat, GQNBase &rowbase,GQNBase &colbase, std::vector<GQN> &TargetGQN);
+  GQNMat(MType& mat, GQNBase &rowbase,GQNBase &colbase, std::vector<snake::math::GQN> &TargetGQN);
   void inject(const GQNMat& mat);
   //  std::ostream& operator<<(std::ostream& os, const GQNMat& mat);
   void write(std::ofstream& fout);
@@ -246,7 +251,7 @@ GQNMat<MType>::GQNMat(MType& mat, GQNBase &row,GQNBase &col,int mode)
 
 
 template<class MType>
-GQNMat<MType>::GQNMat(MType& mat, GQNBase &row,GQNBase &col, std::vector<GQN> &TargetGQN)
+GQNMat<MType>::GQNMat(MType& mat, GQNBase &row,GQNBase &col, std::vector<snake::math::GQN> &TargetGQN)
 {
   subnum=0;
   tempsubnum=0;
@@ -737,8 +742,8 @@ template<class MType>
 void GQNMat<MType>::combine()
 {
   //std::cout<<rowbase.tempTargetGQN.size()<<std::endl;
-  std::vector<GQN> rowsubgqn(rowbase.tempsubgqn);
-  std::vector<GQN> colsubgqn(colbase.tempsubgqn);
+  std::vector<snake::math::GQN> rowsubgqn(rowbase.tempsubgqn);
+  std::vector<snake::math::GQN> colsubgqn(colbase.tempsubgqn);
   pmat.resize(rowbase.subnum,colbase.subnum);
   pmat=-1;
 
@@ -890,4 +895,7 @@ GQNMat<MType> GQNMat<MType>::operator+(const GQNMat<MType> &b) const
 
 void R2C(GQNMat<LaGenMatDouble> &r,GQNMat<LaGenMatComplex> &c);
 void C2R(GQNMat<LaGenMatComplex> &c,GQNMat<LaGenMatDouble> &r);
+
+}
+}
 #endif

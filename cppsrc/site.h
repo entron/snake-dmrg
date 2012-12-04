@@ -18,13 +18,20 @@ This class contains the information of the operators of a site.
 #include <vector>
 #include <fstream>
 
+namespace snake
+{
+
+namespace physics
+{
+
+
 class Block;
 class DTMat;
 
 class Site
 {
 public:
-  GQNBase base;
+  snake::math::GQNBase base;
   
   ///annilation,creation and number operator.
   std::vector<Rmatrix> a,c,n;
@@ -74,6 +81,9 @@ public:
     void genspinlessfermion();
     void genspinFTDMRG();
 };
+
+}
+}
 
 #endif
 

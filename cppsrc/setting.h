@@ -20,15 +20,15 @@
 
 
 
-
+#define   Max_Truncate_Error 1e-12
 
 
 #include "gqnmat.h"
 #define LA_COMPLEX_SUPPORT
 #include <gmc.h>
 #include <gmd.h>
-typedef GQNMat<LaGenMatDouble>  Rmatrix;
-typedef GQNMat<LaGenMatComplex>   Cmatrix;
+typedef snake::math::GQNMat<LaGenMatDouble>  Rmatrix;
+typedef snake::math::GQNMat<LaGenMatComplex>   Cmatrix;
 
 
 #endif

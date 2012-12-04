@@ -2,29 +2,29 @@
 #include<algorithm>
 #include "public.h"
 
-GQNBase::GQNBase()
+snake::math::GQNBase::GQNBase()
 {
   Dim=0;
   subnum=0;
 }
 
 
-GQNBase::~GQNBase()
+snake::math::GQNBase::~GQNBase()
 {
 }
 
 
 /*!
-\fn GQNBase::kron(GQNBase &b1,GQNBase &b2)
+\fn snake::math::GQNBase::kron(snake::math::GQNBase &b1,snake::math::GQNBase &b2)
  */
 
-GQNBase kron(const GQNBase& b1,const GQNBase& b2)
+snake::math::GQNBase snake::math::kron(const snake::math::GQNBase& b1,const snake::math::GQNBase& b2)
 {
-  GQNBase b;
+  snake::math::GQNBase b;
 
   b.tempdim.resize(b1.subnum*b2.subnum);
   b.tempsubgqn.resize(b1.subnum*b2.subnum);
-  std::vector<GQN> tempsubgqnC(b1.subnum*b2.subnum);
+  std::vector<snake::math::GQN> tempsubgqnC(b1.subnum*b2.subnum);
 
   int n=0;
   for(int i=0;i<b1.subnum;i++)
@@ -36,7 +36,7 @@ GQNBase kron(const GQNBase& b1,const GQNBase& b2)
       n++;
     }
 
-  std::vector<GQN> subgqnordered(b.tempsubgqn);
+  std::vector<snake::math::GQN> subgqnordered(b.tempsubgqn);
   sort(subgqnordered.begin(),subgqnordered.end());
   //for(int i=0;i<subgqnordered.size();i++)
   // std::cout<<subgqnordered[i]<<std::endl;
@@ -57,7 +57,7 @@ GQNBase kron(const GQNBase& b1,const GQNBase& b2)
 
   ///Caculate subnum
   b.subnum=1;
-  GQN lastsubgqn=subgqnordered[0];
+  snake::math::GQN lastsubgqn=subgqnordered[0];
   for(int i=1;i<subgqnordered.size();i++)
     if(subgqnordered[i]!=lastsubgqn)
     {
@@ -88,9 +88,9 @@ GQNBase kron(const GQNBase& b1,const GQNBase& b2)
 
 
 /*!
-\fn GQNBase::truncate(GQNBase &dbase,GQNBase &tbase,LaVectorDouble &eigval,double cutedge,int *mark)
+\fn snake::math::GQNBase::truncate(snake::math::GQNBase &dbase,snake::math::GQNBase &tbase,LaVectorDouble &eigval,double cutedge,int *mark)
  */
-void truncate(GQNBase &denmatbase,GQNBase &tmatbase,LaVectorDouble &eigval,double cutedge,int *mark)
+void snake::math::truncate(snake::math::GQNBase &denmatbase,snake::math::GQNBase &tmatbase,LaVectorDouble &eigval,double cutedge,int *mark)
 {
   int subnum=denmatbase.subnum;
   int m=0,n=0,p=0,q=0;
@@ -127,9 +127,9 @@ void truncate(GQNBase &denmatbase,GQNBase &tmatbase,LaVectorDouble &eigval,doubl
 
 
 /*!
-\fn GQNBase::write(fstream &fout)
+\fn snake::math::GQNBase::write(fstream &fout)
  */
-void GQNBase::write(std::ofstream &fout)
+void snake::math::GQNBase::write(std::ofstream &fout)
 {
   fout.write((char*)&Dim,sizeof Dim);
   fout.write((char*)&subnum,sizeof subnum);
@@ -142,9 +142,9 @@ void GQNBase::write(std::ofstream &fout)
 
 
 /*!
-\fn GQNBase::read(std::ifstream &fin)
+\fn snake::math::GQNBase::read(std::ifstream &fin)
  */
-void GQNBase::read(std::ifstream &fin)
+void snake::math::GQNBase::read(std::ifstream &fin)
 {
   fin.read((char*)&Dim,sizeof Dim);
   fin.read((char*)&subnum,sizeof subnum);
@@ -160,9 +160,9 @@ void GQNBase::read(std::ifstream &fin)
 
 
 /*!
-\fn GQNBase::genordermap(GQNBase& b1,GQNBase& b2)
+\fn snake::math::GQNBase::genordermap(snake::math::GQNBase& b1,snake::math::GQNBase& b2)
  */
-void GQNBase::genordermap(const GQNBase& b1,const GQNBase& b2)
+void snake::math::GQNBase::genordermap(const snake::math::GQNBase& b1,const snake::math::GQNBase& b2)
 {
   ordermap.resize(Dim);
   int orderrow,start=0;
@@ -184,23 +184,23 @@ void GQNBase::genordermap(const GQNBase& b1,const GQNBase& b2)
   }
 }
 
-void GQNBase::genvacuumbase()
+void snake::math::GQNBase::genvacuumbase()
 {
 	Dim=1;
 	subnum=1;
 	dim.resize(1);
-	subgqn.resize(1);
+    subgqn.resize(1);
 	dim[0]=1;
-	subgqn[0]=0;
+    subgqn[0]=0;
 
 }
 
 
 /*!
-\fn GQNBase::operator=(GQNBase &b)
+\fn snake::math::GQNBase::operator=(snake::math::GQNBase &b)
  */
 
-GQNBase& GQNBase::operator=(const GQNBase& b)
+snake::math::GQNBase& snake::math::GQNBase::operator=(const snake::math::GQNBase& b)
 {
   dim=b.dim;
   subgqn=b.subgqn;
@@ -213,9 +213,9 @@ GQNBase& GQNBase::operator=(const GQNBase& b)
 }
 
 /*!
-\fn GQNBase::operator==(GQNBase& base)
+\fn snake::math::GQNBase::operator==(snake::math::GQNBase& base)
  */
-int GQNBase::operator==(const GQNBase& base) const
+int snake::math::GQNBase::operator==(const snake::math::GQNBase& base) const
 {
   if(dim==base.dim&&Dim==base.Dim&&subgqn==base.subgqn&&subnum==base.subnum)
     return 1;
@@ -225,9 +225,9 @@ int GQNBase::operator==(const GQNBase& base) const
 
 
 /*!
-\fn GQNBase::operator!=(GQNBase& base)
+\fn snake::math::GQNBase::operator!=(snake::math::GQNBase& base)
  */
-int GQNBase::operator!=(const GQNBase& base) const
+int snake::math::GQNBase::operator!=(const snake::math::GQNBase& base) const
 {
   if(*this==base)
     return 0;
@@ -235,7 +235,7 @@ int GQNBase::operator!=(const GQNBase& base) const
     return 1;
 }
 
-std::ostream & operator<<(std::ostream& os, const GQNBase& base)
+std::ostream & snake::math::operator<<(std::ostream& os, const snake::math::GQNBase& base)
 {
   std::cout<<"-----GQNBase-----"<<std::endl;
   std::cout<<"Dim="<<base.Dim<<"  subnum="<<base.subnum<<std::endl;

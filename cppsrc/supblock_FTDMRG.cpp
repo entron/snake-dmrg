@@ -10,9 +10,9 @@
 #include"supblock.h"
 
 /*!
- \fn SupBlock::geninitialwf();
+ \fn snake::physics::SupBlock::geninitialwf();
  */
-void SupBlock::geninitialwf()
+void snake::physics::SupBlock::geninitialwf()
 {
 	wfmat.resize(rightbase,leftbase);
 	wfmat.subnum=1;
@@ -25,9 +25,9 @@ void SupBlock::geninitialwf()
 
 
 /*!
- \fn SupBlock::geninitialbases()
+ \fn snake::physics::SupBlock::geninitialbases()
  */
-void SupBlock::geninitialbases()
+void snake::physics::SupBlock::geninitialbases()
 {
 	leftbase.Dim=4;
 	leftbase.subnum=3;
@@ -53,9 +53,9 @@ void SupBlock::geninitialbases()
 
 
 /*!
- \fn SupBlock::geninitialdtmats(std::vector<DTMat> &left, std::vector<DTMat> &right)
+ \fn snake::physics::SupBlock::geninitialdtmats(std::vector<DTMat> &left, std::vector<DTMat> &right)
 */
-void SupBlock::geninitialdtmats(std::vector<DTMat> &leftdt, std::vector<DTMat> &rightdt)
+void snake::physics::SupBlock::geninitialdtmats(std::vector<DTMat> &leftdt, std::vector<DTMat> &rightdt)
 {
 	LaGenMatDouble trunmat,trunmattrans;
 	leftdt.resize(sitenum);
@@ -88,9 +88,9 @@ void SupBlock::geninitialdtmats(std::vector<DTMat> &leftdt, std::vector<DTMat> &
 }
 
 /*!
- \fn SupBlock::evolve(LaGenMatDouble &T,int timesteps)
+ \fn snake::physics::SupBlock::evolve(LaGenMatDouble &T,int timesteps)
  */
-void SupBlock::evolve(std::vector<LaGenMatDouble> &gs_proj,int timesteps)
+void snake::physics::SupBlock::evolve(std::vector<LaGenMatDouble> &gs_proj,int timesteps)
 {
 	///Initialize
 	geninitialdtmats(leftdtmat,rightdtmat);
@@ -162,7 +162,6 @@ void SupBlock::evolve(std::vector<LaGenMatDouble> &gs_proj,int timesteps)
 		//std::cout<<freesite.n[0]<<std::endl;
 		occnum=tempmat.trace();
 		//    foccnum<<occnum<<std::endl;
-		std::cout<<"The acumulated truncation error is "<<totaltrunerror<<std::endl;
 	}
 	//foccnum<<std::endl;
 	//fentropy<<std::endl;

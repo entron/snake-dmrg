@@ -17,6 +17,12 @@ Hamiltonian of a block. Sometimes the class can be used as other block operators
 #include<vector>
 #include<fstream>
 
+namespace snake
+{
+
+namespace physics
+{
+
 class DTMat;
 class Site;
 
@@ -32,7 +38,7 @@ public:
   char value_type;
 
   ///Base of BlocHam
-  GQNBase base;
+  snake::math::GQNBase base;
 
 public:
     BlocHam();
@@ -62,5 +68,8 @@ public:
   void toComplex();
 
 };
+
+}
+}
 
 #endif

@@ -21,17 +21,22 @@
 #include "dmrg.h"
 
 
+namespace snake
+{
 long int multnum=0; //Using for debug
+//std::vector<snake::physics::Site> allfreesites;
+}
+
 //Site freesite;
-double totaltrunerror=0;
-std::vector<Site> allfreesites;
+
 //std::ofstream foccnum,;
+
 
 int main()
 {
   double time_start = time(0);
 
-  DMRG chain1;
+  snake::physics::DMRG chain1;
   chain1.mkdir();
 
   chain1.iDMRG();
@@ -40,7 +45,7 @@ int main()
   chain1.iDMRG2tDMRG();
   chain1.tDMRG();
 
-  std::cout<<std::endl<<"The multipling times is "<<std::endl<<multnum<<std::endl;
+  std::cout<<std::endl<<"The multipling times is "<<std::endl<<snake::multnum<<std::endl;
   std::cout << std::endl << "Total CPU time = " << (time(0) - time_start )  << " seconds" << std::endl ;
   return EXIT_SUCCESS;
 }

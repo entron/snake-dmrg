@@ -18,8 +18,11 @@ Density and truncation matrix class.The main purpose is to evaluate density matr
 #include<vector>
 #include<fstream>
 
+namespace snake
+{
 
-extern double totaltrunerror;
+namespace physics
+{
 
 class DTMat{
 public:
@@ -28,13 +31,12 @@ public:
 
 	///Truncation number.
 	int KeptStatesNum;
-	static double MaxTruncateError;
 
 	char handside;
 
 	char value_type;
 
-	GQNBase leftbase,rightbase,denmatbase,tmatbase;
+    snake::math::GQNBase leftbase,rightbase,denmatbase,tmatbase;
 	double entropy;
 
 public:
@@ -44,8 +46,8 @@ public:
     DTMat(std::ifstream &fin);
 	DTMat(const DTMat &mat);
 
-	void gendenmat(Rmatrix &wfmat,GQNBase &l,GQNBase &r);
-	void gendenmat(Cmatrix &wfmat,GQNBase &l,GQNBase &r);
+    void gendenmat(Rmatrix &wfmat,snake::math::GQNBase &l,snake::math::GQNBase &r);
+    void gendenmat(Cmatrix &wfmat,snake::math::GQNBase &l,snake::math::GQNBase &r);
 
 	void findtmat(int tn);
 
@@ -70,8 +72,9 @@ private:
 
 };
 
+
 template<typename DMType, typename MType>
-void DTMat::eig(DMType &dm, MType &evc, LaVectorDouble &evl)
+void snake::physics::DTMat::eig(DMType &dm, MType &evc, LaVectorDouble &evl)
 {
 	//evc.resize(Dim,Dim);
 	//evl.resize(Dim);
@@ -92,7 +95,7 @@ void DTMat::eig(DMType &dm, MType &evc, LaVectorDouble &evl)
 		}
 		else
 			subdenmat.copy(dm.submat[dm.pmat(i,i)]);
-		SSMED(subdenmat.addr(),subdim,subeigval.addr());
+        snake::math::SSMED(subdenmat.addr(),subdim,subeigval.addr());
 		evl(LaIndex(start,start+subdim-1)).inject(subeigval);
 		evc(LaIndex(start,start+subdim-1),LaIndex(start,start+subdim-1)).inject(subdenmat);
 		start+=subdim;
@@ -100,10 +103,10 @@ void DTMat::eig(DMType &dm, MType &evc, LaVectorDouble &evl)
 
 	double mod=Blas_Norm1(evl);
 	evl.scale(1/mod);
-};
+}
 
 template<typename TMType, typename MType>
-void DTMat::caltruncatemat(MType &evc, LaVectorDouble &evl, TMType &trumat)
+void snake::physics::DTMat::caltruncatemat(MType &evc, LaVectorDouble &evl, TMType &trumat)
 {
 	int Dim=denmatbase.Dim;
 
@@ -115,19 +118,18 @@ void DTMat::caltruncatemat(MType &evc, LaVectorDouble &evl, TMType &trumat)
 
 	double cutedge;
 
-	if(Dim<=KeptStatesNum && MaxTruncateError>0)
-		cutedge=MaxTruncateError;
+    if(Dim<=KeptStatesNum && Max_Truncate_Error>0)
+        cutedge=Max_Truncate_Error;
 	else
 	{
 		cutedge=temp[Dim-KeptStatesNum];
-		if(cutedge<MaxTruncateError)
-			cutedge=MaxTruncateError;
+        if(cutedge<Max_Truncate_Error)
+            cutedge=Max_Truncate_Error;
 	}
 
 	double trunerror=0;
 	for(int i=0;temp[i]<cutedge;i++)
 		trunerror+=temp[i];
-	totaltrunerror+=trunerror;
 	entropy=vonNeumannEntropy(evl);
 
 	///Generate trunmat
@@ -153,7 +155,9 @@ void DTMat::caltruncatemat(MType &evc, LaVectorDouble &evl, TMType &trumat)
     //std::cout<<tmatbase<<std::endl;
 	trumat=TMType(trunmatfull,denmatbase,tmatbase,1);
 
-};
+}
+
+}}
 
 
 

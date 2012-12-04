@@ -10,26 +10,26 @@
 #include <blaspp.h>
 
 
-Site::Site()
+snake::physics::Site::Site()
 {
   value_type='r';
   num=NUMBER_OF_KINDS_OF_PARTICLES;
 
 }
 
-Site::~Site()
+snake::physics::Site::~Site()
 {
 }
 
 /*!
-\fn Site::Site(const Site &s)
+\fn snake::physics::Site::Site(constsnake::physics::Site& s)
  */
-Site::Site(const Site &s)
+snake::physics::Site::Site(const snake::physics::Site& s)
 {
     /// @todo implement me
 }
 
-void Site::eval()
+void snake::physics::Site::eval()
 {
   if(value_type=='r')
   {
@@ -56,9 +56,9 @@ void Site::eval()
 }
 
 /*!
-    \fn Site::renorm(LaGenMat &trunmat)
+    \fn snake::physics::Site::renorm(LaGenMat &trunmat)
  */
-void Site::renorm(DTMat &mat)
+void snake::physics::Site::renorm(DTMat &mat)
 {
   int KeptStatesNum;
   KeptStatesNum=mat.tmatbase.Dim;
@@ -95,9 +95,9 @@ void Site::renorm(DTMat &mat)
 
 
 /*!
-    \fn Site::addsite(Site & add,char hand)
+    \fn snake::physics::Site::addsite(Site&  add,char hand)
  */
-void Site::addsite(Site & add,char hand)
+void snake::physics::Site::addsite(Site&  add,char hand)
 {
   if(value_type=='r')
   {
@@ -162,9 +162,9 @@ void Site::addsite(Site & add,char hand)
 
 
 /*!
-    \fn Site::addtoblock(Block &b,char hand)
+    \fn snake::physics::Site::addtoblock(Block &b,char hand)
  */
-void Site::addtoblock(Block &b,char hand)
+void snake::physics::Site::addtoblock(Block &b,char hand)
 {
   if(value_type=='r')
   {
@@ -241,10 +241,10 @@ void Site::addtoblock(Block &b,char hand)
 
 
 /*
-void Site::genfreesite()
+void snake::physics::Site::genfreesite()
 {
 
-	std::string fname="./model/site_operators.dat";
+    std::string fname="./model/operators.dat";
 	std::ifstream opfin(fname.c_str(),std::ios_base::in|std::ios_base::binary);
 	std::string fname2="./model/site_base.dat";
 	std::ifstream basefin(fname2.c_str(),std::ios_base::in|std::ios_base::binary);
@@ -261,7 +261,7 @@ void Site::genfreesite()
 }
 */
 
-void Site::readsite(std::ifstream &basefin, std::ifstream &siteopfin)
+void snake::physics::Site::readsite(std::ifstream &basefin, std::ifstream &siteopfin)
 {
   value_type='r';
   num=NUMBER_OF_KINDS_OF_PARTICLES;
@@ -272,9 +272,9 @@ void Site::readsite(std::ifstream &basefin, std::ifstream &siteopfin)
 
 	base.read(basefin);
   //std::cout<<base<<std::endl;
-	ReadOneOperator(siteopfin, afull);
+    snake::math::ReadOneOperator(siteopfin, afull);
   //std::cout<<afull<<std::endl;
-	ReadOneOperator(siteopfin, nfull);
+    snake::math::ReadOneOperator(siteopfin, nfull);
   //std::cout<<nfull<<std::endl;
 	if(base.subnum==1)
 		a[0]=Rmatrix(afull,base,base,1);
@@ -287,9 +287,9 @@ void Site::readsite(std::ifstream &basefin, std::ifstream &siteopfin)
 
 
 /*!
-    \fn Site::write(std::ofstream &fout)
+    \fn snake::physics::Site::write(std::ofstream &fout)
  */
-void Site::write(std::ofstream &fout)
+void snake::physics::Site::write(std::ofstream &fout)
 {
   fout.write(&value_type,sizeof value_type);
   base.write(fout);
@@ -311,9 +311,9 @@ void Site::write(std::ofstream &fout)
 
 
 /*!
-    \fn Site::read(std::ifstream &fin)
+    \fn snake::physics::Site::read(std::ifstream &fin)
  */
-void Site::read(std::ifstream &fin)
+void snake::physics::Site::read(std::ifstream &fin)
 {
   fin.read(&value_type,sizeof value_type);
   base.read(fin);
@@ -337,9 +337,9 @@ void Site::read(std::ifstream &fin)
 
 
 /*!
-    \fn Site::Site(std::ifstream &fin)
+    \fn snake::physics::Site::Site(std::ifstream &fin)
  */
-Site::Site(std::ifstream &fin)
+snake::physics::Site::Site(std::ifstream &fin)
 {
   num=NUMBER_OF_KINDS_OF_PARTICLES;
   read(fin);
@@ -347,10 +347,10 @@ Site::Site(std::ifstream &fin)
 
 
 /*!
-    \fn Site::operator=(Site &s)
+    \fn snake::physics::Site::operator=(Site& s)
  */
 
-Site& Site::operator=(const Site& s)
+snake::physics::Site& snake::physics::Site::operator=(const snake::physics::Site& s)
 {
   value_type=s.value_type;
   num=s.num;
@@ -367,9 +367,9 @@ Site& Site::operator=(const Site& s)
 
 
 /*!
-    \fn Site::toComplex()
+    \fn snake::physics::Site::toComplex()
  */
-void Site::toComplex()
+void snake::physics::Site::toComplex()
 {
   if(value_type=='r')
   {
@@ -386,7 +386,7 @@ void Site::toComplex()
   }
 }
 
-std::ostream & operator<<(std::ostream& os, const Site& site)
+std::ostream & operator<<(std::ostream& os, const snake::physics::Site& site)
 {
   std::cout<<"===Site Information==="<<std::endl;
   std::cout<<site.base<<std::endl;
@@ -401,9 +401,9 @@ std::ostream & operator<<(std::ostream& os, const Site& site)
 
 
 /*!
-\fn Site::multsignmat()
+\fn snake::physics::Site::multsignmat()
  */
-void Site::multsignmat()
+void snake::physics::Site::multsignmat()
 {
   for(int i=0;i<num;i++)
   {
@@ -418,10 +418,10 @@ void Site::multsignmat()
 
 
 /*!
-    \fn Site::genfermion()
+    \fn snake::physics::Site::genfermion()
  */
 /*
-void Site::genfermion()
+void snake::physics::Site::genfermion()
 {
   int dim=4;
   base.Dim=4;
@@ -494,10 +494,10 @@ void Site::genfermion()
 */
 
 /*!
-    \fn Site::genspin()
+    \fn snake::physics::Site::genspin()
  */
 /*
-void Site::genspin()
+void snake::physics::Site::genspin()
 {
   int dim=2;
   base.Dim=2;
@@ -541,10 +541,10 @@ void Site::genspin()
 
 
 /*!
-    \fn Site::genspinlessfermion()
+    \fn snake::physics::Site::genspinlessfermion()
  */
 /*
-void Site::genspinlessfermion()
+void snake::physics::Site::genspinlessfermion()
 {
   int dim=2;
   base.Dim=2;
@@ -582,10 +582,10 @@ void Site::genspinlessfermion()
 
 */
 /*!
-    \fn Site::genspinFTDMRG()
+    \fn snake::physics::Site::genspinFTDMRG()
  */
 /*
-void Site::genspinFTDMRG()
+void snake::physics::Site::genspinFTDMRG()
 {
   LaGenMatDouble sa(2,2);
   LaGenMatDouble sc(2,2);

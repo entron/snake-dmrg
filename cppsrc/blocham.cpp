@@ -2,6 +2,7 @@
 #include "dtmat.h"
 #include "site.h"
 #include "public.h"
+#include "gqnbase.h"
 
 #include<blas3pp.h>
 #include<blaspp.h>
@@ -9,19 +10,20 @@
 #include <iostream>
 
 
-BlocHam::BlocHam()
+
+snake::physics::BlocHam::BlocHam()
 {
   value_type='r';
 }
 
-BlocHam::~BlocHam()
+snake::physics::BlocHam::~BlocHam()
 {
 }
 
 /*!
-\fn BlocHam::BlocHam(Site &first)
+\fn snake::physics::BlocHam::BlocHam(Site &first)
  */
-BlocHam::BlocHam(Site &first,double OnSiteE)
+snake::physics::BlocHam::BlocHam(Site &first,double OnSiteE)
 {
 	value_type=first.value_type;
 	base=first.base;
@@ -47,9 +49,9 @@ BlocHam::BlocHam(Site &first,double OnSiteE)
 }
 
 /*!
-\fn BlocHam::BlocHam(std::ifstream &fin)
+\fn snake::physics::BlocHam::BlocHam(std::ifstream &fin)
  */
-BlocHam::BlocHam(std::ifstream &fin)
+snake::physics::BlocHam::BlocHam(std::ifstream &fin)
 {
   read(fin);
 }
@@ -58,10 +60,10 @@ BlocHam::BlocHam(std::ifstream &fin)
 
 
 /*!
-\fn BlocHam::newblocham(Site &add)
+\fn snake::physics::BlocHam::newblocham(Site &add)
  */
 
-BlocHam::BlocHam(BlocHam *oldham,Site &add,Rmatrix &Hinter,char hand)
+snake::physics::BlocHam::BlocHam(BlocHam *oldham,Site &add,Rmatrix &Hinter,char hand)
 {
   value_type='r';
   Rmatrix identity;
@@ -86,7 +88,7 @@ BlocHam::BlocHam(BlocHam *oldham,Site &add,Rmatrix &Hinter,char hand)
   }
 }
 
-BlocHam::BlocHam(BlocHam *oldham,Site &add,Cmatrix &Hinter,char hand)
+snake::physics::BlocHam::BlocHam(BlocHam *oldham,Site &add,Cmatrix &Hinter,char hand)
 {
   value_type='c';
   Cmatrix identity;
@@ -108,9 +110,9 @@ BlocHam::BlocHam(BlocHam *oldham,Site &add,Cmatrix &Hinter,char hand)
 
 
 /*!
-\fn BlocHam::BlocHam(BlocHam *oldham,Site &add,LaGenMatDouble &Hinter,char hand,int NOinter)
+\fn snake::physics::BlocHam::BlocHam(BlocHam *oldham,Site &add,LaGenMatDouble &Hinter,char hand,int NOinter)
  */
-BlocHam::BlocHam(BlocHam *oldham,Site &add,char hand)
+snake::physics::BlocHam::BlocHam(BlocHam *oldham,Site &add,char hand)
 {
   value_type=oldham->value_type;
   if(value_type=='r')
@@ -151,9 +153,9 @@ BlocHam::BlocHam(BlocHam *oldham,Site &add,char hand)
 
 
 /*!
-\fn BlocHam::renorm(LaGenMatDouble &tmat)
+\fn snake::physics::BlocHam::renorm(LaGenMatDouble &tmat)
  */
-void BlocHam::renorm(DTMat &mat)
+void snake::physics::BlocHam::renorm(DTMat &mat)
 {
   if(value_type=='r')
   {
@@ -179,9 +181,9 @@ void BlocHam::renorm(DTMat &mat)
 
 
 /*!
-    \fn BlocHam::write(std::ofstream &fout)
+    \fn snake::physics::BlocHam::write(std::ofstream &fout)
  */
-void BlocHam::write(std::ofstream &fout)
+void snake::physics::BlocHam::write(std::ofstream &fout)
 {
   fout.write(&value_type,sizeof value_type);
   base.write(fout);
@@ -199,9 +201,9 @@ void BlocHam::write(std::ofstream &fout)
 
 
 /*!
-    \fn BlocHam::read(std::ifstream &fin)
+    \fn snake::physics::BlocHam::read(std::ifstream &fin)
  */
-void BlocHam::read(std::ifstream &fin)
+void snake::physics::BlocHam::read(std::ifstream &fin)
 {
   fin.read(&value_type,sizeof value_type);
   base.read(fin);
@@ -220,9 +222,9 @@ void BlocHam::read(std::ifstream &fin)
 
 
 /*!
-    \fn BlocHam::toComplex()
+    \fn snake::physics::BlocHam::toComplex()
  */
-void BlocHam::toComplex()
+void snake::physics::BlocHam::toComplex()
 {
   value_type='c';
   R2C(H,HC);

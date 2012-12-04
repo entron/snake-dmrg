@@ -17,6 +17,11 @@ This class contains information related to a block.
 #include<fstream>
 #include<string>
 
+namespace snake
+{
+namespace physics
+{
+
 class Site;
 class BlocHam;
 class DTMat;
@@ -35,7 +40,7 @@ public:
 
   DTMat *dtmat;
 
-  GQNBase base;
+  snake::math::GQNBase base;
 
   ///The interaction term of the right(left) most site and the new added site.
   Rmatrix Hinter;
@@ -93,5 +98,7 @@ private:
 
 };
 
+}
+}
 
 #endif

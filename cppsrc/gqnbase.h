@@ -12,6 +12,12 @@ This class stores and process the information about good quantum number bases.
 @author Guo Cheng
 */
 
+namespace snake
+{
+
+namespace math
+{
+
 class GQNBase{
 public:
  ///The total dim of the base
@@ -24,7 +30,7 @@ public:
   std::vector<int> dim;
 
   ///Good quantum number corresponding to each subspace
-  std::vector<GQN> subgqn;
+  std::vector<snake::math::GQN> subgqn;
 
   ///Useful when the object of this class is generate by a kronecker product.
   std::vector<int> map;
@@ -35,7 +41,7 @@ public:
   std::vector<int> ordermap;
 
   std::vector<int> tempdim;
-  std::vector<GQN> tempsubgqn;
+  std::vector<snake::math::GQN> tempsubgqn;
 
 public:
   GQNBase();
@@ -53,8 +59,14 @@ public:
 
   friend GQNBase kron(const GQNBase &b1,const GQNBase &b2);
   friend void truncate(GQNBase &dbase,GQNBase &tbase,LaVectorDouble &eigval,double cutedge,int *mark);
-  friend std::ostream & operator<<(std::ostream& os, const GQNBase& base);
+  friend std::ostream & snake::math::operator<<(std::ostream& os, const GQNBase& base);
 
 };
+
+   GQNBase kron(const GQNBase &b1,const GQNBase &b2);
+   void truncate(GQNBase &dbase,GQNBase &tbase,LaVectorDouble &eigval,double cutedge,int *mark);
+
+}
+}
 
 #endif

@@ -1,9 +1,17 @@
 #include "supblock.h"
 
+namespace snake
+{
+namespace physics
+{
+long int multnum;
+}
+}
+
 /*!
-\fn SupBlock::CalGroundState(GQN tTargetGQN)
+\fn snake::physics::SupBlock::CalGroundState(GQN tTargetGQN)
  */
-void SupBlock::CalGroundState()
+void snake::physics::SupBlock::CalGroundState()
 {
   //std::cout<<leftbase<<std::endl;
   //std::cout<<rightbase<<std::endl;
@@ -11,8 +19,8 @@ void SupBlock::CalGroundState()
   //std::cout<<L->hamiltonian->H<<std::endl;
   //std::cout<<R->hamiltonian->H<<std::endl;
   
-  midsite1=allfreesites[L->sitenum-1];
-  midsite2=allfreesites[L->sitenum];
+  midsite1=snake::physics::allfreesites[L->sitenum-1];
+  midsite2=snake::physics::allfreesites[L->sitenum];
   double *eigval,**eigvec;
   int dim=calDim();
   int EigStatesNum=1;
@@ -50,9 +58,9 @@ void SupBlock::CalGroundState()
 }
 
 /*!
-\fn SupBlock::calDim()
+\fn snake::physics::SupBlock::calDim()
  */
-int SupBlock::calDim()
+int snake::physics::SupBlock::calDim()
 {
   int Dim=0;
   for(int i=0;i<leftbase.subnum;i++)
@@ -66,7 +74,7 @@ int SupBlock::calDim()
   return Dim;
 }
 
-void SupBlock::av(int n,double *in,double *out)
+void snake::physics::SupBlock::av(int n,double *in,double *out)
 {
   rightmult(in,out);
   leftmult(in,out);
@@ -76,9 +84,9 @@ void SupBlock::av(int n,double *in,double *out)
 
 
 /*!
-\fn SupBlock::rightmult(double *in,double *out)
+\fn snake::physics::SupBlock::rightmult(double *in,double *out)
  */
-void SupBlock::rightmult(double *in,double *out)
+void snake::physics::SupBlock::rightmult(double *in,double *out)
 {
   double *instart,*outstart;
   instart=in;
@@ -95,9 +103,9 @@ void SupBlock::rightmult(double *in,double *out)
 
 
 /*!
-\fn SupBlock::leftmult(double *in ,double *out)
+\fn snake::physics::SupBlock::leftmult(double *in ,double *out)
  */
-void SupBlock::leftmult(double *in ,double *out)
+void snake::physics::SupBlock::leftmult(double *in ,double *out)
 {
   double *instart,*outstart;
   instart=in;
@@ -113,7 +121,7 @@ void SupBlock::leftmult(double *in ,double *out)
 }
 
 /*
-void SupBlock::middlemult(LaGenMatDouble &TO,double *in,double *out)
+void snake::physics::SupBlock::middlemult(LaGenMatDouble &TO,double *in,double *out)
 {
   for(int i=0;i<H2Dim;i++)
     for(int k=0;k<H2Dim;k++)
@@ -125,9 +133,9 @@ void SupBlock::middlemult(LaGenMatDouble &TO,double *in,double *out)
 
 
 /*!
-\fn SupBlock::genindex()
+\fn snake::physics::SupBlock::genindex()
 */
-void SupBlock::genindex()
+void snake::physics::SupBlock::genindex()
 {
   GQNBase b1=midsite1.base;
   GQNBase b2=midsite2.base;
@@ -155,9 +163,9 @@ void SupBlock::genindex()
 }
 
 /*!
-\fn SupBlock::delindex()
+\fn snake::physics::SupBlock::delindex()
 */
-void SupBlock::delindex()
+void snake::physics::SupBlock::delindex()
 {
   GQNBase b1=midsite1.base;
   GQNBase b2=midsite2.base;
@@ -176,9 +184,9 @@ void SupBlock::delindex()
 
 
 /*!
-\fn SupBlock::reshape(LaGenMatDouble &mat,Site &freesite,char hand)
+\fn snake::physics::SupBlock::reshape(LaGenMatDouble &mat,Site &freesite,char hand)
 */
-void SupBlock::genmiddlemap(std::vector<GQN> &tgqn)
+void snake::physics::SupBlock::genmiddlemap(std::vector<snake::math::GQN> &tgqn)
 {
   int middleDim=midsite1.base.Dim*midsite2.base.Dim;
   int count[middleDim];
@@ -231,9 +239,9 @@ void SupBlock::genmiddlemap(std::vector<GQN> &tgqn)
 }
 
 /*!
-\fn SupBlock::deletemiddlemap()
+\fn snake::physics::SupBlock::deletemiddlemap()
 */
-void SupBlock::deletemiddlemap()
+void snake::physics::SupBlock::deletemiddlemap()
 {
   int middleDim=midsite1.base.Dim*midsite2.base.Dim;
   for(int i=0;i<middleDim;i++)
@@ -247,7 +255,7 @@ void SupBlock::deletemiddlemap()
 /*!
 \fn SupHam::dsaupd(int n,int nev,double *Evals,double **Evecs)
  */
-void SupBlock::dsaupd(int n,int nev,double *Evals,double **Evecs)
+void snake::physics::SupBlock::dsaupd(int n,int nev,double *Evals,double **Evecs)
 {
   int ido = 0;/* Initialization of the reverse communication
 		  parameter. */

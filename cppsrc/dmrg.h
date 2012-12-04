@@ -14,6 +14,12 @@ The frontend of SNAKE.
 	@author Cheng.Guo <Cheng.Guo@physik.lmu.de>
 
 */
+namespace snake
+{
+
+namespace physics
+{
+
 class DMRG{
 public:
     DMRG();
@@ -44,7 +50,7 @@ private:
 	int fDMRG_finalNewLeftL;
   ///The number of site which are exact.
   //int n;
-  std::vector<GQN> TargetGQN;
+  std::vector<snake::math::GQN> TargetGQN;
   std::vector<LaGenMatDouble> H;
   std::vector<LaGenMatComplex> Ut;
   std::vector<double> HoppingIntegrals;
@@ -63,4 +69,7 @@ private:
     void AddTwoSites(int LeftChainLength, int RightChainLength);
     void tDMRG_ReadParameters();
 };
+
+}
+}
 #endif

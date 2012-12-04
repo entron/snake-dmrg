@@ -14,6 +14,7 @@
 #include<vector>
 #define LA_COMPLEX_SUPPORT
 #include<lavc.h>
+#include <complex>
 
 
 #include "gqnbase.h"
@@ -25,18 +26,22 @@
 #include "blocham.h"
 #include "site.h"
 
-extern double totaltrunerror;
-extern long int multnum;
-//extern Site freesite;
+using namespace snake::math;
 
-extern  std::vector<Site> allfreesites;
+namespace snake
+{
+
+namespace physics
+{
+extern long int multnum;
+extern std::vector<snake::physics::Site> allfreesites;
 
 class SupBlock {
 public:
     char value_type;
     int KeptStatesNum;
-    std::vector<GQN> TargetGQN;
-    std::vector<GQN> TargetGQN2;
+    std::vector<snake::math::GQN> TargetGQN;
+    std::vector<snake::math::GQN> TargetGQN2;
     int sitenum;
 
     ///Left and right block.
@@ -55,7 +60,7 @@ public:
     Cmatrix wfmatC;
     Cmatrix wfmatC2;
 
-    GQNBase oldleftbase,oldrightbase,leftbase,rightbase;
+    snake::math::GQNBase oldleftbase,oldrightbase,leftbase,rightbase;
 
 private:
 
@@ -122,11 +127,11 @@ public:
         //std::cout<<TO<<std::endl;
         for (int i=0;i<H2Dim;i++)
             for (int k=0;k<H2Dim;k++)
-                if (TO(i,k)!=0)
+                if (TO(i,k) != 0)
                     for (int j=0;j<mapdim[i];j++)
                         //out[map[i][j]]+=TO(i,k)*in[map[k][j]];
                         out[map[i][j]]=out[map[i][j]]+TO(i,k)*in[map[k][j]]; //For the genrality to sacrify a very little bit of efficiency.
-    };
+    }
 
     template<class VType,class MATType>
     void middlemult(MATType &TO,VType &f)
@@ -145,7 +150,7 @@ public:
     void read(char *filename);
 
     ///Generate mapdim and map
-    void genmiddlemap(std::vector<GQN> &tgqn);
+    void genmiddlemap(std::vector<snake::math::GQN> &tgqn);
 
     ///Generate two freesite index.
     void genindex();
@@ -158,7 +163,7 @@ public:
      \fn SupBlock::evalwavefuncmat()
      */
     template<class WFType,class WFMATType>
-    void evalwfmat(WFType &f,WFMATType &mat, std::vector<GQN> TGQN)
+    void evalwfmat(WFType &f,WFMATType &mat, std::vector<snake::math::GQN> TGQN)
     {
         int vstart=0;
         //std::cout<<f.size()<<std::endl;
@@ -178,7 +183,7 @@ public:
                     tempv=f(LaIndex(vstart,vstart+leftbase.dim[i]*rightbase.dim[j]-1));
                     vstart+=leftbase.dim[i]*rightbase.dim[j];
                     tempmat.resize(rightbase.dim[j],leftbase.dim[i]);
-                    vecCmat(tempv,tempmat);
+                    snake::math::vecCmat(tempv,tempmat);
                     //std::cout<<tempmat<<std::endl;
                     mat.subnum++;
                     mat.submat.resize(mat.subnum);
@@ -194,7 +199,7 @@ public:
      \fn SupBlock::extractwf(int TargetGQN)
      */
     template<class WFType,class WFMATType>
-    void extractwf(WFMATType &mat,WFType &f, std::vector<GQN> TGQN)
+    void extractwf(WFMATType &mat,WFType &f, std::vector<snake::math::GQN> TGQN)
     {
         WFType tempv;
         typename WFMATType::value_type tempmat;
@@ -207,13 +212,13 @@ public:
                 if (leftbase.subgqn[i]+rightbase.subgqn[j]==TGQN)
                 {
                     if (mat.pmat(j,i)!=-1)
-                        mat2vec(tempv,mat.submat[mat.pmat(j,i)]);
+                        snake::math::mat2vec(tempv,mat.submat[mat.pmat(j,i)]);
                     else
                     {
                         tempv.resize(leftbase.dim[i]*rightbase.dim[j],1);
                         tempv=0;
                     }
-                    join(f,tempv);
+                    snake::math::join(f,tempv);
                 }
             }
         }
@@ -318,6 +323,6 @@ extern "C"
 
 
 //extern std::ofstream foccnum,fentropy;
-
+}}
 
 #endif

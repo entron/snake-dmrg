@@ -2,9 +2,9 @@
 
 
 /*!
- \fn SupBlock::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
+ \fn snake::physics::SupBlock::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
  */
-void SupBlock::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
+void snake::physics::SupBlock::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vector<LaGenMatComplex> &rt_OP, int timesteps)
 {
 	/////////////////////Output reduced density matrix////////////////////////
 	std::string filename;
@@ -23,7 +23,6 @@ void SupBlock::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vect
 	normalize(wfC2);
 	//std::cout<<wfC<<std::endl;
 	
-	double last_step_error=totaltrunerror;
 	///Time evolve
 	for(int n=0;n<timesteps;n++)
 	{
@@ -83,16 +82,13 @@ void SupBlock::evolve(std::vector<LaGenMatComplex> &rt_td_impurity_OP, std::vect
 		fout_1stsite_n_t<<sigmaz<<std::endl;
 		std::cout<<"sigma_z(t)="<<sigmaz<<"\t";
 		fout_rdm<<offdiag1.r<<" "<<offdiag1.i<<std::endl;
-		std::cout<<"TotalError="<<totaltrunerror<<"\t";
-		fout_steperror_t<<totaltrunerror-last_step_error<<std::endl;
-		last_step_error=totaltrunerror;
 		std::cout<<std::endl<<std::endl;
 		
 	}
   //delindex();
 }
 
-void SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatComplex>& rt_OP)
+void snake::physics::SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatComplex>& rt_OP)
 {
 	///Move right
 	//std::cout<<"LKeptStatesNum="<<flush;
@@ -102,8 +98,8 @@ void SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatC
 		{
   		//std::cout<<impurity_OP_t<<std::endl;
   		//std::cout<<TargetGQN[0]<<std::endl;
-  		midsite1=allfreesites[0];
-  		midsite2=allfreesites[1];
+        midsite1=snake::physics::allfreesites[0];
+        midsite2=snake::physics::allfreesites[1];
   		        genindex();
 			genmiddlemap(TargetGQN);
 			middlemult(impurity_OP_t,wfC);
@@ -118,8 +114,8 @@ void SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatC
 		}
 		else
 		{
-  		midsite1=allfreesites[i-1];
-  		midsite2=allfreesites[i];
+        midsite1=snake::physics::allfreesites[i-1];
+        midsite2=snake::physics::allfreesites[i];
   		genindex();
 			genmiddlemap(TargetGQN);
 			middlemult(rt_OP[i-1],wfC);
@@ -133,7 +129,7 @@ void SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatC
 		}
 		if(i<=sitenum-2)
 		{
-			freesite=allfreesites[i+1];
+            freesite=snake::physics::allfreesites[i+1];
 			moveright(leftdtmat[i],rightdtmat[sitenum-i-1]);
 			oldrightbase=rightdtmat[sitenum-i-2].tmatbase;
 		}
@@ -149,8 +145,8 @@ void SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatC
 		if(i==1)
 		{
   		//std::cout<<TargetGQN[0]<<std::endl;
-  		midsite1=allfreesites[0];
-  		midsite2=allfreesites[1];
+        midsite1=snake::physics::allfreesites[0];
+        midsite2=snake::physics::allfreesites[1];
   		genindex();
 			genmiddlemap(TargetGQN);
 			middlemult(impurity_OP_t,wfC);
@@ -164,8 +160,8 @@ void SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatC
 		}
 		else
 		{
-  		midsite1=allfreesites[i-1];
-  		midsite2=allfreesites[i];
+        midsite1=snake::physics::allfreesites[i-1];
+        midsite2=snake::physics::allfreesites[i];
   		genindex();
 			genmiddlemap(TargetGQN);
 			middlemult(rt_OP[i-1],wfC);
@@ -180,7 +176,7 @@ void SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatC
 		
 		if(i>=2)
 		{
-			freesite=allfreesites[i];
+            freesite=snake::physics::allfreesites[i];
 			moveleft(leftdtmat[i-1],rightdtmat[sitenum-i]);
 			oldleftbase=leftdtmat[i-2].tmatbase;
 		}
@@ -195,7 +191,7 @@ void SupBlock::onetimestep(LaGenMatComplex& impurity_OP_t, std::vector<LaGenMatC
 
 
 
-void SupBlock::creatoutputfiles()
+void snake::physics::SupBlock::creatoutputfiles()
 {
 	std::string filename;
 #if CAL_DURING_TIME_EVOLVE
@@ -215,7 +211,7 @@ void SupBlock::creatoutputfiles()
 	fout_steperror_t.precision(15);
 }
 
-void SupBlock::closeoutputfiles()
+void snake::physics::SupBlock::closeoutputfiles()
 {
 #if CAL_DURING_TIME_EVOLVE
 	fout_1stsite_n_t.close();
@@ -226,9 +222,9 @@ void SupBlock::closeoutputfiles()
 }
 
 /*!
- \fn SupBlock::loaddtmats(int n)
+ \fn snake::physics::SupBlock::loaddtmats(int n)
  */
-void SupBlock::loaddtmats()
+void snake::physics::SupBlock::loaddtmats()
 {
 	rightdtmat.resize(sitenum);
 	leftdtmat.resize(sitenum);
@@ -279,23 +275,23 @@ void SupBlock::loaddtmats()
 }
 
 /*!
- \fn SupBlock::sweep2left()
+ \fn snake::physics::SupBlock::sweep2left()
  */
-void SupBlock::sweep2left(int NewLeftChainLength)
+void snake::physics::SupBlock::sweep2left(int NewLeftChainLength)
 {
 	for(int i=NewLeftChainLength;i>1;i--)
 	{
 		//std::cout<<"Left site is "<<i<<std::endl;
 		//std::cout<<wfmat<<std::endl;
 		//std::cout<<"Norm="<<Blas_Norm2(wf)<<std::endl;
-  	        freesite=allfreesites[i];
+            freesite=snake::physics::allfreesites[i];
 		moveleft(leftdtmat[i-1],rightdtmat[sitenum-i]);
 		oldleftbase=leftdtmat[i-2].tmatbase;
 		
 	}
 }
 
-void SupBlock::sweep2leftmost()
+void snake::physics::SupBlock::sweep2leftmost()
 {
 	
 	//	std::cout<<leftbase<<std::endl;
@@ -315,9 +311,9 @@ void SupBlock::sweep2leftmost()
 }
 
 /*!
- \fn SupBlock::toComplex()
+ \fn snake::physics::SupBlock::toComplex()
  */
-void SupBlock::toComplex()
+void snake::physics::SupBlock::toComplex()
 {
 	if(value_type=='r')
 	{

@@ -2,7 +2,7 @@
 #include "setting.h"
 
 
-void R2C(GQNMat<LaGenMatDouble> &r,GQNMat<LaGenMatComplex> &c)
+void snake::math::R2C(snake::math::GQNMat<LaGenMatDouble> &r,snake::math::GQNMat<LaGenMatComplex> &c)
 {
   c.resize(r.rowbase,r.colbase);
   c.pmat=r.pmat;
@@ -12,7 +12,7 @@ void R2C(GQNMat<LaGenMatDouble> &r,GQNMat<LaGenMatComplex> &c)
     c.submat[i]=r.submat[i].to_LaGenMatComplex();
 }
 
-void C2R(GQNMat<LaGenMatComplex> &c,GQNMat<LaGenMatDouble> &r)
+void snake::math::C2R(snake::math::GQNMat<LaGenMatComplex> &c,snake::math::GQNMat<LaGenMatDouble> &r)
 {
   r.resize(c.rowbase,c.colbase);
   r.pmat=c.pmat;

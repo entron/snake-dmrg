@@ -9,12 +9,12 @@
 #include <sstream>
 #include <iostream>
 
-Block::Block()
+snake::physics::Block::Block()
 {
 	value_type='r';
 }
 
-Block::~Block()
+snake::physics::Block::~Block()
 {
 	delete hamiltonian;
 
@@ -22,9 +22,9 @@ Block::~Block()
 }
 
 /*!
- \fn Block::Block(Site site)
+ \fn snake::physics::Block::Block(Site site)
  */
-Block::Block(Site &first, double OnSiteE)
+snake::physics::Block::Block(Site &first, double OnSiteE)
 {
 	value_type=first.value_type;
 	hamiltonian=new BlocHam(first, OnSiteE);
@@ -37,19 +37,19 @@ Block::Block(Site &first, double OnSiteE)
 }
 
 /*!
- \fn Block::Block(char *filename)
+ \fn snake::physics::Block::Block(char *filename)
  */
-Block::Block(std::string &filename)
+snake::physics::Block::Block(std::string &filename)
 {
 	read(filename);
 }
 
 
 /*!
- \fn Block::Block(Block &old,Site add)
+ \fn snake::physics::Block::Block(Block &old,Site add)
  */
 /*
- Block::Block(Block &old,Site &addsite)
+ snake::physics::Block::Block(Block &old,Site &addsite)
  {
  value_type=old.value_type;
  #if FERMIONSIGN
@@ -94,7 +94,7 @@ Block::Block(std::string &filename)
  std::cout<<"Block dim is "<<base.Dim<<std::endl;
  }
 
- Block::Block(Site &addsite,Block &old)
+ snake::physics::Block::Block(Site &addsite,Block &old)
  {
  value_type=old.value_type;
 
@@ -125,7 +125,7 @@ Block::Block(std::string &filename)
  }
  */
 
-Block::Block(Block &old,Site &addsite, double HoppingT, double OnSiteE, double TwoSitesV)
+snake::physics::Block::Block(Block &old,Site &addsite, double HoppingT, double OnSiteE, double TwoSitesV)
 {
 	value_type=old.value_type;
 #if FERMIONSIGN
@@ -160,7 +160,7 @@ Block::Block(Block &old,Site &addsite, double HoppingT, double OnSiteE, double T
 }
 
 
-Block::Block(Site &addsite,Block &old,double HoppingT, double OnSiteE, double TwoSitesV)
+snake::physics::Block::Block(Site &addsite,Block &old,double HoppingT, double OnSiteE, double TwoSitesV)
 {
 	value_type=old.value_type;
 
@@ -190,7 +190,7 @@ Block::Block(Site &addsite,Block &old,double HoppingT, double OnSiteE, double Tw
 }
 
 /*
- Block::Block(Site &addsite,Block &old)
+ snake::physics::Block::Block(Site &addsite,Block &old)
  {
  value_type=old.value_type;
 
@@ -222,10 +222,10 @@ Block::Block(Site &addsite,Block &old,double HoppingT, double OnSiteE, double Tw
  */
 
 /*!
- \fn Block::Block(Site& addsite,Block& old,int localsite)
+ \fn snake::physics::Block::Block(Site& addsite,Block& old,int localsite)
  */
 /*
-Block::Block(Site& addsite,Block& old,int localsite)
+snake::physics::Block::Block(Site& addsite,Block& old,int localsite)
 {
 	value_type=old.value_type;
 	initialadd(old,addsite);
@@ -269,9 +269,9 @@ Block::Block(Site& addsite,Block& old,int localsite)
  */
 
 /*!
- \fn Block::initialadd(Block &old,Site &add)
+ \fn snake::physics::Block::initialadd(Block &old,Site &add)
  */
-void Block::initialadd(Block &old,Site &add)
+void snake::physics::Block::initialadd(Block &old,Site &add)
 {
 	siteadded=&add;///Might be rewrite the way to store steadded.
 	sitenum=old.sitenum+1;
@@ -280,10 +280,10 @@ void Block::initialadd(Block &old,Site &add)
 
 
 /*!
- \fn Block::interaction(Site &a,Site &b)
+ \fn snake::physics::Block::interaction(Site &a,Site &b)
  */
 /*
- void Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,char include_onsite)
+ void snake::physics::Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,char include_onsite)
  {
  calHinter_Heisenberg(siteA,siteB,addsiteposition);
  //calHinter_Hubbard(siteA,siteB,addsiteposition,include_onsite);
@@ -291,7 +291,7 @@ void Block::initialadd(Block &old,Site &add)
 
  }
  */
-void Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,double HoppingT, double OnSiteE, double TwoSitesV)
+void snake::physics::Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,double HoppingT, double OnSiteE, double TwoSitesV)
 {
 	//std::cout<<"HoppingT="<<HoppingT<<std::endl;
 
@@ -299,7 +299,7 @@ void Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,double Hoppin
 	if(value_type=='r')
 	{
 		//Hopping term
-  	GQNBase Hinterbase;
+    snake::math::GQNBase Hinterbase;
   	Hinterbase=kron(siteA.base,siteB.base);
   	
 	 Hinter.geneye(Hinterbase);
@@ -363,9 +363,9 @@ void Block::calHinter(Site &siteA,Site &siteB,char addsiteposition,double Hoppin
 }
 
 /*!
- \fn Block::renorm(LaGenMatDouble &tmat)
+ \fn snake::physics::Block::renorm(LaGenMatDouble &tmat)
  */
-void Block::renorm()
+void snake::physics::Block::renorm()
 {
 	hamiltonian->renorm(*dtmat);
 
@@ -380,9 +380,9 @@ void Block::renorm()
 
 
 /*!
- \fn Block::renormsites(DTMat &mat)
+ \fn snake::physics::Block::renormsites(DTMat &mat)
  */
-void Block::renormsites()
+void snake::physics::Block::renormsites()
 {
 	for(int i=0;i<sitenum;i++)
 		site[i].renorm(*dtmat);
@@ -390,18 +390,18 @@ void Block::renormsites()
 
 
 /*!
- \fn Block::renormsidesite(DTMat &mat)
+ \fn snake::physics::Block::renormsidesite(DTMat &mat)
  */
-void Block::renormsidesite()
+void snake::physics::Block::renormsidesite()
 {
 	site[sitenum-1].renorm(*dtmat);
 }
 
 
 /*!
- \fn Block::write(char *prefix)
+ \fn snake::physics::Block::write(char *prefix)
  */
-void Block::write(char *prefix)
+void snake::physics::Block::write(char *prefix)
 {
 	std::string filename;
     std::stringstream stemp;
@@ -425,9 +425,9 @@ void Block::write(char *prefix)
 
 
 /*!
- \fn Block::read(char *filename)
+ \fn snake::physics::Block::read(char *filename)
  */
-void Block::read(std::string &filename)
+void snake::physics::Block::read(std::string &filename)
 {
 	std::ifstream fin(filename.c_str(),std::ios_base::in|std::ios_base::binary);
 	fin.read(&value_type,sizeof value_type);
@@ -447,9 +447,9 @@ void Block::read(std::string &filename)
 
 
 /*!
- \fn Block::calN(std::ofstream fout)
+ \fn snake::physics::Block::calN(std::ofstream fout)
  */
-void Block::calN(std::ofstream &fout,char hand)
+void snake::physics::Block::calN(std::ofstream &fout,char hand)
 {
 	if(value_type=='r')
 	{
@@ -517,9 +517,9 @@ void Block::calN(std::ofstream &fout,char hand)
 
 
 /*!
- \fn Block::toComplex()
+ \fn snake::physics::Block::toComplex()
  */
-void Block::toComplex()
+void snake::physics::Block::toComplex()
 {
 	if(value_type=='r')
 	{
@@ -534,10 +534,10 @@ void Block::toComplex()
 
 
 /*!
- \fn Block::calHinter_Hubbard(Site &siteA,Site &siteB)
+ \fn snake::physics::Block::calHinter_Hubbard(Site &siteA,Site &siteB)
  */
 /*
-void Block::calHinter_Hubbard(Site &siteA,Site &siteB,char addsiteposition,char include_onsite)
+void snake::physics::Block::calHinter_Hubbard(Site &siteA,Site &siteB,char addsiteposition,char include_onsite)
 {
 
 	if(value_type=='r')
@@ -626,10 +626,10 @@ void Block::calHinter_Hubbard(Site &siteA,Site &siteB,char addsiteposition,char 
  */
 
 /*!
- \fn Block::calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition)
+ \fn snake::physics::Block::calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition)
  */
 /*
-void Block::calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition)
+void snake::physics::Block::calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition)
 {
 	if(value_type=='r')
 	{
@@ -646,7 +646,7 @@ void Block::calHinter_Heisenberg(Site &siteA,Site &siteB,char addsiteposition)
 		//std::cout<<temp<<std::endl;
 		if(addsiteposition=='r'&& sitenum==1)
 		{
-			std::cout<<"This is if code in Block::calHinter_Heisenberg is noly for temperary use to include the U term in impurity models, this must be replaced by more general method (matlab generated operators)"<<std::endl;
+            std::cout<<"This is if code in snake::physics::Block::calHinter_Heisenberg is noly for temperary use to include the U term in impurity models, this must be replaced by more general method (matlab generated operators)"<<std::endl;
 			Rmatrix temp1,temp2;
 			temp1.geneye(siteA.base);
 			temp2.geneye(siteB.base);
