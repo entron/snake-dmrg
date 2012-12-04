@@ -159,9 +159,7 @@ public:
     void creatoutputfiles();
     void closeoutputfiles();
 
-    /*!
-     \fn SuperChain::evalwavefuncmat()
-     */
+
     template<class WFType,class WFMATType>
     void evalwfmat(WFType &f,WFMATType &mat, std::vector<snake::math::GQN> TGQN)
     {
@@ -195,9 +193,6 @@ public:
     }
 
 
-    /*!
-     \fn SuperChain::extractwf(int TargetGQN)
-     */
     template<class WFType,class WFMATType>
     void extractwf(WFMATType &mat,WFType &f, std::vector<snake::math::GQN> TGQN)
     {
