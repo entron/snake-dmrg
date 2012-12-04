@@ -107,9 +107,7 @@ GQNMat<MType>::~GQNMat()
 }
 
 
-/*!
-\fn GQNMat::GQNMat(std::ifstream& fin)
- */
+
 template<class MType>
 GQNMat<MType>::GQNMat(std::ifstream& fin)
 {
@@ -117,9 +115,7 @@ GQNMat<MType>::GQNMat(std::ifstream& fin)
 }
 
 
-/*!
-\fn GQNMat::GQNMat(GQNMat& mat)
- */
+
 template<class MType>
 GQNMat<MType>::GQNMat(const GQNMat& mat)
 {
@@ -137,9 +133,7 @@ GQNMat<MType>::GQNMat(const GQNBase &row,const GQNBase &col)
   tempsubnum=0;
 }
 
-/*!
-\fn GQNMat::GQNMat(MType& mat, GQNBase &rowbase,GQNBase &colbase,int mode)
- */
+
 ///Convert full matrix to partitioned matrix
 template<class MType>
 GQNMat<MType>::GQNMat(MType& mat, GQNBase &row,GQNBase &col,int mode)
@@ -285,9 +279,6 @@ GQNMat<MType>::GQNMat(MType& mat, GQNBase &row,GQNBase &col, std::vector<snake::
 }
 
 
-/*!
-\fn GQNMat::inject(GQNMat& mat)
- */
 template<class MType>
 void GQNMat<MType>::inject(const GQNMat<MType>& mat)
 {
@@ -299,9 +290,7 @@ void GQNMat<MType>::inject(const GQNMat<MType>& mat)
 }
 
 
-/*!
-\fn GQNMat::write(std::ofstream& fout)
- */
+
 template<class MType>
 void GQNMat<MType>::write(std::ofstream& fout)
 {
@@ -314,9 +303,7 @@ void GQNMat<MType>::write(std::ofstream& fout)
 }
 
 
-/*!
-\fn GQNMat::read(std::ifstream& fin)
- */
+
 template<class MType>
 void GQNMat<MType>::read(std::ifstream& fin)
 {
@@ -331,9 +318,6 @@ void GQNMat<MType>::read(std::ifstream& fin)
 
 
 
-/*!
-\fn GQNMat::scale(MType::value_type s)
- */
 template<class MType>
 void GQNMat<MType>::scale(typename MType::value_type s)
 {
@@ -342,9 +326,6 @@ void GQNMat<MType>::scale(typename MType::value_type s)
 }
 
 
-/*!
-\fn GQNMat::pmatequal(GQNMat& mat)
- */
 template<class MType>
 int GQNMat<MType>::pmatequal(const GQNMat<MType>& mat) const
 {
@@ -363,9 +344,6 @@ int GQNMat<MType>::pmatequal(const GQNMat<MType>& mat) const
 }
 
 
-/*!
-\fn GQNMat::geneye(GQNMat& mat)
- */
 template<class MType>
 void GQNMat<MType>::geneye(const GQNMat<MType>& mat)
 {
@@ -804,12 +782,8 @@ std::cout<<"Postion matrix is: "<<std::endl;
   }
   std::cout<<"+++++End of GQNMat Information+++++"<<std::endl;
   return os;
-
 }
 
-/*!
-\fn GQNMat::operator=(GQNMat& mat)
- */
 
 template<class MType>
 GQNMat<MType>& GQNMat<MType>::operator=(const GQNMat<MType> &mat)
@@ -822,9 +796,7 @@ GQNMat<MType>& GQNMat<MType>::operator=(const GQNMat<MType> &mat)
   return *this;
 }
 
-/*!
-\fn GQNMat::operator+=(GQNMat& mat)
- */
+
 template<class MType>
 void GQNMat<MType>::operator+=(const GQNMat<MType>& mat)
 {
@@ -853,10 +825,6 @@ void GQNMat<MType>::operator+=(const GQNMat<MType>& mat)
   }
 }
 
-
-/*!
-\fn GQNMat::operator=(MType::value_type s)
- */
 
 template<class MType>
 GQNMat<MType>& GQNMat<MType>::operator=(double s)
@@ -890,7 +858,6 @@ GQNMat<MType> GQNMat<MType>::operator+(const GQNMat<MType> &b) const
   r+=b;
   return r;
 }
-
 
 
 void R2C(GQNMat<LaGenMatDouble> &r,GQNMat<LaGenMatComplex> &c);
