@@ -13,15 +13,13 @@ class InfiniteDMRG: public DMRG
 {
 public:
     InfiniteDMRG();
-    void readFreesites();
-    void readParameters();
     void run();
-    void addTwoSites(int LeftChainLength, int RightChainLength);
-    void readSavedLRBlocks(int LeftChainLength);
 
 protected:
-    void ReadSavedLRBlocks(int LeftChainLength);
-    void AddTwoSites(int LeftChainLength, int RightChainLength);
+    void addTwoSites(int LeftChainLength, int RightChainLength);
+    void readFreesites();
+    void readParameters();
+
     Chain *left,*right,*newleft,*newright;
     std::vector<double> HoppingIntegrals;
     std::vector<double> OnSitePotentials;

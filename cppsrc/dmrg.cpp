@@ -13,7 +13,6 @@ namespace physics
 
 snake::physics::DMRG::DMRG()
 {
-	//n=1;
     m_KeptStatesNum=50;
 	TargetGQN.resize(1);
     std::cout<<"==========Parameters:"<<std::endl;
