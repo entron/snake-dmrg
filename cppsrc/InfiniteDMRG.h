@@ -31,6 +31,11 @@ protected:
     std::vector<double> m_TwoSitesInteraction;
     std::vector<LaGenMatDouble> m_TwoFreeSitesHamiltonian;
 
+private:
+    void initLeftRightChains();
+
+
+
 };
 
 

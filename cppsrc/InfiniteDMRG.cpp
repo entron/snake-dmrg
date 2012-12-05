@@ -60,14 +60,8 @@ void snake::physics::InfiniteDMRG::readFreesites()
     basefin.close();
 }
 
-
-void snake::physics::InfiniteDMRG::run()
+void snake::physics::InfiniteDMRG::initLeftRightChains()
 {
-    readParameters();
-    std::cout<<"==========Reading free site information from matlab generated files."<<std::endl;
-    readFreesites();
-    std::cout<<"==========Start Infinite DMRG."<<std::endl;
-
     ///The initial left and right block each with one site.
     m_LeftChain=new snake::physics::Chain(snake::physics::allfreesites[0],m_OnSitePotentials[0]);
     m_RightChain=new snake::physics::Chain(snake::physics::allfreesites[m_ChainLength-1],m_OnSitePotentials[m_ChainLength-1]);
@@ -82,6 +76,18 @@ void snake::physics::InfiniteDMRG::run()
         m_LeftChain=m_NewLeftChain;
         m_LeftChain->write("./data/L");
     }
+}
+
+
+void snake::physics::InfiniteDMRG::run()
+{
+    readParameters();
+    std::cout<<"==========Reading free site information from matlab generated files."<<std::endl;
+    readFreesites();
+    std::cout<<"==========Start Infinite DMRG."<<std::endl;
+
+    initLeftRightChains();
+
     int IniLeftL, IniRightL;
     IniLeftL=m_LeftChain->sitenum;
     IniRightL=m_RightChain->sitenum;

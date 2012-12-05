@@ -114,7 +114,7 @@ snake::physics::SuperChain& snake::physics::FiniteDMRG::generateApdativeTimeDepe
     delete m_NewLeftChain;
     delete m_NewRightChain;
     std::cout<<std::endl;
-system("rm -rf data");
+    system("rm -rf data");
     std::cout<<"==========Passing fDMRG m_SuperChain to the t-DMRG complete."<<std::endl<<std::endl;
     return *m_SuperChain;
 }
@@ -127,7 +127,7 @@ void snake::physics::FiniteDMRG::readSavedLRBlocks(int LeftChainLength)
     fname="./data/L";
     stl<<LeftChainLength;
     fname=fname+stl.str();
-  // std::cout<<fname<<std::endl;
+    // std::cout<<fname<<std::endl;
     m_LeftChain=new snake::physics::Chain(fname);
     fname="./data/R";
     str<<(m_ChainLength-LeftChainLength-2);
