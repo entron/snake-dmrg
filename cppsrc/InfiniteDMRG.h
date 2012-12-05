@@ -17,7 +17,7 @@ public:
     void readParameters();
     void run();
     void addTwoSites(int LeftChainLength, int RightChainLength);
-
+    void readSavedLRBlocks(int LeftChainLength);
 
 protected:
     void ReadSavedLRBlocks(int LeftChainLength);

@@ -37,8 +37,6 @@ void snake::physics::SuperChain::CalGroundState()
   genmiddlemap(TargetGQN);
   dsaupd(dim,EigStatesNum,eigval,eigvec);
 
-  std::cout<<"MultTimes="<<mtimes<<"\t";
-  multnum+=mtimes;
   //std::cout.width(20);
   std::cout.precision(15);
   std::cout<<"Eg="<<eigval[0]<<"\t";

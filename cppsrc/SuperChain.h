@@ -33,7 +33,6 @@ namespace snake
 
 namespace physics
 {
-extern long int multnum;
 extern std::vector<snake::physics::Site> allfreesites;
 
 class SuperChain {
@@ -140,7 +139,6 @@ public:
         out=f;
         f=0;
         middlemult(TO,out.addr(),f.addr());
-        multnum++;
     }
 
 

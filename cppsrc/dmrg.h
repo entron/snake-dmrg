@@ -26,8 +26,6 @@ public:
 
     ~DMRG();
     void mkdir();
-    void readSavedLRBlocks(int LeftChainLength);
-    void addTwoSites(int LeftChainLength, int RightChainLength);
     ///Caculate the average value of onsite operator;
     void CalN();
 
