@@ -10,12 +10,12 @@ snake::physics::FiniteDMRG::FiniteDMRG(
 void snake::physics::FiniteDMRG::run()
 {
     std::cout<<"==========Start Finite DMRG."<<std::endl;
-    fDMRG_finalNewLeftL=NewLeftL;
+    fDMRG_finalNewLeftL=m_NewLeftL;
     for(int num=0;num<m_sweepTimes;num++)
     {
         //left increase at the cost of right
         std::cout<<"*****No."<<num<<" sweep"<<std::endl;
-        sweep2Left(NewLeftL-1,1);
+        sweep2Left(m_NewLeftL-1,1);
         sweep2Right(1,m_ChainLength-3);
         sweep2Left(m_ChainLength-3,fDMRG_finalNewLeftL-1);
     }
@@ -29,16 +29,16 @@ void snake::physics::FiniteDMRG::sweep2Right(int StartLeftChainLength, int EndLe
     {
         readSavedLRBlocks(i);
         addTwoSites(i,m_ChainLength-i-2);
-        m_SuperChain=new SuperChain(newleft,newright,left,right,H[i]);
-        m_SuperChain->TargetGQN=TargetGQN;
+        m_SuperChain=new SuperChain(m_NewLeftChain,m_NewRightChain,m_LeftChain,m_RightChain,m_TwoFreeSitesHamiltonian[i]);
+        m_SuperChain->TargetGQN=m_TargetGQN;
         m_SuperChain->CalGroundState();
         //	if(newleft->base.Dim>m_KeptStatesNum)
         m_SuperChain->renormleft(m_KeptStatesNum);
-        newleft->write("./data/L");
-        delete left;
-        delete right;
-        delete newleft;
-        delete newright;
+        m_NewLeftChain->write("./data/L");
+        delete m_LeftChain;
+        delete m_RightChain;
+        delete m_NewLeftChain;
+        delete m_NewRightChain;
         delete m_SuperChain;
         std::cout<<std::endl;
     }
@@ -52,18 +52,18 @@ void snake::physics::FiniteDMRG::sweep2Left(int StartLeftChainLength, int EndLef
     {
         readSavedLRBlocks(i);
         addTwoSites(i,m_ChainLength-i-2);
-        m_SuperChain=new SuperChain(newleft,newright,left,right,H[i]);
-        m_SuperChain->TargetGQN=TargetGQN;
+        m_SuperChain=new SuperChain(m_NewLeftChain,m_NewRightChain,m_LeftChain,m_RightChain,m_TwoFreeSitesHamiltonian[i]);
+        m_SuperChain->TargetGQN=m_TargetGQN;
         m_SuperChain->CalGroundState();
         //std::cout<<m_SuperChain->wf<<std::endl;break;
         //	if(newright->base.Dim>m_KeptStatesNum)
         m_SuperChain->renormright(m_KeptStatesNum);
 
-        newright->write("./data/R");
-        delete left;
-        delete right;
-        delete newright;
-        delete newleft;
+        m_NewRightChain->write("./data/R");
+        delete m_LeftChain;
+        delete m_RightChain;
+        delete m_NewRightChain;
+        delete m_NewLeftChain;
         delete m_SuperChain;
         std::cout<<std::endl;
     }
@@ -75,11 +75,11 @@ snake::physics::SuperChain& snake::physics::FiniteDMRG::generateApdativeTimeDepe
     ///Pass the DMRG m_SuperChain to the tDMRG
     readSavedLRBlocks(fDMRG_finalNewLeftL-1);
     addTwoSites(fDMRG_finalNewLeftL-1,fDMRG_finalNewLeftL-2);
-    m_SuperChain=new SuperChain(newleft,newright,left,right,H[fDMRG_finalNewLeftL-1]);
+    m_SuperChain=new SuperChain(m_NewLeftChain,m_NewRightChain,m_LeftChain,m_RightChain,m_TwoFreeSitesHamiltonian[fDMRG_finalNewLeftL-1]);
     //TargetGQN.resize(2);
-    m_SuperChain->TargetGQN=TargetGQN;
+    m_SuperChain->TargetGQN=m_TargetGQN;
     m_SuperChain->CalGroundState();
-    if(newleft->base.Dim>m_KeptStatesNum)
+    if(m_NewLeftChain->base.Dim>m_KeptStatesNum)
         m_SuperChain->renorm(m_KeptStatesNum);
     m_SuperChain->KeptStatesNum=m_KeptStatesNum;
     //std::cout<<freesite<<std::endl;
@@ -109,10 +109,10 @@ snake::physics::SuperChain& snake::physics::FiniteDMRG::generateApdativeTimeDepe
         snake::physics::allfreesites[i].toComplex();
         snake::physics::allfreesites[i].eval();
     }
-    delete left;
-    delete right;
-    delete newleft;
-    delete newright;
+    delete m_LeftChain;
+    delete m_RightChain;
+    delete m_NewLeftChain;
+    delete m_NewRightChain;
     std::cout<<std::endl;
 system("rm -rf data");
     std::cout<<"==========Passing fDMRG m_SuperChain to the t-DMRG complete."<<std::endl<<std::endl;
@@ -128,12 +128,12 @@ void snake::physics::FiniteDMRG::readSavedLRBlocks(int LeftChainLength)
     stl<<LeftChainLength;
     fname=fname+stl.str();
   // std::cout<<fname<<std::endl;
-    left=new snake::physics::Chain(fname);
+    m_LeftChain=new snake::physics::Chain(fname);
     fname="./data/R";
     str<<(m_ChainLength-LeftChainLength-2);
     fname=fname+str.str();
     //std::cout<<fname<<std::endl;
-    right=new snake::physics::Chain(fname);
+    m_RightChain=new snake::physics::Chain(fname);
 }
 
 
@@ -142,23 +142,23 @@ void snake::physics::FiniteDMRG::CalN()
     std::cout<<"Calculate N of Everysites when Chain sweeped to the middle."<<std::endl;
     readSavedLRBlocks(fDMRG_finalNewLeftL-1);
     addTwoSites(fDMRG_finalNewLeftL-1,fDMRG_finalNewLeftL-2);
-    m_SuperChain=new SuperChain(newleft,newright,left,right,H[fDMRG_finalNewLeftL-1]);
-    m_SuperChain->TargetGQN=TargetGQN;
+    m_SuperChain=new SuperChain(m_NewLeftChain,m_NewRightChain,m_LeftChain,m_RightChain,m_TwoFreeSitesHamiltonian[fDMRG_finalNewLeftL-1]);
+    m_SuperChain->TargetGQN=m_TargetGQN;
     m_SuperChain->CalGroundState();
-    if(newleft->base.Dim>m_KeptStatesNum)
+    if(m_NewLeftChain->base.Dim>m_KeptStatesNum)
         m_SuperChain->renorm(m_KeptStatesNum);
 
     //m_SuperChain->calN("./data/n.dat");
     std::ofstream fout("./data/n.dat");
-    newleft->calN(fout,'l');
-    newright->calN(fout,'r');
+    m_NewLeftChain->calN(fout,'l');
+    m_NewRightChain->calN(fout,'r');
     fout.close();
 
     system("xmgrace ./data/n.dat &");
     //m_SuperChain->prepare(); ///Store base information of the blocks
-    delete left;
-    delete right;
-    delete newleft;
-    delete newright;
+    delete m_LeftChain;
+    delete m_RightChain;
+    delete m_NewLeftChain;
+    delete m_NewRightChain;
     delete m_SuperChain;
 }

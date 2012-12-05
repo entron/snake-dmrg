@@ -19,12 +19,17 @@ protected:
     void addTwoSites(int LeftChainLength, int RightChainLength);
     void readFreesites();
     void readParameters();
+    void printParameters();
 
-    Chain *left,*right,*newleft,*newright;
-    std::vector<double> HoppingIntegrals;
-    std::vector<double> OnSitePotentials;
-    std::vector<double> TwoSitesInteraction;
-    std::vector<LaGenMatDouble> H;
+
+    Chain *m_LeftChain;
+    Chain *m_RightChain;
+    Chain *m_NewLeftChain;
+    Chain *m_NewRightChain;
+    std::vector<double> m_HoppingIntegrals;
+    std::vector<double> m_OnSitePotentials;
+    std::vector<double> m_TwoSitesInteraction;
+    std::vector<LaGenMatDouble> m_TwoFreeSitesHamiltonian;
 
 };
 

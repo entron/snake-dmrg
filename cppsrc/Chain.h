@@ -78,7 +78,7 @@ public:
   void renorm();
 
   ///Write the block information to a file,whose name starts with prefix
-  void write(char* prefix);
+  void write(const char *prefix);
   void read(std::string &filename);
 
   ///Calculat the average value of operator n at each site.

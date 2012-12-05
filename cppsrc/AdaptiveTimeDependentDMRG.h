@@ -17,10 +17,9 @@ private:
 
     int m_StepNum;
     //Trotter terms of the real-time evolution operator
-    std::vector<LaGenMatComplex> rt_OP;
+    std::vector<LaGenMatComplex> m_LocalUt;
     //The time-dependent Trotter term of the impurity and the first site of the real-time evolution operator
-    std::vector<LaGenMatComplex> rt_td_impurity_OP;
-    std::vector<LaGenMatComplex> Ut;
+    std::vector<LaGenMatComplex> m_TimeDependentImpurityUt;
 };
 }}
 #endif // ADAPTIVETIMEDEPENDENTDMRG_H

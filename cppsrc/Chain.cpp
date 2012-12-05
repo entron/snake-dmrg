@@ -378,7 +378,7 @@ void snake::physics::Chain::renormsidesite()
 }
 
 
-void snake::physics::Chain::write(char *prefix)
+void snake::physics::Chain::write(const char *prefix)
 {
 	std::string filename;
     std::stringstream stemp;
