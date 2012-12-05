@@ -18,8 +18,9 @@
 #include "gqnmat.h"
 #include <string>
 #include <sstream>
-#include "dmrg.h"
-
+#include "InfiniteDMRG.h"
+#include "FiniteDMRG.h"
+#include "AdaptiveTimeDependentDMRG.h"
 
 namespace snake
 {
@@ -36,14 +37,15 @@ int main()
 {
   double time_start = time(0);
 
-  snake::physics::DMRG chain1;
-  chain1.mkdir();
+  snake::physics::InfiniteDMRG iDMRG;
+  iDMRG.mkdir();
+  iDMRG.run();
 
-  chain1.iDMRG();
+  snake::physics::FiniteDMRG fDMRG(iDMRG);
+  fDMRG.run();
 
-  chain1.fDMRG();
-  chain1.iDMRG2tDMRG();
-  chain1.tDMRG();
+  snake::physics::AdaptiveTimeDependentDMRG tDMRG(fDMRG.generateApdativeTimeDependentDMRGSuperChain());
+  tDMRG.run();
 
   std::cout<<std::endl<<"The multipling times is "<<std::endl<<snake::multnum<<std::endl;
   std::cout << std::endl << "Total CPU time = " << (time(0) - time_start )  << " seconds" << std::endl ;

@@ -6,7 +6,6 @@ filename=[para.folder '/problemparmeters.dat'];
 fid=fopen(filename, 'wb');
 fwrite(fid,para.L,'int32');
 fwrite(fid,para.TGQN,'int32');
-fwrite(fid,para.t_num,'int32');
 fclose(fid);
 
 %%%%%%------Site info
@@ -46,6 +45,7 @@ fclose(fid);
 %%%%%%-----Time evolving Hamiltonian
 filename=[para.folder '/rt_T0.dat'];
 fid=fopen(filename, 'wb');
+fwrite(fid,para.t_num,'int32');
 for i=1:para.L-1
 mat2file(fid,para.U{i});
 end

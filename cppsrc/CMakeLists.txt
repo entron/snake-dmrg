@@ -9,6 +9,10 @@ link_directories($ENV{HOME}/usr/lib)
 
 add_executable(Snake 
 snake.cpp
+InfiniteDMRG.cpp
+FiniteDMRG.cpp
+AdaptiveTimeDependentDMRG.cpp
+FiniteTemperatureDMRG.cpp
 ChainHamiltonian.cpp        
 public.cpp          
 dmrg.cpp        
