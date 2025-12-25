@@ -7,4 +7,21 @@ The program has been tested on Linux, Unix and Mac OS X, but should also be poss
 
 This program has been developed under the supervision of Prof. Tao Xiang and Prof. Jan von Delft. Thank Shijie Hu, Honggang Luo, Shaojing Qin, Jize Zhao, Hantao Lu, Zhihui Wang and Shuming Li for either direct contribution or discussions during the development of the program.
 
-This program has been used in our paper "Density matrix renormalization group study of a quantum impurity model with Landau-Zener time-dependent Hamiltonian" Phys. Rev. B 79, 115137 (2009). Please consider citing this paper if you use Snake for your project.
+If you use this code or build on these ideas, please cite:
+
+```
+@article{PhysRevB.79.115137,
+  title = {Density matrix renormalization group study of a quantum impurity model with Landau-Zener time-dependent Hamiltonian},
+  author = {Guo, Cheng and Weichselbaum, Andreas and Kehrein, Stefan and Xiang, Tao and von Delft, Jan},
+  journal = {Phys. Rev. B},
+  volume = {79},
+  issue = {11},
+  pages = {115137},
+  numpages = {6},
+  year = {2009},
+  month = {Mar},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevB.79.115137},
+  url = {https://link.aps.org/doi/10.1103/PhysRevB.79.115137}
+}
+```
