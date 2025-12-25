@@ -17,15 +17,7 @@ This repository contains an implementation of the methods and models used in:
 
 The default executable (`cppsrc/snake.cpp`) runs a fixed pipeline: iDMRG → fDMRG → tDMRG. There are no command-line flags; to change the pipeline (e.g. “ground state only”), edit `cppsrc/snake.cpp` and rebuild.
 
-## If you’re new to DMRG (2-minute mental model)
-
-- **DMRG ≈ variational optimization over MPS.** You optimize within the matrix product state (MPS) ansatz.
-- **Kept states / bond dimension** $m$ (a.k.a. $\chi$) controls accuracy vs cost.
-- **Truncation is controlled by density-matrix eigenvalues.** Snake keeps up to $m$ states and also enforces an eigenvalue cutoff (`Max_Truncate_Error`).
-- **“Infinite” vs “finite” DMRG.** Here “iDMRG” means the classic infinite-system warmup (grow the chain); “fDMRG” means sweeps on the finite chain.
-- **tDMRG.** Real-time evolution applies local two-site gates and adapts the basis; entanglement growth limits reachable times for fixed $m$.
-
-## Quick start (run the included example)
+## Quick start
 
 ### 1) Build the `Snake` executable
 
@@ -101,6 +93,7 @@ The superblock ground state at each step is computed with **ARPACK** (see `cppsr
 ### Adaptive real-time tDMRG
 
 For a nearest-neighbor Hamiltonian $H(t)=\sum_{i} h_{i,i+1}(t)$, real-time evolution over a step $\tau$ is approximated by a symmetric (second-order) Suzuki–Trotter product of two-site gates,
+
 $$U(\tau)\approx\prod_i e^{-i(\tau/2)h_{i,i+1}}\prod_i^{\leftarrow} e^{-i(\tau/2)h_{i,i+1}}.$$
 
 In Snake:
@@ -122,14 +115,18 @@ This repo contains MATLAB helpers for chain construction:
 - `lindiscr.m`: linear discretization + Lanczos tridiagonalization
 - `star2tridiag.m`: star → tridiagonal chain transformation
 
-### Dissipative Landau–Zener / resonant-level model (paper context)
+### Dissipative Landau–Zener / resonant-level model
 
 The Phys. Rev. B 79, 115137 (2009) study focuses on the (spinless) resonant-level model with a linearly swept impurity level,
+
 $$H(t)=\varepsilon_d(t)d^\dagger d + \sum_k \varepsilon_k c_k^\dagger c_k + V\sum_k (d^\dagger c_k + c_k^\dagger d),\qquad \varepsilon_d(t)=vt,$$
+
 with hybridization width $\Gamma=\pi\rho V^2$ for a flat bath density of states $\rho$ on $[-D,D]$. After discretization and mapping to a Wilson chain, this becomes a nearest-neighbor chain with a local impurity–first-site hybridization and exponentially decaying hoppings.
 
 Under a standard mapping, this model is equivalent to an Ohmic spin-boson model at dissipation strength $\alpha=1/2$, and the impurity occupation $n_d(t)=\langle d^\dagger(t)d(t)\rangle$ is related to a two-level “spin” observable via $\sigma_z(t)=1-2n_d(t)$. The dimensionless sweep parameter
+
 $$r=\frac{2\Gamma}{v}$$
+
 separates fast ($r\ll1$) and slow ($r\gg1$) sweeps.
 
 Snake’s tDMRG engine supports this class of problems as long as you generate the corresponding `model/` inputs (chain, two-site Hamiltonians, and time-dependent impurity gate).
